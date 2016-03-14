@@ -15,6 +15,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.SignInActivity"/>
+        <activity android:name=".activity.SignUpActivity"/>
+        <activity android:name=".activity.FriendsActivity"/>
+        <activity android:name=".activity.SettingsActivity"/>
     </application>
 
 </manifest>

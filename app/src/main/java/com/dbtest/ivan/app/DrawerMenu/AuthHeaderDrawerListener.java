@@ -8,6 +8,7 @@ import android.widget.Button;
 
 import com.dbtest.ivan.app.R;
 import com.dbtest.ivan.app.activity.SignInActivity;
+import com.dbtest.ivan.app.activity.SignUpActivity;
 import com.mikepenz.materialdrawer.Drawer;
 
 public final class AuthHeaderDrawerListener implements Drawer.OnDrawerListener {
@@ -31,6 +32,19 @@ public final class AuthHeaderDrawerListener implements Drawer.OnDrawerListener {
             });
         } else {
             Log.e("MY_APP", "No signin button in menu");
+        }
+
+        Button btnSignUp = (Button) activity.findViewById(R.id.h_unlogged_btn_signup);
+        if (btnSignUp != null) {
+            btnSignUp.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(activity, SignUpActivity.class);
+                    activity.startActivity(intent);
+                }
+            });
+        } else {
+            Log.e("MY_APP", "No signup button in menu");
         }
     }
 
