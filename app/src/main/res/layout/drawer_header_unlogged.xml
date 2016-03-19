@@ -30,7 +30,7 @@ android:layout_height="wrap_content">
 
         android:layout_marginBottom="@dimen/mrg_medium"
         android:layout_marginRight="@dimen/mrg_medium"
-        android:layout_marginEnd="6dp"
+        android:layout_marginEnd="@dimen/mrg_medium"
 
         android:layout_alignBottom="@+id/h_unlogged_bgr"
         android:layout_alignParentRight="true"

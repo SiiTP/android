@@ -1,4 +1,4 @@
-package com.dbtest.ivan.app.DrawerMenu;
+package com.dbtest.ivan.app.drawer_menu;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -20,7 +20,7 @@ public final class AuthHeaderDrawerListener implements Drawer.OnDrawerListener {
 
     @Override
     public void onDrawerOpened(View view) {
-        Log.d("MY_APP", "drawer opened " + view.getId());
+        Log.d("myapp", "drawer opened " + view.getId());
         Button btnSignIn = (Button) activity.findViewById(R.id.h_unlogged_btn_signin);
         if (btnSignIn != null) {
             btnSignIn.setOnClickListener(new View.OnClickListener() {
@@ -31,7 +31,7 @@ public final class AuthHeaderDrawerListener implements Drawer.OnDrawerListener {
                 }
             });
         } else {
-            Log.e("MY_APP", "No signin button in menu");
+            Log.e("myapp", "No signin button in menu");
         }
 
         Button btnSignUp = (Button) activity.findViewById(R.id.h_unlogged_btn_signup);
@@ -44,13 +44,13 @@ public final class AuthHeaderDrawerListener implements Drawer.OnDrawerListener {
                 }
             });
         } else {
-            Log.e("MY_APP", "No signup button in menu");
+            Log.e("myapp", "No signup button in menu");
         }
     }
 
     @Override
     public void onDrawerClosed(View view) {
-        Log.d("MY_APP", "drawer closed " + view.getId());
+        Log.d("myapp", "drawer closed " + view.getId());
     }
 
     @Override
