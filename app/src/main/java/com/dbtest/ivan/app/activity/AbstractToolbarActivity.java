@@ -1,6 +1,7 @@
 package com.dbtest.ivan.app.activity;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -11,17 +12,21 @@ import android.widget.RelativeLayout;
 import com.dbtest.ivan.app.R;
 import com.dbtest.ivan.app.drawer_menu.DrawerMenuUtils;
 
-public abstract class AbstractActivity extends AppCompatActivity {
+public abstract class AbstractToolbarActivity extends AppCompatActivity {
     protected Toolbar toolbar;
-    RelativeLayout rel;
+    RelativeLayout layout;
 
-    protected abstract int getBodyResId();
+    @NonNull
+    protected abstract Integer getBodyResId();
+
+    @NonNull
+    protected abstract Integer getMenuPosition();
 
     protected void setToolbarAndMenu() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
-            DrawerMenuUtils.setDrawerMenuOnActivity(this, toolbar);
+            DrawerMenuUtils.setDrawerMenuOnActivity(this, toolbar, getMenuPosition());
         } else {
             Log.e("myapp", "no toolbar");
         }
@@ -30,9 +35,8 @@ public abstract class AbstractActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.i("myapp", "on create abstract");
 
-        rel = (RelativeLayout) getLayoutInflater().inflate(R.layout.activity_abstract, null);
+        layout = (RelativeLayout) getLayoutInflater().inflate(R.layout.activity_abstract, null);
         View addingView = getLayoutInflater().inflate(getBodyResId(), null);
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout
                 .LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
@@ -40,8 +44,8 @@ public abstract class AbstractActivity extends AppCompatActivity {
 
         addingView.setLayoutParams(layoutParams);
 
-        rel.addView(addingView);
-        setContentView(rel);
+        layout.addView(addingView);
+        setContentView(layout);
         setToolbarAndMenu();
 
     }

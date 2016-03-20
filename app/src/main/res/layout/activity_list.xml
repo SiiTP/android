@@ -2,7 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/md_red_600"
     tools:context="com.dbtest.ivan.app.activity.ListActivity">
 
     <!--<include layout="@layout/toolbar" android:id="@+id/list_toolbar_container"/>-->

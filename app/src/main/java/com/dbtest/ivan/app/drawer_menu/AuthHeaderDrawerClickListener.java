@@ -11,16 +11,15 @@ import com.dbtest.ivan.app.activity.SignInActivity;
 import com.dbtest.ivan.app.activity.SignUpActivity;
 import com.mikepenz.materialdrawer.Drawer;
 
-public final class AuthHeaderDrawerListener implements Drawer.OnDrawerListener {
+public final class AuthHeaderDrawerClickListener implements Drawer.OnDrawerListener {
     private Activity activity;
 
-    AuthHeaderDrawerListener(Activity activity) {
+    AuthHeaderDrawerClickListener(Activity activity) {
         this.activity = activity;
     }
 
     @Override
     public void onDrawerOpened(View view) {
-        Log.d("myapp", "drawer opened " + view.getId());
         Button btnSignIn = (Button) activity.findViewById(R.id.h_unlogged_btn_signin);
         if (btnSignIn != null) {
             btnSignIn.setOnClickListener(new View.OnClickListener() {
@@ -50,7 +49,6 @@ public final class AuthHeaderDrawerListener implements Drawer.OnDrawerListener {
 
     @Override
     public void onDrawerClosed(View view) {
-        Log.d("myapp", "drawer closed " + view.getId());
     }
 
     @Override

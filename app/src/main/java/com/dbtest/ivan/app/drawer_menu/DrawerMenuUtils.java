@@ -2,7 +2,7 @@ package com.dbtest.ivan.app.drawer_menu;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Typeface;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -17,36 +17,41 @@ import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
-import com.mikepenz.materialdrawer.model.SectionDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 public class DrawerMenuUtils {
     private static boolean logged = false;
-    private static Drawer drawerMenu = null;
 
     private static AccountHeader getAccountHeaderLogged(Activity activity) {
         AccountHeaderBuilder accountHeaderBuilder = new AccountHeaderBuilder()
                 .withActivity(activity)
                 .withHeaderBackground(R.drawable.menu_header)
                 .withSelectionListEnabled(false)
-                .withTextColor(activity.getResources().getColor(R.color.material_drawer_primary_text))
+                .withTextColor(ContextCompat.getColor(activity, R.color.material_drawer_primary_text))
                 .addProfiles(
                         new ProfileDrawerItem().withName("IvanS").withEmail("dev.ivansem@gmail.com")
                 );
         return accountHeaderBuilder.build();
     }
 
-    public static void setDrawerMenuOnActivity(final Activity activity, Toolbar toolbar) {
-        Typeface sectionTypeFace = Typeface.create("", Typeface.BOLD);
+    public static void setDrawerMenuOnActivity(final Activity activity, Toolbar toolbar, int activePosition) {
         DrawerBuilder builder = new DrawerBuilder(activity)
-                .withToolbar(toolbar)
-                .withSelectedItemByPosition(2);
+                .withToolbar(toolbar);
+
+        //position of selected point
+        if (activePosition > 0) {
+                builder.withSelectedItemByPosition(activePosition);
+        }
+
         if (logged) { //if you logged
             builder.withAccountHeader(getAccountHeaderLogged(activity));
         } else { //if you not logged
             builder.withHeader(R.layout.drawer_header_unlogged)
-                    .withOnDrawerListener(new AuthHeaderDrawerListener(activity));
+                    .withOnDrawerListener(new AuthHeaderDrawerClickListener(activity));
         }
+
+        CategoriesDrawerClickListener categoriesClickListener = new CategoriesDrawerClickListener(activity);
+
         builder.addDrawerItems(
                 new PrimaryDrawerItem().withName("Friends").withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
@@ -66,12 +71,15 @@ public class DrawerMenuUtils {
                         return false;
                     }
                 }),
-                new SectionDrawerItem().withName("Categories").withTypeface(sectionTypeFace),
-                new SecondaryDrawerItem().withName("all"),
-                new SecondaryDrawerItem().withName("from friends"),
-                new SecondaryDrawerItem().withName("first"),
-                new SecondaryDrawerItem().withName("second")
+                new PrimaryDrawerItem().withName("Best categories").withIdentifier(1).withSubItems(
+                        new SecondaryDrawerItem().withName("all").withOnDrawerItemClickListener(categoriesClickListener),
+                        new SecondaryDrawerItem().withName("from friends").withOnDrawerItemClickListener(categoriesClickListener),
+                        new SecondaryDrawerItem().withName("first").withOnDrawerItemClickListener(categoriesClickListener),
+                        new SecondaryDrawerItem().withName("second").withOnDrawerItemClickListener(categoriesClickListener)
+                        ).withIsExpanded(true).withSelectable(false).withSelectedColor(ContextCompat.getColor(activity, R.color.material_drawer_accent)).withSetSelected(true)
+
         );
-        drawerMenu = builder.build();
+        builder.withTranslucentNavigationBar(true);
+        builder.build();
     }
 }
