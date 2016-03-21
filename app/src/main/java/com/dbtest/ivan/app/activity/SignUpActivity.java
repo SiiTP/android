@@ -6,8 +6,7 @@ import android.support.annotation.NonNull;
 import com.dbtest.ivan.app.R;
 
 public class SignUpActivity extends AbstractToolbarActivity {
-    public static final int MENU_POSITION = -1; //activity not in menu list
-
+    private static final int MENU_POSITION = -1; //activity not in menu list
 
     @NonNull
     @Override
@@ -17,7 +16,7 @@ public class SignUpActivity extends AbstractToolbarActivity {
 
     @NonNull
     @Override
-    protected Integer getMenuPosition() {
+    public Integer getMenuPosition() {
         return MENU_POSITION;
     }
 

@@ -10,23 +10,29 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.dbtest.ivan.app.R;
-import com.dbtest.ivan.app.drawer_menu.DrawerMenuUtils;
+import com.dbtest.ivan.app.drawer_menu.DrawerMenuManager;
+import com.mikepenz.materialdrawer.Drawer;
 
 public abstract class AbstractToolbarActivity extends AppCompatActivity {
-    protected Toolbar toolbar;
-    RelativeLayout layout;
+    protected Toolbar mToolbar;
+    protected RelativeLayout mLayout;
+    protected Drawer mDrawer;
 
     @NonNull
     protected abstract Integer getBodyResId();
 
     @NonNull
-    protected abstract Integer getMenuPosition();
+    public abstract Integer getMenuPosition();
+
+    public Drawer getDrawer() {
+        return mDrawer;
+    }
 
     protected void setToolbarAndMenu() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
-            DrawerMenuUtils.setDrawerMenuOnActivity(this, toolbar, getMenuPosition());
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        if (mToolbar != null) {
+            setSupportActionBar(mToolbar);
+            mDrawer = DrawerMenuManager.buildDrawerMenu(this, mToolbar);
         } else {
             Log.e("myapp", "no toolbar");
         }
@@ -36,17 +42,24 @@ public abstract class AbstractToolbarActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        layout = (RelativeLayout) getLayoutInflater().inflate(R.layout.activity_abstract, null);
+        mLayout = (RelativeLayout) getLayoutInflater().inflate(R.layout.activity_abstract, null);
         View addingView = getLayoutInflater().inflate(getBodyResId(), null);
-        RelativeLayout.LayoutParams layoutParams = new RelativeLayout
-                .LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.MATCH_PARENT
+                );
         layoutParams.addRule(RelativeLayout.BELOW, R.id.toolbar);
 
         addingView.setLayoutParams(layoutParams);
 
-        layout.addView(addingView);
-        setContentView(layout);
+        mLayout.addView(addingView);
+        setContentView(mLayout);
         setToolbarAndMenu();
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mDrawer.setSelectionAtPosition(getMenuPosition());
     }
 }

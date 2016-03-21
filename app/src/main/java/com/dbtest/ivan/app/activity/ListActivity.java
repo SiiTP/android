@@ -8,14 +8,16 @@
 
 package com.dbtest.ivan.app.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.dbtest.ivan.app.R;
+import com.dbtest.ivan.app.utils.ExtrasCodes;
 
 public class ListActivity extends AbstractToolbarActivity {
-    public static final int MENU_POSITION = 4;
+    private static int sMenuLastPosition = 5;
 
     @NonNull
     @Override
@@ -25,13 +27,25 @@ public class ListActivity extends AbstractToolbarActivity {
 
     @NonNull
     @Override
-    protected Integer getMenuPosition() {
-        return MENU_POSITION;
+    public Integer getMenuPosition() {
+        return sMenuLastPosition;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
+        if (intent != null) {
+            sMenuLastPosition = intent.getIntExtra(ExtrasCodes.ACTIVE_MENU_POSITION_CODE, sMenuLastPosition);
+            Log.d("myapp", "position from extra : " + sMenuLastPosition);
+            mDrawer.setSelectionAtPosition(sMenuLastPosition);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mDrawer.setSelectionAtPosition(sMenuLastPosition);
     }
 
     public void renderList(String category) {

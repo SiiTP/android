@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     tools:context="com.dbtest.ivan.app.activity.ListActivity">
 
-    <!--<include layout="@layout/toolbar" android:id="@+id/list_toolbar_container"/>-->
+    <!--<include layout="@layout/mToolbar" android:id="@+id/list_toolbar_container"/>-->
 
     <TextView
         android:id="@+id/list_text_view"

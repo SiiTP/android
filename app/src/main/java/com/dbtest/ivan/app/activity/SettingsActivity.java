@@ -16,7 +16,7 @@ public class SettingsActivity extends AbstractToolbarActivity {
 
     @NonNull
     @Override
-    protected Integer getMenuPosition() {
+    public Integer getMenuPosition() {
         return MENU_POSITION;
     }
 

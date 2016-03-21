@@ -7,7 +7,7 @@ import com.dbtest.ivan.app.R;
 
 public class FriendsActivity extends AbstractToolbarActivity {
 
-    public static final int MENU_POSITION = 1;
+    private static final int MENU_POSITION = 1;
 
     @NonNull
     @Override
@@ -17,7 +17,7 @@ public class FriendsActivity extends AbstractToolbarActivity {
 
     @NonNull
     @Override
-    protected Integer getMenuPosition() {
+    public Integer getMenuPosition() {
         return MENU_POSITION;
     }
 
