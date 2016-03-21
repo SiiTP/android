@@ -68,7 +68,6 @@ public final class AuthHeaderDrawerClickListener implements Drawer.OnDrawerListe
             @Override
             public void run() {
                 drawer.closeDrawer();
-                Log.i("myapp", "drawer closed");
             }
         }, 200);
     }

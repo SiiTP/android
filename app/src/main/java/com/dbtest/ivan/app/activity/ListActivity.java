@@ -12,12 +12,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.dbtest.ivan.app.R;
+import com.dbtest.ivan.app.model.CategoryManager;
 import com.dbtest.ivan.app.utils.ExtrasCodes;
 
 public class ListActivity extends AbstractToolbarActivity {
-    private static int sMenuLastPosition = 5;
+    private int mMenuLastPosition = 5;
 
     @NonNull
     @Override
@@ -28,7 +30,7 @@ public class ListActivity extends AbstractToolbarActivity {
     @NonNull
     @Override
     public Integer getMenuPosition() {
-        return sMenuLastPosition;
+        return mMenuLastPosition;
     }
 
     @Override
@@ -36,19 +38,34 @@ public class ListActivity extends AbstractToolbarActivity {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         if (intent != null) {
-            sMenuLastPosition = intent.getIntExtra(ExtrasCodes.ACTIVE_MENU_POSITION_CODE, sMenuLastPosition);
-            Log.d("myapp", "position from extra : " + sMenuLastPosition);
-            mDrawer.setSelectionAtPosition(sMenuLastPosition);
+            int gettedPosition = intent.getIntExtra(ExtrasCodes.ACTIVE_MENU_POSITION_CODE, mMenuLastPosition);
+            if (mMenuLastPosition != gettedPosition) {
+                mMenuLastPosition = gettedPosition;
+                renderList(mMenuLastPosition);
+            }
+            Log.d("myapp", "position from extra : " + mMenuLastPosition);
+            mDrawer.setSelectionAtPosition(mMenuLastPosition);
         }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        mDrawer.setSelectionAtPosition(sMenuLastPosition);
+        mDrawer.setSelectionAtPosition(mMenuLastPosition);
     }
 
-    public void renderList(String category) {
-        Log.d("myapp", "rendered list of category : " + category);
+    public void setMenuLastPosition(int mMenuLastPosition) {
+        this.mMenuLastPosition = mMenuLastPosition;
+    }
+
+    public void renderList(int position) {
+        String checkedCategory = CategoryManager.getCategoryByPosition(position);
+        TextView textView = (TextView) findViewById(R.id.list_category_name);
+        if (checkedCategory != null) {
+            textView.setText(checkedCategory);
+        } else {
+            textView.setText("not found view by position");
+        }
+        Log.d("myapp", "rendered list of category : " + checkedCategory);
     }
 }

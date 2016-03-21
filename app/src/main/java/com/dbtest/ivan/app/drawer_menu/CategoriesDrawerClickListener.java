@@ -10,7 +10,7 @@ import com.dbtest.ivan.app.utils.ExtrasCodes;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
-public class CategoriesDrawerClickListener implements Drawer.OnDrawerItemClickListener {
+public final class CategoriesDrawerClickListener implements Drawer.OnDrawerItemClickListener {
     private AbstractToolbarActivity activity;
 
     public CategoriesDrawerClickListener(AbstractToolbarActivity activity) {
@@ -22,10 +22,9 @@ public class CategoriesDrawerClickListener implements Drawer.OnDrawerItemClickLi
         Log.d("myapp", "sub item click, position : " + position);
         drawerItem.withSetSelected(true);
         if ((activity instanceof ListActivity)) {
-            Log.v("myapp", "only changed category, no start activity");
-            ((ListActivity)activity).renderList("all");
+            ((ListActivity)activity).renderList(position);
+            ((ListActivity)activity).setMenuLastPosition(position);
         } else {
-            Log.v("myapp", "start new list activity");
             Intent i = new Intent(activity, ListActivity.class);
             i.putExtra(ExtrasCodes.ACTIVE_MENU_POSITION_CODE, position);
             activity.startActivity(i);

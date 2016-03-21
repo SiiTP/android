@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 
 import com.dbtest.ivan.app.R;
 import com.dbtest.ivan.app.drawer_menu.DrawerMenuManager;
+import com.dbtest.ivan.app.model.CategoryManager;
 import com.mikepenz.materialdrawer.Drawer;
 
 public abstract class AbstractToolbarActivity extends AppCompatActivity {
@@ -33,6 +34,8 @@ public abstract class AbstractToolbarActivity extends AppCompatActivity {
         if (mToolbar != null) {
             setSupportActionBar(mToolbar);
             mDrawer = DrawerMenuManager.buildDrawerMenu(this, mToolbar);
+            DrawerMenuManager.setCategoriesSubItems(this, CategoryManager.getBestCategories());
+            Log.d("myapp", "categories installed");
         } else {
             Log.e("myapp", "no toolbar");
         }
@@ -49,7 +52,6 @@ public abstract class AbstractToolbarActivity extends AppCompatActivity {
                         ViewGroup.LayoutParams.MATCH_PARENT
                 );
         layoutParams.addRule(RelativeLayout.BELOW, R.id.toolbar);
-
         addingView.setLayoutParams(layoutParams);
 
         mLayout.addView(addingView);
@@ -62,4 +64,6 @@ public abstract class AbstractToolbarActivity extends AppCompatActivity {
         super.onResume();
         mDrawer.setSelectionAtPosition(getMenuPosition());
     }
+
+
 }

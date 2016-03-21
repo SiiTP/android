@@ -4,11 +4,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 
 import com.dbtest.ivan.app.R;
 import com.dbtest.ivan.app.activity.AbstractToolbarActivity;
 import com.dbtest.ivan.app.activity.FriendsActivity;
+import com.dbtest.ivan.app.activity.ListActivity;
 import com.dbtest.ivan.app.activity.SettingsActivity;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
@@ -22,29 +24,11 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 public class DrawerMenuManager {
     private static boolean logged = false;
-
-    private static AccountHeader getAccountHeaderLogged(Activity activity) {
-        AccountHeaderBuilder accountHeaderBuilder = new AccountHeaderBuilder()
-                .withActivity(activity)
-                .withHeaderBackground(R.drawable.menu_header)
-                .withSelectionListEnabled(false)
-                .withTextColor(ContextCompat.getColor(activity, R.color.material_drawer_primary_text))
-                .addProfiles(
-                        new ProfileDrawerItem().withName("IvanS").withEmail("dev.ivansem@gmail.com")
-                );
-        return accountHeaderBuilder.build();
-    }
+    public static final int ID_CATEGORIES_ITEM = 1;
 
     public static Drawer buildDrawerMenu(final AbstractToolbarActivity activity, Toolbar toolbar) {
-        CategoriesDrawerClickListener categoriesClickListener = new CategoriesDrawerClickListener(activity);
         DrawerBuilder builder = new DrawerBuilder(activity)
                 .withToolbar(toolbar);
-
-        //position of selected point
-        Integer activePosition = activity.getMenuPosition();
-        if (activePosition > 0) {
-                builder.withSelectedItemByPosition(activePosition);
-        }
 
         if (logged) { //if you logged
             builder.withAccountHeader(getAccountHeaderLogged(activity));
@@ -52,8 +36,6 @@ public class DrawerMenuManager {
             builder.withHeader(R.layout.drawer_header_unlogged)
                     .withOnDrawerListener(new AuthHeaderDrawerClickListener(activity));
         }
-
-        builder.withTranslucentNavigationBarProgrammatically(true);
 
         builder.addDrawerItems(
                 new PrimaryDrawerItem().withName("Friends").withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
@@ -73,14 +55,42 @@ public class DrawerMenuManager {
                     }
                 }),
                 new DividerDrawerItem(),
-                new PrimaryDrawerItem().withName("Best categories").withSubItems(
-                        new SecondaryDrawerItem().withName("all").withOnDrawerItemClickListener(categoriesClickListener),
-                        new SecondaryDrawerItem().withName("from friends").withOnDrawerItemClickListener(categoriesClickListener),
-                        new SecondaryDrawerItem().withName("first").withOnDrawerItemClickListener(categoriesClickListener),
-                        new SecondaryDrawerItem().withName("second").withOnDrawerItemClickListener(categoriesClickListener)
-                ).withIsExpanded(true).withSelectable(false)
-
+                new PrimaryDrawerItem().withName("Best categories").withSelectable(false).withIdentifier(ID_CATEGORIES_ITEM) //subitems setted later
         );
         return builder.build();
     }
+
+    public static void setCategoriesSubItems(AbstractToolbarActivity activity, String[] categories) {
+        Drawer drawer = activity.getDrawer();
+        CategoriesDrawerClickListener categoriesClickListener = new CategoriesDrawerClickListener(activity);
+
+        IDrawerItem[] subItems = new IDrawerItem[categories.length];
+        int iter = 0;
+        for (String category : categories) {
+            SecondaryDrawerItem item = new SecondaryDrawerItem().withName(category).withOnDrawerItemClickListener(categoriesClickListener);
+            subItems[iter] = item;
+            iter++;
+        }
+
+        PrimaryDrawerItem categoriesItem = (PrimaryDrawerItem) drawer.getDrawerItem(DrawerMenuManager.ID_CATEGORIES_ITEM);
+        categoriesItem.withSubItems(subItems);
+        if (activity instanceof ListActivity) {
+            Log.d("myapp", "set is expanded");
+//            categoriesItem.withIsExpanded(false);
+        }
+    }
+
+    private static AccountHeader getAccountHeaderLogged(Activity activity) {
+        AccountHeaderBuilder accountHeaderBuilder = new AccountHeaderBuilder()
+                .withActivity(activity)
+                .withHeaderBackground(R.drawable.menu_header)
+                .withSelectionListEnabled(false)
+                .withTextColor(ContextCompat.getColor(activity, R.color.material_drawer_primary_text))
+                .addProfiles(
+                        new ProfileDrawerItem().withName("IvanS").withEmail("dev.ivansem@gmail.com")
+                );
+        return accountHeaderBuilder.build();
+    }
+
+
 }

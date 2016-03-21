@@ -7,11 +7,11 @@
     <!--<include layout="@layout/mToolbar" android:id="@+id/list_toolbar_container"/>-->
 
     <TextView
-        android:id="@+id/list_text_view"
-        android:text="@string/app_name"
+        android:id="@+id/list_category_name"
+        android:text="@string/list_default_category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/font_size_xxlarge"
+        android:textSize="@dimen/font_size_large"
         android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
