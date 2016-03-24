@@ -4,8 +4,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.dbtest.ivan.app.activity.AbstractToolbarActivity;
+
 public class CategoryManager {
-    public static final int POSITION_OF_FIRST = 5;
     private static String[] bestCategories = {"all", "from friends", "first", "second"}; //get from db
 
     @NonNull
@@ -15,8 +16,9 @@ public class CategoryManager {
 
     @Nullable
     public static String getCategoryByPosition(int position) {
-        if (POSITION_OF_FIRST <= position && position < POSITION_OF_FIRST + bestCategories.length) {
-            return bestCategories[position - POSITION_OF_FIRST];
+        if (AbstractToolbarActivity.MENU_FIRST_CATEGORY_POSITION <= position &&
+                position < AbstractToolbarActivity.MENU_FIRST_CATEGORY_POSITION + bestCategories.length) {
+            return bestCategories[position - AbstractToolbarActivity.MENU_FIRST_CATEGORY_POSITION];
         } else {
             Log.e("myapp", "No category with position : " + position);
             return null;

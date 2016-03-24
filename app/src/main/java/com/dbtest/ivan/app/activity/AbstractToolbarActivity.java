@@ -15,6 +15,8 @@ import com.dbtest.ivan.app.model.CategoryManager;
 import com.mikepenz.materialdrawer.Drawer;
 
 public abstract class AbstractToolbarActivity extends AppCompatActivity {
+    public static final int MENU_FIRST_CATEGORY_POSITION = 4; //for DrawerMenuManager позиция, начиная с которой категории вставляются
+
     protected Toolbar mToolbar;
     protected RelativeLayout mLayout;
     protected Drawer mDrawer;
@@ -62,8 +64,13 @@ public abstract class AbstractToolbarActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+//        PrimaryDrawerItem drawerItem = (PrimaryDrawerItem) mDrawer.getDrawerItem(DrawerMenuManager.ID_CATEGORIES_ITEM);
+//        if (this instanceof ListActivity) {
+//            drawerItem.withSetSelected(true);
+//        } else {
+//            drawerItem.withSetSelected(false);
+//        }
+
         mDrawer.setSelectionAtPosition(getMenuPosition());
     }
-
-
 }
