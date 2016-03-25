@@ -18,6 +18,9 @@
         <activity android:name=".activity.SignUpActivity" />
         <activity android:name=".activity.FriendsActivity" />
         <activity android:name=".activity.SettingsActivity" />
+
+        <service android:name=".services.intent.SignInIntentService"/>
+        <service android:name=".services.intent.SignUpIntentService"/>
     </application>
 
 </manifest>

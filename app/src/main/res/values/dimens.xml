@@ -12,4 +12,7 @@
     <dimen name="font_size_large">20sp</dimen>
     <dimen name="font_size_xlarge">28sp</dimen>
     <dimen name="font_size_xxlarge">36sp</dimen>
+
+    <dimen name="sign_inputs_width">259dp</dimen>
+    <dimen name="sign_label_width">100dp</dimen>
 </resources>

@@ -12,4 +12,16 @@
     <string name="h_unlogged_btn_signup">Sign Up</string>
     <string name="title_activity_azaza">AzazaActivity</string>
     <string name="list_default_category">all</string>
+    <string name="signin_lo">all</string>
+
+
+    <string name="email_hint">your.email@email.com</string>
+    <string name="password_hint">password</string>
+    <string name="username_hint">your name</string>
+    <string name="repeat_pass_hint">repeat password</string>
+
+    <string name="signin_button_submit">Sign in</string>
+    <string name="signup_submit">Register</string>
+
+
 </resources>
