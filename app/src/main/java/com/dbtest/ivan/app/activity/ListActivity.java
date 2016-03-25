@@ -19,7 +19,7 @@ import com.dbtest.ivan.app.model.CategoryManager;
 import com.dbtest.ivan.app.utils.ExtrasCodes;
 
 public class ListActivity extends AbstractToolbarActivity {
-    private int mMenuLastPosition = 5;
+    private int mMenuLastPosition = 4;
 
     @NonNull
     @Override
@@ -48,12 +48,6 @@ public class ListActivity extends AbstractToolbarActivity {
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        mDrawer.setSelectionAtPosition(mMenuLastPosition);
-    }
-
     public void setMenuLastPosition(int mMenuLastPosition) {
         this.mMenuLastPosition = mMenuLastPosition;
     }
@@ -61,11 +55,10 @@ public class ListActivity extends AbstractToolbarActivity {
     public void renderList(int position) {
         String checkedCategory = CategoryManager.getCategoryByPosition(position);
         TextView textView = (TextView) findViewById(R.id.list_category_name);
-        if (checkedCategory != null) {
-            textView.setText(checkedCategory);
-        } else {
-            textView.setText("not found view by position");
-        }
+
         Log.d("myapp", "rendered list of category : " + checkedCategory);
+        if (textView != null) {
+            textView.setText(checkedCategory);
+        }
     }
 }

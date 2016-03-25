@@ -19,7 +19,7 @@ public final class CategoriesDrawerClickListener implements Drawer.OnDrawerItemC
 
     @Override
     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-        Log.d("myapp", "sub item click, position : " + position);
+        Log.d("myapp", "category click, position : " + position);
         drawerItem.withSetSelected(true);
         if ((activity instanceof ListActivity)) {
             ((ListActivity)activity).renderList(position);
