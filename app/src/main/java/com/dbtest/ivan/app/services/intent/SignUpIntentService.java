@@ -38,7 +38,7 @@ public class SignUpIntentService extends IntentService {
         try {
             Response<User> userResponse = userCall.execute();
             System.out.println(userResponse.headers().toMultimap().toString());
-            Log.d(SignUpIntentService.class.toString(), userResponse.body().getId() != null ? userResponse.body().getId().toString() : userResponse.body().getEmail());
+            Log.d("myapp " + SignUpIntentService.class.toString(), userResponse.body().getId().toString());
         } catch (IOException e) {
             e.printStackTrace();
         }

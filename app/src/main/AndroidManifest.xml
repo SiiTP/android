@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.dbtest.ivan.app" >
-    <uses-permission android:name="android.permission.INTERNET"/>
+    package="com.dbtest.ivan.app">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
-        <activity android:name=".activity.ListActivity" >
+        android:theme="@style/AppTheme">
+        <activity android:name=".activity.ListActivity">
             <intent-filter>
-                <action android:name="ANDROID.INTENT.ACTION.MAIN" />
+                <action android:name="android.intent.action.main" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -18,8 +20,10 @@
         <activity android:name=".activity.FriendsActivity" />
         <activity android:name=".activity.SettingsActivity" />
 
-        <service android:name=".services.intent.SignInIntentService"/>
-        <service android:name=".services.intent.SignUpIntentService"/>
+        <service android:name=".services.intent.SignInIntentService" />
+        <service android:name=".services.intent.SignUpIntentService" />
+
+        <activity android:name=".activity.DetailReminderActivity"></activity>
     </application>
 
 </manifest>

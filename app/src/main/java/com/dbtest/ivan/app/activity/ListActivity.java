@@ -12,6 +12,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.dbtest.ivan.app.R;
@@ -36,7 +38,7 @@ public class ListActivity extends AbstractToolbarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         if (intent != null) {
             int gettedPosition = intent.getIntExtra(ExtrasCodes.ACTIVE_MENU_POSITION_CODE, mMenuLastPosition);
             if (mMenuLastPosition != gettedPosition) {
@@ -45,6 +47,16 @@ public class ListActivity extends AbstractToolbarActivity {
             }
             Log.d("myapp", "position from extra : " + mMenuLastPosition);
             mDrawer.setSelectionAtPosition(mMenuLastPosition);
+        }
+        Button add =(Button) findViewById(R.id.list_add_reminder);
+        if (add != null) {
+            add.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent1 = new Intent(ListActivity.this,DetailReminderActivity.class);
+                    startActivity(intent1);
+                }
+            });
         }
     }
 
