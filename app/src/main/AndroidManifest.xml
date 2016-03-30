@@ -10,7 +10,6 @@
         <activity android:name=".activity.ListActivity" >
             <intent-filter>
                 <action android:name="ANDROID.INTENT.ACTION.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
