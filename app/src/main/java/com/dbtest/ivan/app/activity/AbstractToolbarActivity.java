@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.dbtest.ivan.app.R;
-import com.dbtest.ivan.app.drawer_menu.DrawerMenuManager;
+import com.dbtest.ivan.app.activity.drawer_menu.DrawerMenuManager;
 import com.dbtest.ivan.app.model.CategoryManager;
 import com.mikepenz.materialdrawer.Drawer;
 

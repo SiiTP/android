@@ -63,11 +63,17 @@ public class SignInIntentService extends IntentService {
         Call<User> callUser = authApi.login(user);
         try {
             Response<User> userResponse = callUser.execute();
-            Log.d(SignUpIntentService.class.toString(), userResponse.headers().toMultimap().toString());
-            Log.d(SignUpIntentService.class.toString(),userResponse.body().getId() != null? userResponse.body().getId().toString() : "WTF?");
-            List<String> cookies = userResponse.headers().toMultimap().get("Set-Cookie");
-            String session = CookieExtractor.getCookie(cookies.get(0), SESSION_COOKIE_NAME);
-            Log.d(SignUpIntentService.class.toString(),session);
+            Log.d("myapp " + SignUpIntentService.class.toString(), userResponse.headers().toMultimap().toString());
+            Log.d("myapp " + SignUpIntentService.class.toString(),userResponse.body().getId() != null? userResponse.body().getId().toString() : "WTF?");
+            String session = null;
+            if(userResponse.body().getId() != -1) {
+                List<String> cookies = userResponse.headers().toMultimap().get("Set-Cookie");
+                session = CookieExtractor.getCookie(cookies.get(0), SESSION_COOKIE_NAME);
+                Log.d("myapp " + SignUpIntentService.class.toString(),session);
+            }else{
+                Log.d("myapp " + SignUpIntentService.class.toString(), "failure login");
+            }
+
             //todo sendbroadcast intent with session & user data??!?!
         } catch (IOException e) {
             e.printStackTrace();
