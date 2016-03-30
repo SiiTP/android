@@ -30,25 +30,25 @@ public class SignInIntentService extends IntentService {
 
     @Override
     public void onDestroy() {
-        Log.d(SignInIntentService.class.toString(),"Destroyed()");
+//        Log.d(SignInIntentService.class.toString(),"Destroyed()");
         super.onDestroy();
     }
 
     @Override
     public void onCreate() {
-        Log.d(SignInIntentService.class.toString(),"Created()");
+//        Log.d(SignInIntentService.class.toString(),"Created()");
         super.onCreate();
     }
 
     @Override
     public void onStart(Intent intent, int startId) {
-        Log.d(SignInIntentService.class.toString(),"Started()");
+//        Log.d(SignInIntentService.class.toString(),"Started()");
         super.onStart(intent, startId);
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.d(SignInIntentService.class.toString(),"StartCommand()");
+//        Log.d(SignInIntentService.class.toString(),"StartCommand()");
         return super.onStartCommand(intent, flags, startId);
     }
 

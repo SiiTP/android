@@ -2,6 +2,7 @@ package com.dbtest.ivan.app.activity;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,12 +13,14 @@ import com.dbtest.ivan.app.logic.entities.Category;
 import com.dbtest.ivan.app.logic.entities.Reminder;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.stmt.Where;
 
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 public class DetailReminderActivity extends AbstractToolbarActivity {
+
 
     @NonNull
     @Override
@@ -59,6 +62,11 @@ public class DetailReminderActivity extends AbstractToolbarActivity {
                         reminder.setCategory(category);
                         reminder.setReminderTime(new SimpleDateFormat("yyyyMMdd").parse(time));
                         reminderDao.create(reminder);
+
+                        Where<Reminder, Long> reminderLongQueryBuilder = reminderDao.queryBuilder().where().eq("author", author);
+                        Reminder get = reminderLongQueryBuilder.queryForFirst();
+                        categoryDao.refresh(get.getCategory());
+                        Log.d("myapp " + DetailReminderActivity.class.toString(), get != null ? get.getText() + ' ' + get.getCategory().getName(): "wtf?");
                     } catch (SQLException e) {
                         e.printStackTrace();
                     } catch (ParseException e) {
@@ -67,5 +75,11 @@ public class DetailReminderActivity extends AbstractToolbarActivity {
                 }
             });
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        OpenHelperManager.releaseHelper();
+        super.onDestroy();
     }
 }

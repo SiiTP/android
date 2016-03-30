@@ -13,14 +13,13 @@ import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
 import java.sql.SQLException;
-import java.util.List;
 
 /**
  * Created by ivan on 30.03.16.
  */
 public class OrmHelper extends OrmLiteSqliteOpenHelper {
     public static final String DB_NAME = "friend_reminder";
-    public static final int DB_VERSION = 1;
+    public static final int DB_VERSION = 3;
     public OrmHelper(Context context){
         super(context,DB_NAME,null,DB_VERSION, R.raw.ormlite_config);
     }
@@ -29,9 +28,8 @@ public class OrmHelper extends OrmLiteSqliteOpenHelper {
     public void onCreate(SQLiteDatabase database, ConnectionSource connectionSource) {
         try {
             Log.d("myapp " + OrmHelper.class.toString(), "Creating "+DB_NAME +" database V: "+DB_VERSION);
-            TableUtils.clearTable(connectionSource, Reminder.class);
-            TableUtils.clearTable(connectionSource, Category.class);
-            List<String> list = TableUtils.getCreateTableStatements(connectionSource,Reminder.class);
+            TableUtils.createTable(connectionSource, Reminder.class);
+            TableUtils.createTable(connectionSource, Category.class);
         } catch (SQLException e) {
             e.printStackTrace();
         }
