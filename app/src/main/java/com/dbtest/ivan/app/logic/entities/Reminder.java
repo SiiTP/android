@@ -1,15 +1,22 @@
 package com.dbtest.ivan.app.logic.entities;
 
+import android.util.Log;
+
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by ivan on 27.03.16.
  */
 @DatabaseTable(tableName = "reminder")
 public class Reminder {
+    public static final String REMINDER_TIME_FORMAT = "dd:MM:yyyy HH:mm";
+
     @DatabaseField(generatedId = true)
     private Long id;
     @DatabaseField(canBeNull = false)
@@ -23,6 +30,21 @@ public class Reminder {
     @DatabaseField(columnName = "is_synced",defaultValue = "false")
     private Boolean isSynced;
 
+    public Reminder() {
+
+    }
+
+    public Reminder(String date, String text) {
+        this.text = text;
+        try {
+            this.reminderTime = new SimpleDateFormat(REMINDER_TIME_FORMAT, Locale.US).parse(date);
+        } catch (ParseException e) {
+            Log.e("myapp " + this.getClass(), "date was not parsed");
+            this.reminderTime = new Date();
+        }
+
+    }
+
     public String getAuthor() {
         return author;
     }
@@ -33,6 +55,10 @@ public class Reminder {
 
     public Date getReminderTime() {
         return reminderTime;
+    }
+
+    public String getStringReminderTime() {
+        return new SimpleDateFormat(REMINDER_TIME_FORMAT, Locale.US).format(reminderTime);
     }
 
     public void setReminderTime(Date reminderTime) {

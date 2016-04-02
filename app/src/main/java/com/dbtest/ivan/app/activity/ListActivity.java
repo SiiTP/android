@@ -1,7 +1,5 @@
-//TODO Что должно быть в gitignore?
-//TODO 1 меню на все активити? метод build в navbaractivity
-//TODO drawer странное поведение onOpen onClose
 //TODO buzz шины
+//TODO softReference cache
 
 //TODO ResultReceiver???
 
@@ -17,10 +15,11 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.dbtest.ivan.app.R;
+import com.dbtest.ivan.app.fragment.ReminderListFragment;
 import com.dbtest.ivan.app.model.CategoryManager;
 import com.dbtest.ivan.app.utils.ExtrasCodes;
 
-public class ListActivity extends AbstractToolbarActivity {
+public class ListActivity extends AbstractToolbarActivity implements ReminderListFragment.OnItemSelectedListener {
     private int mMenuLastPosition = 4;
 
     @NonNull
@@ -43,11 +42,18 @@ public class ListActivity extends AbstractToolbarActivity {
             int gettedPosition = intent.getIntExtra(ExtrasCodes.ACTIVE_MENU_POSITION_CODE, mMenuLastPosition);
             if (mMenuLastPosition != gettedPosition) {
                 mMenuLastPosition = gettedPosition;
-                renderList(mMenuLastPosition);
             }
+            renderList(mMenuLastPosition);
             Log.d("myapp", "position from extra : " + mMenuLastPosition);
             mDrawer.setSelectionAtPosition(mMenuLastPosition);
         }
+
+//        FragmentManager fragmentManager = getFragmentManager();
+//        FragmentTransaction transaction = fragmentManager.beginTransaction();
+//        ReminderListFragment fragment = new ReminderListFragment();
+//        transaction.add(R.id.list_reminders, fragment);
+//        transaction.commit();
+
         Button add =(Button) findViewById(R.id.list_add_reminder);
         if (add != null) {
             add.setOnClickListener(new View.OnClickListener() {
@@ -72,5 +78,10 @@ public class ListActivity extends AbstractToolbarActivity {
         if (textView != null) {
             textView.setText(checkedCategory);
         }
+    }
+
+    @Override
+    public void onReminderSelected(int position) {
+        Log.d("myapp", "reminder selected");
     }
 }

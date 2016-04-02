@@ -14,6 +14,13 @@
         android:textSize="@dimen/font_size_large"
         android:layout_centerHorizontal="true" />
 
+    <fragment
+        android:id="@+id/list_reminders"
+        class="com.dbtest.ivan.app.fragment.ReminderListFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/list_category_name"/>
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
