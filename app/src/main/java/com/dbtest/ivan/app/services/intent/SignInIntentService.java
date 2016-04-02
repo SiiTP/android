@@ -8,7 +8,7 @@ import android.util.Log;
 import com.dbtest.ivan.app.activity.SignInActivity;
 import com.dbtest.ivan.app.logic.RetrofitFactory;
 import com.dbtest.ivan.app.logic.api.AuthApi;
-import com.dbtest.ivan.app.logic.entities.User;
+import com.dbtest.ivan.app.logic.db.entities.User;
 import com.dbtest.ivan.app.utils.network.CookieExtractor;
 
 import java.io.IOException;
@@ -30,25 +30,25 @@ public class SignInIntentService extends IntentService {
 
     @Override
     public void onDestroy() {
-        Log.d(SignInIntentService.class.toString(),"Destroyed()");
+//        Log.d(SignInIntentService.class.toString(),"Destroyed()");
         super.onDestroy();
     }
 
     @Override
     public void onCreate() {
-        Log.d(SignInIntentService.class.toString(),"Created()");
+//        Log.d(SignInIntentService.class.toString(),"Created()");
         super.onCreate();
     }
 
     @Override
     public void onStart(Intent intent, int startId) {
-        Log.d(SignInIntentService.class.toString(),"Started()");
+//        Log.d(SignInIntentService.class.toString(),"Started()");
         super.onStart(intent, startId);
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.d(SignInIntentService.class.toString(),"StartCommand()");
+//        Log.d(SignInIntentService.class.toString(),"StartCommand()");
         return super.onStartCommand(intent, flags, startId);
     }
 

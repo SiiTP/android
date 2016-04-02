@@ -1,6 +1,6 @@
 package com.dbtest.ivan.app.logic.api;
 
-import com.dbtest.ivan.app.logic.entities.User;
+import com.dbtest.ivan.app.logic.db.entities.User;
 
 import retrofit2.Call;
 import retrofit2.http.Body;

@@ -1,4 +1,4 @@
-package com.dbtest.ivan.app.logic.entities;
+package com.dbtest.ivan.app.logic.db.entities;
 
 /**
  * Created by ivan on 26.03.16.

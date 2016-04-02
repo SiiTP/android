@@ -1,6 +1,8 @@
-package com.dbtest.ivan.app.logic.entities;
+package com.dbtest.ivan.app.logic.db.entities;
 
+import com.j256.ormlite.dao.ForeignCollection;
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
 /**
@@ -10,10 +12,13 @@ import com.j256.ormlite.table.DatabaseTable;
 public class Category {
     @DatabaseField(generatedId = true)
     private Long id;
-    @DatabaseField
+    @DatabaseField(unique = true)
     private String name;
     @DatabaseField
     private String picture;
+
+    @ForeignCollectionField
+    private ForeignCollection<Reminder> reminders;
     public Long getId() {
         return id;
     }
@@ -36,5 +41,13 @@ public class Category {
 
     public void setPicture(String picture) {
         this.picture = picture;
+    }
+
+    public ForeignCollection<Reminder> getReminders() {
+        return reminders;
+    }
+
+    public void setReminders(ForeignCollection<Reminder> reminders) {
+        this.reminders = reminders;
     }
 }

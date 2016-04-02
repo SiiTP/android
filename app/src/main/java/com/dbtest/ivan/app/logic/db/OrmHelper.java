@@ -5,22 +5,21 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.dbtest.ivan.app.R;
-import com.dbtest.ivan.app.logic.entities.Category;
-import com.dbtest.ivan.app.logic.entities.Reminder;
+import com.dbtest.ivan.app.logic.db.entities.Category;
+import com.dbtest.ivan.app.logic.db.entities.Reminder;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
 import java.sql.SQLException;
-import java.util.List;
 
 /**
  * Created by ivan on 30.03.16.
  */
 public class OrmHelper extends OrmLiteSqliteOpenHelper {
     public static final String DB_NAME = "friend_reminder";
-    public static final int DB_VERSION = 1;
+    public static final int DB_VERSION = 7;
     public OrmHelper(Context context){
         super(context,DB_NAME,null,DB_VERSION, R.raw.ormlite_config);
     }
@@ -29,9 +28,8 @@ public class OrmHelper extends OrmLiteSqliteOpenHelper {
     public void onCreate(SQLiteDatabase database, ConnectionSource connectionSource) {
         try {
             Log.d("myapp " + OrmHelper.class.toString(), "Creating "+DB_NAME +" database V: "+DB_VERSION);
-            TableUtils.clearTable(connectionSource, Reminder.class);
-            TableUtils.clearTable(connectionSource, Category.class);
-            List<String> list = TableUtils.getCreateTableStatements(connectionSource,Reminder.class);
+            TableUtils.createTable(connectionSource, Reminder.class);
+            TableUtils.createTable(connectionSource, Category.class);
         } catch (SQLException e) {
             e.printStackTrace();
         }
