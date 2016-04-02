@@ -1,4 +1,4 @@
-package com.dbtest.ivan.app.logic.entities;
+package com.dbtest.ivan.app.logic.db.entities;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
@@ -18,7 +18,7 @@ public class Reminder {
     private Date reminderTime;
     @DatabaseField
     private String text;
-    @DatabaseField(foreign = true)
+    @DatabaseField(foreign = true,foreignAutoRefresh = true)
     private Category category;
     @DatabaseField(columnName = "is_synced",defaultValue = "false")
     private Boolean isSynced;

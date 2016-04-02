@@ -5,8 +5,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.dbtest.ivan.app.R;
-import com.dbtest.ivan.app.logic.entities.Category;
-import com.dbtest.ivan.app.logic.entities.Reminder;
+import com.dbtest.ivan.app.logic.db.entities.Category;
+import com.dbtest.ivan.app.logic.db.entities.Reminder;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
@@ -19,7 +19,7 @@ import java.sql.SQLException;
  */
 public class OrmHelper extends OrmLiteSqliteOpenHelper {
     public static final String DB_NAME = "friend_reminder";
-    public static final int DB_VERSION = 3;
+    public static final int DB_VERSION = 7;
     public OrmHelper(Context context){
         super(context,DB_NAME,null,DB_VERSION, R.raw.ormlite_config);
     }

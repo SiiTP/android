@@ -8,7 +8,7 @@ import android.util.Log;
 import com.dbtest.ivan.app.activity.SignInActivity;
 import com.dbtest.ivan.app.logic.RetrofitFactory;
 import com.dbtest.ivan.app.logic.api.AuthApi;
-import com.dbtest.ivan.app.logic.entities.User;
+import com.dbtest.ivan.app.logic.db.entities.User;
 import com.dbtest.ivan.app.utils.network.CookieExtractor;
 
 import java.io.IOException;
