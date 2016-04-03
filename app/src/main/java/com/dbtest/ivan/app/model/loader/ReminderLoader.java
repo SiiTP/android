@@ -24,6 +24,11 @@ public class ReminderLoader extends AsyncTaskLoader<ArrayList<Reminder>> {
     @Override
     public ArrayList<Reminder> loadInBackground() {
         Dao<Reminder, Long> reminderDao = mOrmHelper.getReminderDao();
+        try {
+            reminderDao.create(new Reminder("11.11.2012 10:11", "from db")); //todo delete this
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         List<Reminder> reminders = null;
         try {
             reminders = reminderDao.queryForAll();

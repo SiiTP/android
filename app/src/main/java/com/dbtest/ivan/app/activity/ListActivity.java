@@ -6,9 +6,7 @@
 
 package com.dbtest.ivan.app.activity;
 
-import android.app.LoaderManager;
 import android.content.Intent;
-import android.content.Loader;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -18,12 +16,8 @@ import android.widget.TextView;
 
 import com.dbtest.ivan.app.R;
 import com.dbtest.ivan.app.fragment.ReminderListFragment;
-import com.dbtest.ivan.app.logic.db.entities.Reminder;
 import com.dbtest.ivan.app.model.CategoryManager;
-import com.dbtest.ivan.app.model.loader.ReminderLoader;
 import com.dbtest.ivan.app.utils.ExtrasCodes;
-
-import java.util.ArrayList;
 
 public class ListActivity extends AbstractToolbarActivity
                           implements ReminderListFragment.OnItemSelectedListener {
@@ -91,6 +85,4 @@ public class ListActivity extends AbstractToolbarActivity
     public void onReminderSelected(int position) {
         Log.d("myapp", "reminder selected");
     }
-
-
 }
