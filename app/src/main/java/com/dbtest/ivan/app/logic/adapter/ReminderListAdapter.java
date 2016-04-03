@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.dbtest.ivan.app.R;
-import com.dbtest.ivan.app.logic.entities.Reminder;
+import com.dbtest.ivan.app.logic.db.entities.Reminder;
 
 public class ReminderListAdapter extends ArrayAdapter<Reminder> {
 
