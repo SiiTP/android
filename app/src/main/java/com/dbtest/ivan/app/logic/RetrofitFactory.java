@@ -22,7 +22,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitFactory {
     private static final String BASE_URL ="http://10.0.3.2:8080";//todo add from resources
     private static String JSESSION_ID = null;
-    public static String SESSION_COOKIE_NAME = "JSESSIONID";
+    public static final String SESSION_COOKIE_NAME = "JSESSIONID";
     public static final String SESSION_STORAGE_NAME = "sessionStorage";
     public static Retrofit getInstance(){
         OkHttpClient.Builder okBuiler = new OkHttpClient.Builder();

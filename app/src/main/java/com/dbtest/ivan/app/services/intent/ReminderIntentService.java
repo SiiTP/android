@@ -102,7 +102,7 @@ public class ReminderIntentService extends IntentService {
             }
 
             Response<Reminder> response = request.execute();
-            if(response.body().getId() != null) {
+            if(response.body() != null && response.body().getId() != null) {
                 Log.d("myapp", String.valueOf(response.body().getId()) + response.body().getText());
                 reminder.setIsSynced(true);
                 reminderDao.update(reminder);
@@ -110,7 +110,6 @@ public class ReminderIntentService extends IntentService {
         } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
-
         OpenHelperManager.releaseHelper();
     }
     @Nullable

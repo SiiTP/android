@@ -44,7 +44,7 @@ public class DetailReminderActivity extends AbstractToolbarActivity {
                     bundle.putString(ReminderIntentService.TEXT, text);
                     bundle.putString(ReminderIntentService.CATEGORY, categoryName);
                     bundle.putLong(ReminderIntentService.ID_USER, 0L);
-                    bundle.putLong(ReminderIntentService.ID, 4L);
+                    bundle.putLong(ReminderIntentService.ID, -1L);
                     Intent intent = new Intent(DetailReminderActivity.this,ReminderIntentService.class);
                     intent.putExtras(bundle);
                     startService(intent);
