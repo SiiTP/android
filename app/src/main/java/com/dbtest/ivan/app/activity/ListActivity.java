@@ -20,8 +20,10 @@ import com.dbtest.ivan.app.fragment.ReminderListFragment;
 import com.dbtest.ivan.app.logic.RetrofitFactory;
 import com.dbtest.ivan.app.model.CategoryManager;
 import com.dbtest.ivan.app.utils.ExtrasCodes;
+import com.j256.ormlite.android.apptools.OpenHelperManager;
 
-public class ListActivity extends AbstractToolbarActivity implements ReminderListFragment.OnItemSelectedListener {
+public class ListActivity extends AbstractToolbarActivity
+                          implements ReminderListFragment.OnItemSelectedListener {
     private int mMenuLastPosition = 4;
 
     @NonNull
@@ -69,6 +71,11 @@ public class ListActivity extends AbstractToolbarActivity implements ReminderLis
                 }
             });
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        OpenHelperManager.releaseHelper();
     }
 
     public void setMenuLastPosition(int mMenuLastPosition) {

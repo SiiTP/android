@@ -15,7 +15,7 @@ import java.util.Locale;
  */
 @DatabaseTable(tableName = "reminder")
 public class Reminder {
-    public static final String REMINDER_TIME_FORMAT = "dd:MM:yyyy HH:mm";
+    public static final String REMINDER_TIME_FORMAT = "dd.MM.yyyy HH:mm";
 
     @DatabaseField(generatedId = true)
     private Long id;
