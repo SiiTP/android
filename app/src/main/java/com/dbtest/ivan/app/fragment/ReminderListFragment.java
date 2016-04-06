@@ -37,6 +37,7 @@ public class ReminderListFragment extends ListFragment implements LoaderManager.
 
 
         mLoader = (ReminderLoader) getLoaderManager().initLoader(ReminderLoader.LOADER_REMINDER_ID, null, this);
+        Log.d("myapp", "forceload");
         mLoader.forceLoad();
         return super.onCreateView(inflater, container, savedInstanceState);
     }

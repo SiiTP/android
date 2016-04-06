@@ -24,7 +24,7 @@ public class ReminderListAdapter extends ArrayAdapter<Reminder> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Log.d("myapp", "adapter get view on position : " + position);
+        Log.v("myapp", "adapter get view on position : " + position);
         View reminderRow = convertView;
         Reminder reminderItem = getItem(position);
         if (convertView == null) {

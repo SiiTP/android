@@ -2,6 +2,7 @@ package com.dbtest.ivan.app.model.loader;
 
 import android.content.AsyncTaskLoader;
 import android.content.Context;
+import android.util.Log;
 
 import com.dbtest.ivan.app.logic.db.OrmHelper;
 import com.dbtest.ivan.app.logic.db.entities.Reminder;
@@ -23,9 +24,13 @@ public class ReminderLoader extends AsyncTaskLoader<ArrayList<Reminder>> {
 
     @Override
     public ArrayList<Reminder> loadInBackground() {
+        Log.d("myapp", "reminder loader do in background");
         Dao<Reminder, Long> reminderDao = mOrmHelper.getReminderDao();
         try {
-            reminderDao.create(new Reminder("11.11.2012 10:11", "from db")); //todo delete this
+            Reminder reminder = new Reminder("11.11.2012 10:11", "from db");
+            reminder.setAuthor("My");
+            reminderDao.create(reminder);//todo delete this
+            Log.d("myapp", "id of reminder : " + reminder.getId());
         } catch (SQLException e) {
             e.printStackTrace();
         }
