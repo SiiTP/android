@@ -1,14 +1,14 @@
 package com.dbtest.ivan.app.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.dbtest.ivan.app.R;
-import com.j256.ormlite.android.apptools.OpenHelperManager;
+import com.dbtest.ivan.app.services.intent.ReminderIntentService;
 
 public class DetailReminderActivity extends AbstractToolbarActivity {
 
@@ -29,7 +29,7 @@ public class DetailReminderActivity extends AbstractToolbarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Button insert = (Button) findViewById(R.id.details_add);
+        final Button insert = (Button) findViewById(R.id.details_add);
         if (insert != null) {
             insert.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -38,16 +38,26 @@ public class DetailReminderActivity extends AbstractToolbarActivity {
                     String time = ((EditText) findViewById(R.id.details_time)).getText().toString();
                     String text = ((EditText) findViewById(R.id.details_text)).getText().toString();
                     String categoryName = ((EditText) findViewById(R.id.details_category)).getText().toString();
-
-                    Log.d("myapp " + DetailReminderActivity.class.toString(), "got " + author + ' ' + time + ' ' + text + ' ' + categoryName);
+                    Bundle bundle = new Bundle();
+                    bundle.putString(ReminderIntentService.AUTHOR,author);
+                    bundle.putString(ReminderIntentService.TIME,time);
+                    bundle.putString(ReminderIntentService.TEXT, text);
+                    bundle.putString(ReminderIntentService.CATEGORY, categoryName);
+                    bundle.putLong(ReminderIntentService.ID_USER, 0L);
+                    bundle.putLong(ReminderIntentService.ID, 4L);
+                    Intent intent = new Intent(DetailReminderActivity.this,ReminderIntentService.class);
+                    intent.putExtras(bundle);
+                    startService(intent);
                 }
             });
+
+
+
         }
     }
 
     @Override
     protected void onDestroy() {
-        OpenHelperManager.releaseHelper();
         super.onDestroy();
     }
 }

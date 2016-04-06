@@ -7,6 +7,7 @@
 package com.dbtest.ivan.app.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 
 import com.dbtest.ivan.app.R;
 import com.dbtest.ivan.app.fragment.ReminderListFragment;
+import com.dbtest.ivan.app.logic.RetrofitFactory;
 import com.dbtest.ivan.app.model.CategoryManager;
 import com.dbtest.ivan.app.utils.ExtrasCodes;
 
@@ -36,6 +38,9 @@ public class ListActivity extends AbstractToolbarActivity implements ReminderLis
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SharedPreferences preferences = getSharedPreferences(RetrofitFactory.SESSION_STORAGE_NAME,0);
+        RetrofitFactory.setSession(preferences.getString(RetrofitFactory.SESSION_COOKIE_NAME, null));
+
         super.onCreate(savedInstanceState);
         final Intent intent = getIntent();
         if (intent != null) {

@@ -19,19 +19,40 @@ public class Reminder {
 
     @DatabaseField(generatedId = true)
     private Long id;
-    @DatabaseField(canBeNull = false)
+    @DatabaseField
     private String author;
     @DatabaseField(columnName = "reminder_time",canBeNull = false)
     private Date reminderTime;
     @DatabaseField
     private String text;
-    @DatabaseField(foreign = true,foreignAutoRefresh = true)
+    @DatabaseField(foreign = true,foreignAutoRefresh = false)
     private Category category;
     @DatabaseField(columnName = "is_synced",defaultValue = "false")
     private Boolean isSynced;
 
+    private Long friendId = 0L;
     public Reminder() {
 
+    }
+
+    public Reminder(Long id, String author, Date reminderTime, String text) {
+        this.id = id;
+        this.author = author;
+        this.reminderTime = reminderTime;
+        this.text = text;
+    }
+
+    public Reminder(Date reminderTime, String text) {
+        this.author = author;
+        this.reminderTime = reminderTime;
+        this.text = text;
+    }
+
+    public Reminder(String author, Date reminderTime, String text, Category category) {
+        this.author = author;
+        this.reminderTime = reminderTime;
+        this.text = text;
+        this.category = category;
     }
 
     public Reminder(String date, String text) {
@@ -95,5 +116,13 @@ public class Reminder {
 
     public void setIsSynced(Boolean isSynced) {
         this.isSynced = isSynced;
+    }
+
+    public Long getFriendId() {
+        return friendId;
+    }
+
+    public void setFriendId(Long friendId) {
+        this.friendId = friendId;
     }
 }

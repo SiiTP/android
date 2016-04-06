@@ -2,6 +2,7 @@ package com.dbtest.ivan.app.services.intent;
 
 import android.app.IntentService;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -21,12 +22,10 @@ import retrofit2.Response;
  * Created by ivan on 25.03.16.
  */
 public class SignInIntentService extends IntentService {
-
+    public static final String PREF_SESSION = "sessionPreference";
     public SignInIntentService() {
         super("SignInService");
     }
-
-    private static String SESSION_COOKIE_NAME = "JSESSIONID";
 
     @Override
     public void onDestroy() {
@@ -68,7 +67,10 @@ public class SignInIntentService extends IntentService {
             String session = null;
             if(userResponse.body().getId() != -1) {
                 List<String> cookies = userResponse.headers().toMultimap().get("Set-Cookie");
-                session = CookieExtractor.getCookie(cookies.get(0), SESSION_COOKIE_NAME);
+                session = CookieExtractor.getCookie(cookies.get(0), RetrofitFactory.SESSION_COOKIE_NAME);
+                RetrofitFactory.setSession(session);
+                SharedPreferences preferences = getSharedPreferences(RetrofitFactory.SESSION_STORAGE_NAME,0);
+                preferences.edit().putString(RetrofitFactory.SESSION_COOKIE_NAME,session).commit();
                 Log.d("myapp " + SignUpIntentService.class.toString(),session);
             }else{
                 Log.d("myapp " + SignUpIntentService.class.toString(), "failure login");

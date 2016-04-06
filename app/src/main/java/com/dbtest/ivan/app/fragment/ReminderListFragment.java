@@ -10,7 +10,7 @@ import android.widget.ListView;
 
 import com.dbtest.ivan.app.R;
 import com.dbtest.ivan.app.logic.adapter.ReminderListAdapter;
-import com.dbtest.ivan.app.logic.entities.Reminder;
+import com.dbtest.ivan.app.logic.db.entities.Reminder;
 
 public class ReminderListFragment extends ListFragment {
     private Reminder[] reminders = new Reminder[3];

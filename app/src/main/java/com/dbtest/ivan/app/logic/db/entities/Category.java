@@ -19,6 +19,16 @@ public class Category {
 
     @ForeignCollectionField
     private ForeignCollection<Reminder> reminders;
+
+    @DatabaseField(columnName = "is_synced",defaultValue = "false")
+    private Boolean isSynced;
+    public Category() {
+    }
+
+    public Category(String name) {
+        this.name = name;
+    }
+
     public Long getId() {
         return id;
     }
@@ -49,5 +59,13 @@ public class Category {
 
     public void setReminders(ForeignCollection<Reminder> reminders) {
         this.reminders = reminders;
+    }
+
+    public Boolean getIsSynced() {
+        return isSynced;
+    }
+
+    public void setIsSynced(Boolean isSynced) {
+        this.isSynced = isSynced;
     }
 }
