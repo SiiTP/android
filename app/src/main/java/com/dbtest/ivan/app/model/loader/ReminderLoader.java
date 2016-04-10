@@ -26,6 +26,7 @@ public class ReminderLoader extends AsyncTaskLoader<ArrayList<Reminder>> {
     public ArrayList<Reminder> loadInBackground() {
         Log.d("myapp", "reminder loader do in background");
         Dao<Reminder, Long> reminderDao = mOrmHelper.getReminderDao();
+
         List<Reminder> reminders = null;
         try {
             reminders = reminderDao.queryForAll();

@@ -12,8 +12,8 @@ import retrofit2.http.PUT;
  */
 public interface ReminderApi {
     @POST("/reminder")
-    Call<Reminder> postReminder(@Body Reminder reminder);
+    Call<Reminder> create(@Body Reminder reminder);
 
     @PUT("/reminder")
-    Call<Reminder> updateReminder(@Body Reminder reminder);
+    Call<Reminder> update(@Body Reminder reminder);
 }

@@ -3,12 +3,14 @@ package com.dbtest.ivan.app.services.intent;
 import android.app.IntentService;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.dbtest.ivan.app.activity.SignUpActivity;
 import com.dbtest.ivan.app.logic.RetrofitFactory;
 import com.dbtest.ivan.app.logic.api.AuthApi;
 import com.dbtest.ivan.app.logic.db.entities.User;
+import com.dbtest.ivan.app.receiver.CustomReceiver;
 
 import java.io.IOException;
 
@@ -39,9 +41,12 @@ public class SignUpIntentService extends IntentService {
             Response<User> userResponse = userCall.execute();
             System.out.println(userResponse.headers().toMultimap().toString());
             Log.d("myapp " + SignUpIntentService.class.toString(), userResponse.body().getId().toString());
+
+            Intent activityNotify = new Intent(CustomReceiver.WAITING_ACTION);
+            activityNotify.addCategory(Intent.CATEGORY_DEFAULT);
+            LocalBroadcastManager.getInstance(SignUpIntentService.this).sendBroadcast(activityNotify);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 }

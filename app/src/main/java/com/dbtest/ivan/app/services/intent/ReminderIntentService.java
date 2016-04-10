@@ -4,11 +4,7 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
-import com.dbtest.ivan.app.logic.RetrofitFactory;
-import com.dbtest.ivan.app.logic.api.CategoryApi;
-import com.dbtest.ivan.app.logic.api.ReminderApi;
 import com.dbtest.ivan.app.logic.db.OrmHelper;
 import com.dbtest.ivan.app.logic.db.entities.Category;
 import com.dbtest.ivan.app.logic.db.entities.Reminder;
@@ -21,10 +17,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Response;
-import retrofit2.Retrofit;
 
 /**
  * Created by ivan on 02.04.16.
@@ -50,26 +42,14 @@ public class ReminderIntentService extends IntentService {
         String time = bundle.getString(TIME);
         String categoryName = bundle.getString(CATEGORY);
         Date date = null;
-        try {
-            if(time != null && !time.isEmpty()) {
-                date = new SimpleDateFormat("yyyyMMdd").parse(time);
-            }
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
 
         OrmHelper helper = OpenHelperManager.getHelper(this, OrmHelper.class);
         Dao<Reminder,Long> reminderDao = helper.getReminderDao();
         Dao<Category,Long> categoryDao = helper.getCategoryDao();
         Reminder reminder;
-        Retrofit retrofit = RetrofitFactory.getInstance();
         try {
-            Category category = null;
-            if(idUser == 0) {//todo add const MY_REMINDER = 0 in activity/fragment
-                  category = getCategory(categoryDao, categoryName);
-                if(category == null){
-                    category = createCategory(categoryDao,categoryName);
-                }
+            if(time != null && !time.isEmpty()) {
+                date = new SimpleDateFormat("yyyyMMdd").parse(time);
             }
 
             if(id != -1){
@@ -83,34 +63,23 @@ public class ReminderIntentService extends IntentService {
             }else{
                 reminder = new Reminder(date,text);
             }
-            if(category != null){
-                reminder.setCategory(category);
+            Category category = getCategory(categoryDao, categoryName);
+            if(category == null){
+                category = createCategory(categoryDao,categoryName);
             }
-            ReminderApi reminderApi = retrofit.create(ReminderApi.class);
-            Call<Reminder> request;
+            reminder.setCategory(category);
             if(id != -1){
+                reminder.setIsSynced(false);
                 reminderDao.update(reminder);
-                request = reminderApi.updateReminder(reminder);
-            }else{
-                if(idUser != 0){
-                    reminder.setFriendId(idUser);
-                }else {
-                    reminder.setAuthor("ME");
-                    reminderDao.create(reminder);
-                }
-                request = reminderApi.postReminder(reminder);
+            } else {
+                reminder.setAuthor("ME");
+                reminderDao.create(reminder);
             }
-
-            Response<Reminder> response = request.execute();
-            if(response.body().getId() != null) {
-                Log.d("myapp", String.valueOf(response.body().getId()) + response.body().getText());
-                reminder.setIsSynced(true);
-                reminderDao.update(reminder);
-            }
-        } catch (SQLException | IOException e) {
+            Intent sync = new Intent(this,SynchronizeIntentService.class);
+            startService(sync);
+        } catch (SQLException | IOException | ParseException e) {
             e.printStackTrace();
         }
-
         OpenHelperManager.releaseHelper();
     }
     @Nullable
@@ -123,17 +92,9 @@ public class ReminderIntentService extends IntentService {
         return category;
     }
     private Category createCategory(Dao<Category,Long> dao,String categoryName) throws SQLException, IOException {
-        Retrofit retrofit = RetrofitFactory.getInstance();
         Category category;
         category = new Category(categoryName);
         dao.create(category);
-        CategoryApi categoryApi = retrofit.create(CategoryApi.class);
-        Call<Category> request = categoryApi.create(category);
-        Response<Category> response = request.execute();
-        if (response.body().getId() != null) {
-            category.setIsSynced(true);
-            dao.update(category);
-        }
         return category;
     }
 }

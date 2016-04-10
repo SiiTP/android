@@ -21,12 +21,11 @@ public class ReminderGsonAdapter extends TypeAdapter<Reminder> {
         }
         out.beginObject();
         out.name("text").value(value.getText());
-        out.name("time").value(value.getReminderTime().toString());
+        out.name("time").value(value.getReminderTime().getTime());
         out.name("idCategory").value(value.getCategory().getId());
         out.name("friendId").value(value.getFriendId());//todo rename mobileFriendId
         out.name("id").value(value.getId());//todo rename mobileId
         out.endObject();
-
     }
     @Override
     public Reminder read(JsonReader in) throws IOException {

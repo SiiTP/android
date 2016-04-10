@@ -1,5 +1,5 @@
 #
-# generated on 2016/04/03 09:39:01
+# generated on 2016/04/06 07:48:43
 #
 # --table-start--
 dataClass=com.dbtest.ivan.app.logic.db.entities.Category
@@ -38,7 +38,6 @@ generatedId=true
 # --field-end--
 # --field-start--
 fieldName=author
-canBeNull=false
 # --field-end--
 # --field-start--
 fieldName=reminderTime
@@ -51,6 +50,7 @@ fieldName=text
 # --field-start--
 fieldName=category
 foreign=true
+foreignAutoRefresh=true
 # --field-end--
 # --field-start--
 fieldName=isSynced

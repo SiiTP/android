@@ -4,12 +4,14 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.dbtest.ivan.app.activity.SignInActivity;
 import com.dbtest.ivan.app.logic.RetrofitFactory;
 import com.dbtest.ivan.app.logic.api.AuthApi;
 import com.dbtest.ivan.app.logic.db.entities.User;
+import com.dbtest.ivan.app.receiver.CustomReceiver;
 import com.dbtest.ivan.app.utils.network.CookieExtractor;
 
 import java.io.IOException;
@@ -72,10 +74,13 @@ public class SignInIntentService extends IntentService {
                 SharedPreferences preferences = getSharedPreferences(RetrofitFactory.SESSION_STORAGE_NAME,0);
                 preferences.edit().putString(RetrofitFactory.SESSION_COOKIE_NAME,session).commit();
                 Log.d("myapp " + SignUpIntentService.class.toString(),session);
+
             }else{
                 Log.d("myapp " + SignUpIntentService.class.toString(), "failure login");
             }
-
+            Intent activityNotify = new Intent(CustomReceiver.WAITING_ACTION);
+            activityNotify.addCategory(Intent.CATEGORY_DEFAULT);
+            LocalBroadcastManager.getInstance(SignInIntentService.this).sendBroadcast(activityNotify);
             //todo sendbroadcast intent with session & user data??!?!
         } catch (IOException e) {
             e.printStackTrace();
