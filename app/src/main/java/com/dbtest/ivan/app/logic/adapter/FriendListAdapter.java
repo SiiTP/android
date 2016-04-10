@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.dbtest.ivan.app.R;
-import com.dbtest.ivan.app.logic.db.entities.Friend;
+import com.dbtest.ivan.app.logic.db.entities.User;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.ViewHolder> {
 
-    private List<Friend> friendList;
+    private List<User> friendList;
     LayoutInflater layoutInflater;
 
     @Override
@@ -28,7 +28,7 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.name.setText(friendList.get(position).getName());
+        holder.name.setText(friendList.get(position).getUsername());
     }
 
     @Override
