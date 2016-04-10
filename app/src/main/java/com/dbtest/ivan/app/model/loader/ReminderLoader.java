@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReminderLoader extends AsyncTaskLoader<ArrayList<Reminder>> {
-    public static final int LOADER_REMINDER_ID = 1; //todo maybe should be in resources
 
     private OrmHelper mOrmHelper;
 

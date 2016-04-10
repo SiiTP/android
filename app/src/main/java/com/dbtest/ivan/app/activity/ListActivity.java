@@ -75,6 +75,7 @@ public class ListActivity extends AbstractToolbarActivity
 
     @Override
     protected void onDestroy() {
+        super.onDestroy();
         OpenHelperManager.releaseHelper();
     }
 

@@ -9,6 +9,7 @@ import com.dbtest.ivan.app.activity.AbstractToolbarActivity;
 public class CategoryManager {
     private static String[] bestCategories = {"all", "from friends", "first", "second"}; //get from db
 
+
     @NonNull
     public static String[] getBestCategories() {
         return bestCategories;
