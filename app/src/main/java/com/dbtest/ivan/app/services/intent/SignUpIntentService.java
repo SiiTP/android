@@ -42,11 +42,12 @@ public class SignUpIntentService extends IntentService {
             System.out.println(userResponse.headers().toMultimap().toString());
             Log.d("myapp " + SignUpIntentService.class.toString(), userResponse.body().getId().toString());
 
-            Intent activityNotify = new Intent(CustomReceiver.WAITING_ACTION);
-            activityNotify.addCategory(Intent.CATEGORY_DEFAULT);
-            LocalBroadcastManager.getInstance(SignUpIntentService.this).sendBroadcast(activityNotify);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
+        Intent activityNotify = new Intent(CustomReceiver.WAITING_ACTION);
+        activityNotify.addCategory(Intent.CATEGORY_DEFAULT);
+        LocalBroadcastManager.getInstance(SignUpIntentService.this).sendBroadcast(activityNotify);
     }
 }
