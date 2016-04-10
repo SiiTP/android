@@ -7,7 +7,7 @@ import android.util.Log;
 import com.dbtest.ivan.app.activity.AbstractToolbarActivity;
 
 public class CategoryManager {
-    private static String[] bestCategories = {"all", "from friends", "first", "second"}; //get from db
+    private static String[] bestCategories = {"all", "from friends"}; //get from db
 
 
     @NonNull

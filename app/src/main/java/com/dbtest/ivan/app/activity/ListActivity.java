@@ -24,7 +24,7 @@ import com.j256.ormlite.android.apptools.OpenHelperManager;
 
 public class ListActivity extends AbstractToolbarActivity
                           implements ReminderListFragment.OnItemSelectedListener {
-    private int mMenuLastPosition = 4;
+    private int mMenuLastPosition = 5;
 
     @NonNull
     @Override
@@ -54,12 +54,6 @@ public class ListActivity extends AbstractToolbarActivity
             Log.d("myapp", "position from extra : " + mMenuLastPosition);
             mDrawer.setSelectionAtPosition(mMenuLastPosition);
         }
-
-//        FragmentManager fragmentManager = getFragmentManager();
-//        FragmentTransaction transaction = fragmentManager.beginTransaction();
-//        ReminderListFragment fragment = new ReminderListFragment();
-//        transaction.add(R.id.list_reminders, fragment);
-//        transaction.commit();
 
         Button add =(Button) findViewById(R.id.list_add_reminder);
         if (add != null) {

@@ -21,12 +21,13 @@ import com.mikepenz.materialdrawer.Drawer;
 import java.util.ArrayList;
 
 public abstract class AbstractToolbarActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<ArrayList<Category>> {
-    public static final int MENU_FIRST_CATEGORY_POSITION = 4; //for DrawerMenuManager позиция, начиная с которой категории вставляются
+    private static final String CURRENT_POSITION_KEY = "currentPosition";
+    public static final int MENU_FIRST_CATEGORY_POSITION = 5; //for DrawerMenuManager позиция, начиная с которой категории вставляются
+
+    protected CategoryLoader mCategoryLoader;
+    protected String[] mBestCategories;
 
     protected Toolbar mToolbar;
-    protected CategoryLoader mCategoryLoader;
-    protected String[] bestCategories;
-
     protected RelativeLayout mLayout;
     protected Drawer mDrawer;
     @NonNull
@@ -56,7 +57,7 @@ public abstract class AbstractToolbarActivity extends AppCompatActivity implemen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Log.v("myapp", "abstract activity on create");
         mLayout = (RelativeLayout) getLayoutInflater().inflate(R.layout.activity_abstract, null);
         View addingView = getLayoutInflater().inflate(getBodyResId(), null);
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
@@ -69,12 +70,23 @@ public abstract class AbstractToolbarActivity extends AppCompatActivity implemen
         mLayout.addView(addingView);
         setContentView(mLayout);
         setToolbarAndMenu();
+        if (savedInstanceState != null) {
+            int currentPosition = savedInstanceState.getInt(CURRENT_POSITION_KEY);
+            Log.d("myapp " + this.getClass().toString(), "current position from saved instance state");
+            //TODO set current position
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         mDrawer.setSelectionAtPosition(getMenuPosition());
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(CURRENT_POSITION_KEY, getMenuPosition());
     }
 
     @Override
@@ -95,12 +107,13 @@ public abstract class AbstractToolbarActivity extends AppCompatActivity implemen
         Category category2 = new Category("friends");
         data.add(category);
         data.add(category2);
-        this.bestCategories = Category.toStringArray(data);
-        DrawerMenuManager.setCategoriesSubItems(this, bestCategories);
+        this.mBestCategories = Category.toStringArray(data);
+        DrawerMenuManager.setCategoriesSubItems(this, mBestCategories);
+        mDrawer.setSelectionAtPosition(getMenuPosition());
     }
 
     @Override
     public void onLoaderReset(Loader<ArrayList<Category>> loader) {
-        this.bestCategories = null;
+        this.mBestCategories = null;
     }
 }
