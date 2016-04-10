@@ -25,7 +25,6 @@ public class FriendsActivity extends AbstractToolbarActivity {
     private static final int MENU_POSITION = 1;
     private RecyclerView recyclerView;
     private FriendListAdapter friendListAdapter;
-    private List<Friend> exampleList = new ArrayList<>();
     private FriendsWebRequestReceiver receiver;
 
     @NonNull
@@ -49,12 +48,9 @@ public class FriendsActivity extends AbstractToolbarActivity {
         receiver = new FriendsWebRequestReceiver();
         registerReceiver(receiver, filter);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        friendListAdapter = new FriendListAdapter(this, exampleList);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-        recyclerView.setAdapter(friendListAdapter);
-        prepareFriendData();
         Intent intent = new Intent(FriendsActivity.this, FriendIntentService.class);
         startService(intent);
     }
@@ -65,11 +61,11 @@ public class FriendsActivity extends AbstractToolbarActivity {
         super.onDestroy();
     }
 
-    private void prepareFriendData() {
-        for (int i = 0; i < 10; i++) {
-            Friend friend = new Friend(i, "aaa@mail.ru" + i, "Eee" + i, 123132, 1);
+    public void setFriendListAdapter(List<Friend> friendsList) {
+        if (friendListAdapter == null) {
+            friendListAdapter = new FriendListAdapter(this, friendsList);
 
-            exampleList.add(friend);
+            recyclerView.setAdapter(friendListAdapter);
         }
     }
 
@@ -79,6 +75,8 @@ public class FriendsActivity extends AbstractToolbarActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             List<Friend> friendList = intent.getParcelableArrayListExtra("FriendsList");
+
+            ((FriendsActivity) context).setFriendListAdapter(friendList);
         }
     }
 }
