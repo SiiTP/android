@@ -95,6 +95,12 @@ public class SignUpActivity extends AbstractToolbarActivity implements WaitingAc
     }
 
     @Override
+    protected void onPause() {
+        if(receiver != null) LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
+        super.onPause();
+    }
+
+    @Override
     public void setWaiting(boolean isWaiting) {
         if(isWaiting){
             bar.setVisibility(View.VISIBLE);

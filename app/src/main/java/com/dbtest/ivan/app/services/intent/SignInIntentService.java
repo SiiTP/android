@@ -78,13 +78,14 @@ public class SignInIntentService extends IntentService {
             }else{
                 Log.d("myapp " + SignUpIntentService.class.toString(), "failure login");
             }
-            Intent activityNotify = new Intent(CustomReceiver.WAITING_ACTION);
-            activityNotify.addCategory(Intent.CATEGORY_DEFAULT);
-            LocalBroadcastManager.getInstance(SignInIntentService.this).sendBroadcast(activityNotify);
+
             //todo sendbroadcast intent with session & user data??!?!
         } catch (IOException e) {
             e.printStackTrace();
         }
+        Intent activityNotify = new Intent(CustomReceiver.WAITING_ACTION);
+        activityNotify.addCategory(Intent.CATEGORY_DEFAULT);
+        LocalBroadcastManager.getInstance(SignInIntentService.this).sendBroadcast(activityNotify);
 
     }
 }
