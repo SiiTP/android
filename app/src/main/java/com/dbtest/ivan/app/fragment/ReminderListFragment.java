@@ -63,8 +63,8 @@ public class ReminderListFragment extends ListFragment implements LoaderManager.
 
     @Override
     public void onLoadFinished(Loader<ArrayList<Reminder>> loader, ArrayList<Reminder> data) {
-        data.add(new Reminder("11.11.2012 10:11", "from code 1")); //todo delete this
-        data.add(new Reminder("11.11.2011 11:11", "from code 2"));
+//        data.add(new Reminder("11.11.2012 10:11", "from code 1")); //todo delete this
+//        data.add(new Reminder("11.11.2011 11:11", "from code 2"));
         mAdapter.addAll(data);
     }
 

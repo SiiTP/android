@@ -21,7 +21,7 @@ public class Category {
     private ForeignCollection<Reminder> reminders;
 
     @DatabaseField(columnName = "is_synced",defaultValue = "false")
-    private Boolean isSynced;
+    private Boolean isSynced = false;
     public Category() {
     }
 

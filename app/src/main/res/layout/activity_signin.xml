@@ -1,54 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    android:gravity="center_vertical" android:layout_marginBottom="75dp">
+   android:layout_marginBottom="75dp">
 
+    <ProgressBar
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/signin_bar"
+        android:layout_marginTop="170dp"
+        android:layout_centerHorizontal="true" />
     <RelativeLayout
+        android:layout_marginTop="150dp"
         android:id="@+id/rel_signin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal">
-        <!--<TextView
-            android:id="@+id/email_label"
-            android:layout_width="@dimen/sign_label_width"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:text="@string/email_label"
-            android:layout_marginTop="10dp"
-            android:textSize="@dimen/font_size_large"
-        />
-        <EditText
-            android:layout_width="@dimen/sign_inputs_width"
-            android:layout_height="wrap_content"
-            android:inputType="textEmailAddress"
-            android:hint="@string/email_hint"
-            android:id="@+id/signin_email"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="0dp"
-            android:layout_toRightOf="@id/email_label"
-            android:layout_toEndOf="@id/email_label"
-        />
-        <TextView
-            android:id="@+id/password_label"
-            android:layout_width="@dimen/sign_label_width"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:text="@string/password_label"
-            android:layout_marginTop="10dp"
-            android:textSize="@dimen/font_size_large"
-            android:layout_below="@id/signin_email"
-        />
-        <EditText
-            android:layout_width="@dimen/sign_inputs_width"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:id="@+id/signin_password"
-            android:layout_toRightOf="@id/password_label"
-            android:layout_toEndOf="@id/password_label"
-            android:layout_below="@id/signin_email"
-            android:hint="password"/>-->
         <EditText
             android:layout_width="@dimen/sign_inputs_width"
             android:layout_height="wrap_content"
@@ -66,6 +33,7 @@
             android:id="@+id/signin_password"
             android:layout_below="@id/signin_email"
             android:hint="@string/password_hint"/>
+
     </RelativeLayout>
         <Button
             android:layout_width="wrap_content"

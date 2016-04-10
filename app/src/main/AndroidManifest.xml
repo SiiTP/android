@@ -12,6 +12,7 @@
         <activity android:name=".activity.ListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.main" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -24,7 +25,9 @@
         <service android:name=".services.intent.SignUpIntentService" />
         <service android:name=".services.intent.ReminderIntentService" />
 
-        <activity android:name=".activity.DetailReminderActivity"></activity>
+        <activity android:name=".activity.DetailReminderActivity" />
+
+        <service android:name=".services.intent.SynchronizeIntentService"/>
     </application>
 
 </manifest>
