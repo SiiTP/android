@@ -5,10 +5,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.dbtest.ivan.app.R;
 import com.dbtest.ivan.app.model.Friend;
@@ -38,7 +36,12 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.name.setText(friendList.get(position).getName());
+        holder.name.setText(friendList.get(position).getEmail());
+        holder.deleteBtn.setOnClickListener((v) -> {
+            friendList.remove(position);
+            notifyItemRemoved(position);
+            notifyItemRangeChanged(position, friendList.size());
+        });
     }
 
     @Override
@@ -55,7 +58,6 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
 
             name = (TextView) itemView.findViewById(R.id.friend_name);
             deleteBtn = (ImageButton) itemView.findViewById(R.id.delete_btn);
-            deleteBtn.setOnClickListener((v) -> Toast.makeText(activity, "DeleteClick", Toast.LENGTH_SHORT).show());
         }
     }
 }

@@ -1,13 +1,17 @@
 package com.dbtest.ivan.app.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.LinearLayout;
 
 import com.dbtest.ivan.app.R;
 import com.dbtest.ivan.app.logic.adapter.FriendListAdapter;
+import com.dbtest.ivan.app.logic.divider.DividerItemDecoration;
 import com.dbtest.ivan.app.model.Friend;
+import com.dbtest.ivan.app.services.intent.FriendIntentService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,8 +43,11 @@ public class FriendsActivity extends AbstractToolbarActivity {
         friendListAdapter = new FriendListAdapter(this, exampleList);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(friendListAdapter);
         prepareFriendData();
+        Intent intent = new Intent(FriendsActivity.this, FriendIntentService.class);
+        startService(intent);
     }
 
     private void prepareFriendData() {
