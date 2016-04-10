@@ -10,7 +10,8 @@ public class Friend {
     private long invitionTime;
     private int state;
 
-    public Friend(String email, String name, long invitionTime, int state) {
+    public Friend(long id, String email, String name, long invitionTime, int state) {
+        this.id = id;
         this.email = email;
         this.name = name;
         this.invitionTime = invitionTime;
@@ -41,7 +42,7 @@ public class Friend {
         this.name = name;
     }
 
-    public String getname() {
+    public String getName() {
         return name;
     }
 
