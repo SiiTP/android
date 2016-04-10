@@ -2,13 +2,16 @@ package com.dbtest.ivan.app.services.intent;
 
 import android.app.IntentService;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 
+import com.dbtest.ivan.app.activity.FriendsActivity;
 import com.dbtest.ivan.app.logic.RetrofitFactory;
 import com.dbtest.ivan.app.logic.api.FriendApi;
 import com.dbtest.ivan.app.model.Friend;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -53,9 +56,15 @@ public class FriendIntentService extends IntentService {
         Call<List<Friend>> callFriends = friendApi.getFriends();
         try {
             List<Friend> friendList = callFriends.execute().body();
-            Log.d("Friend", friendList.toString());
+            Intent broadcastIntent = new Intent();
+
+            broadcastIntent.setAction(FriendsActivity.FriendsWebRequestReceiver.PROCESS_RESPONSE);
+            broadcastIntent.addCategory(Intent.CATEGORY_DEFAULT);
+            broadcastIntent.putParcelableArrayListExtra("FriendsList", (ArrayList<Friend>) friendList);
+            sendBroadcast(broadcastIntent);
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 }

@@ -1,10 +1,14 @@
 package com.dbtest.ivan.app.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.LinearLayout;
 
 import com.dbtest.ivan.app.R;
@@ -22,6 +26,7 @@ public class FriendsActivity extends AbstractToolbarActivity {
     private RecyclerView recyclerView;
     private FriendListAdapter friendListAdapter;
     private List<Friend> exampleList = new ArrayList<>();
+    private FriendsWebRequestReceiver receiver;
 
     @NonNull
     @Override
@@ -39,6 +44,10 @@ public class FriendsActivity extends AbstractToolbarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        IntentFilter filter = new IntentFilter(FriendsWebRequestReceiver.PROCESS_RESPONSE);
+        filter.addCategory(Intent.CATEGORY_DEFAULT);
+        receiver = new FriendsWebRequestReceiver();
+        registerReceiver(receiver, filter);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         friendListAdapter = new FriendListAdapter(this, exampleList);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
@@ -50,11 +59,26 @@ public class FriendsActivity extends AbstractToolbarActivity {
         startService(intent);
     }
 
+    @Override
+    public void onDestroy() {
+        this.unregisterReceiver(receiver);
+        super.onDestroy();
+    }
+
     private void prepareFriendData() {
         for (int i = 0; i < 10; i++) {
             Friend friend = new Friend(i, "aaa@mail.ru" + i, "Eee" + i, 123132, 1);
 
             exampleList.add(friend);
+        }
+    }
+
+    public class FriendsWebRequestReceiver extends BroadcastReceiver {
+
+        public static final String PROCESS_RESPONSE = "com.dbtest.ivan.intent.action.PROCESS_RESPONSE";
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            List<Friend> friendList = intent.getParcelableArrayListExtra("FriendsList");
         }
     }
 }
