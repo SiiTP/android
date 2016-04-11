@@ -2,23 +2,10 @@ package com.dbtest.ivan.app.services.intent;
 
 import android.app.IntentService;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 
-import com.dbtest.ivan.app.activity.SignInActivity;
-import com.dbtest.ivan.app.logic.RetrofitFactory;
-import com.dbtest.ivan.app.logic.api.AuthApi;
-import com.dbtest.ivan.app.logic.db.entities.User;
 import com.dbtest.ivan.app.receiver.CustomReceiver;
-import com.dbtest.ivan.app.utils.network.CookieExtractor;
-
-import java.io.IOException;
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Response;
 
 /**
  * Created by ivan on 25.03.16.
@@ -52,10 +39,10 @@ public class SignInIntentService extends IntentService {
 //        Log.d(SignInIntentService.class.toString(),"StartCommand()");
         return super.onStartCommand(intent, flags, startId);
     }
-
+    static int i = 0;
     @Override
     protected void onHandleIntent(Intent intent) {
-        Bundle bundle = intent.getExtras();
+       /* Bundle bundle = intent.getExtras();
         String email = bundle.getString(SignInActivity.SIGNIN_EMAIL);
         String password = bundle.getString(SignInActivity.SIGNIN_PASSWORD);
 
@@ -82,9 +69,22 @@ public class SignInIntentService extends IntentService {
             //todo sendbroadcast intent with session & user data??!?!
         } catch (IOException e) {
             e.printStackTrace();
+        }*/
+        try {
+            Thread.sleep(2500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
+        Bundle bundle = new Bundle();
+        if(i % 2 == 0){
+            bundle.putString(CustomReceiver.RESULT,"Successful login");
+        }else{
+            bundle.putString(CustomReceiver.RESULT,"Wrong email or password");
+        }
+        i++;
         Intent activityNotify = new Intent(CustomReceiver.WAITING_ACTION);
         activityNotify.addCategory(Intent.CATEGORY_DEFAULT);
+        activityNotify.putExtras(bundle);
         LocalBroadcastManager.getInstance(SignInIntentService.this).sendBroadcast(activityNotify);
 
     }

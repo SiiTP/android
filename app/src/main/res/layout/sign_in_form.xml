@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rel_signin"
+    style="@style/SignRelativeLayout"
+    android:padding="10dp"
+    android:paddingTop="15dp"
+    >
+    <android.support.design.widget.TextInputLayout
+        style="@style/SupportInput"
+        android:id="@+id/signin_email_supp">
+        <EditText
+            style="@style/TextInput.EmailInput"
+            android:id="@+id/signin_email"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="0dp"
+            android:layout_alignParentTop="true"
+            />
+    </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
+        style="@style/SupportInput"
+        android:id="@+id/signin_password_supp"
+        android:layout_below="@id/signin_email_supp">
+        <EditText
+            style="@style/TextInput.PasswordInput"
+            android:id="@+id/signin_password"
+            android:hint="@string/password_hint"
+            />
+    </android.support.design.widget.TextInputLayout>
+    <Button
+        style="@style/SignSubmit"
+        android:text="@string/signin_button_submit"
+        android:id="@+id/signin_submit"
+        android:layout_below="@id/signin_password_supp"/>
+</RelativeLayout>

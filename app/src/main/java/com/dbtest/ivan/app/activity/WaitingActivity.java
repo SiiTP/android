@@ -5,4 +5,5 @@ package com.dbtest.ivan.app.activity;
  */
 public interface WaitingActivity {
     void setWaiting(boolean isWaiting);
+    void notifyResult(String result);
 }

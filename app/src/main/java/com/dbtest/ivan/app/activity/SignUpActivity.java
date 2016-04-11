@@ -3,13 +3,16 @@ package com.dbtest.ivan.app.activity;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.dbtest.ivan.app.R;
 import com.dbtest.ivan.app.receiver.CustomReceiver;
@@ -29,6 +32,8 @@ public class SignUpActivity extends AbstractToolbarActivity implements WaitingAc
     private Button submit;
     private BroadcastReceiver receiver;
     private ProgressBar bar;
+    private Snackbar snackbar;
+
     @NonNull
     @Override
     protected Integer getBodyResId() {
@@ -119,5 +124,16 @@ public class SignUpActivity extends AbstractToolbarActivity implements WaitingAc
         repeatPasswordView.setFocusableInTouchMode(isWaiting);
         submit.setEnabled(isWaiting);
         submit.setFocusableInTouchMode(isWaiting);
+    }
+
+    @Override
+    public void notifyResult(String result) {
+        if(snackbar == null) {
+            snackbar = Snackbar.make(findViewById(R.id.signup_layout), "None", Snackbar.LENGTH_LONG);
+            TextView textView = (TextView)snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.WHITE);
+        }
+        snackbar.setText(result);
+        snackbar.show();
     }
 }
