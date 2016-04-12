@@ -36,7 +36,7 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.name.setText(friendList.get(position).getEmail());
+        holder.name.setText(friendList.get(position).getName());
         holder.deleteBtn.setOnClickListener((v) -> {
             friendList.remove(position);
             notifyItemRemoved(position);
