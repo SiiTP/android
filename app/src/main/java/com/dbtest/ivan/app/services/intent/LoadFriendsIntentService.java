@@ -20,10 +20,10 @@ import retrofit2.Response;
 /**
  * Created by said on 10.04.16.
  */
-public class FriendIntentService extends IntentService {
+public class LoadFriendsIntentService extends IntentService {
 
-    public FriendIntentService() {
-        super("FriendService");
+    public LoadFriendsIntentService() {
+        super("LoadFriendsService");
     }
 
     @Override

@@ -23,7 +23,8 @@
         <service android:name=".services.intent.SignInIntentService" />
         <service android:name=".services.intent.SignUpIntentService" />
         <service android:name=".services.intent.ReminderIntentService" />
-        <service android:name=".services.intent.FriendIntentService" />
+        <service android:name=".services.intent.LoadFriendsIntentService" />
+        <service android:name=".services.intent.RemoveFriendIntentService" />
 
         <activity android:name=".activity.DetailReminderActivity" />
 

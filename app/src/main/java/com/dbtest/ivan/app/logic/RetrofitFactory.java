@@ -20,7 +20,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by ivan on 26.03.16.
  */
 public class RetrofitFactory {
-    private static final String BASE_URL ="http://localhost:8080";//todo add from resources
+    private static final String BASE_URL ="http://10.0.3.2:8080";//todo add from resources
     private static String JSESSION_ID = null;
     public static final String SESSION_COOKIE_NAME = "JSESSIONID";
     public static final String SESSION_STORAGE_NAME = "sessionStorage";

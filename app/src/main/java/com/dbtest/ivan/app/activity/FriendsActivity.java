@@ -8,16 +8,15 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.widget.LinearLayout;
+import android.view.View;
 
 import com.dbtest.ivan.app.R;
 import com.dbtest.ivan.app.logic.adapter.FriendListAdapter;
 import com.dbtest.ivan.app.logic.divider.DividerItemDecoration;
 import com.dbtest.ivan.app.model.Friend;
-import com.dbtest.ivan.app.services.intent.FriendIntentService;
+import com.dbtest.ivan.app.services.intent.LoadFriendsIntentService;
+import com.dbtest.ivan.app.services.intent.RemoveFriendIntentService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class FriendsActivity extends AbstractToolbarActivity {
@@ -51,14 +50,26 @@ public class FriendsActivity extends AbstractToolbarActivity {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-        Intent intent = new Intent(FriendsActivity.this, FriendIntentService.class);
+        Intent intent = new Intent(FriendsActivity.this, LoadFriendsIntentService.class);
         startService(intent);
     }
 
     @Override
     public void onDestroy() {
-        this.unregisterReceiver(receiver);
+        if (receiver != null) {
+            this.unregisterReceiver(receiver);
+        }
         super.onDestroy();
+    }
+
+    public void removeFriend(String friendEmail) {
+        Bundle bundle = new Bundle();
+
+        bundle.putString("email", friendEmail);
+        Intent intent = new Intent(FriendsActivity.this, RemoveFriendIntentService.class);
+
+        intent.putExtras(bundle);
+        startService(intent);
     }
 
     public void setFriendListAdapter(List<Friend> friendsList) {

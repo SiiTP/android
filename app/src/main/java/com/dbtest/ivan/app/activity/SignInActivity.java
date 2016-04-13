@@ -73,8 +73,6 @@ public class SignInActivity extends AbstractToolbarActivity implements WaitingAc
                     filter.addCategory(Intent.CATEGORY_DEFAULT);
                     receiver = new CustomReceiver(SignInActivity.this);
                     LocalBroadcastManager.getInstance(SignInActivity.this).registerReceiver(receiver, filter);
-
-
                 }
             });
         }
