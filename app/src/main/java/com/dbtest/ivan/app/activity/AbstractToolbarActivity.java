@@ -92,7 +92,6 @@ public abstract class AbstractToolbarActivity extends AppCompatActivity implemen
 
     @Override
     public void onLoadFinished(Loader<ArrayList<Category>> loader, ArrayList<Category> data) {
-        Log.d("myapp" + this.getClass().toString(), "category load finished : " + data.size());
         Category category = new Category("all");
         Category category2 = new Category("friends");
         data.add(category);
@@ -100,6 +99,7 @@ public abstract class AbstractToolbarActivity extends AppCompatActivity implemen
         mCategories = Category.toStringArray(data);
         DrawerMenuManager.setCategoriesSubItems(this, mCategories);
         mDrawer.setSelectionAtPosition(getMenuPosition());
+        Log.d("myapp" + this.getClass().toString(), "category load finished : " + data.size());
     }
 
     @Override
