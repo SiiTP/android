@@ -78,6 +78,10 @@ public abstract class AbstractToolbarActivity extends AppCompatActivity implemen
         mDrawer.setSelectionAtPosition(getMenuPosition());
     }
 
+    protected void afterCategoriesLoaded() {
+        DrawerMenuManager.setCategoriesSubItems(this, mCategories);
+        mDrawer.setSelectionAtPosition(getMenuPosition());
+    }
 
     @Override
     public Loader<ArrayList<Category>> onCreateLoader(int id, Bundle args) {
@@ -86,7 +90,6 @@ public abstract class AbstractToolbarActivity extends AppCompatActivity implemen
         } else {
             Log.e("myapp", "unexcept loader id not equal category loader");
         }
-
         return mCategoryLoader;
     }
 
@@ -97,8 +100,7 @@ public abstract class AbstractToolbarActivity extends AppCompatActivity implemen
         data.add(category);
         data.add(category2);
         mCategories = Category.toStringArray(data);
-        DrawerMenuManager.setCategoriesSubItems(this, mCategories);
-        mDrawer.setSelectionAtPosition(getMenuPosition());
+        afterCategoriesLoaded();
         Log.d("myapp" + this.getClass().toString(), "category load finished : " + data.size());
     }
 
