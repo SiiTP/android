@@ -41,7 +41,7 @@
         <item name="android:gravity">center_horizontal</item>
         <item name="android:layout_centerHorizontal">true</item>
     </style>
-    <style name="SignSubmit">
+    <style name="SignSubmit" parent="Base.Widget.AppCompat.Button.Borderless">
         <!--<item name="android:layout_width">@dimen/sign_inputs_width</item>-->
         <!--<item name="android:background">@color/app_accent</item>-->
         <!--<item name="android:textSize">@dimen/font_size_medium</item>-->

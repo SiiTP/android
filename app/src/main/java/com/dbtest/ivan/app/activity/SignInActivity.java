@@ -5,6 +5,7 @@ import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 import android.view.animation.AnimationUtils;
@@ -100,7 +101,7 @@ public class SignInActivity extends AbstractToolbarActivity implements WaitingAc
         }else{
             bar.startAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_out));
             bar.setVisibility(View.GONE);
-            submit.setTextColor(Color.parseColor("#FF5722"));//todo color accent app theme
+            submit.setTextColor(ContextCompat.getColor(this,R.color.app_accent));//todo color accent app theme
         }
         bar.getIndeterminateDrawable().setColorFilter(0xFFFF0000, android.graphics.PorterDuff.Mode.MULTIPLY);
         isWaiting = !isWaiting;
