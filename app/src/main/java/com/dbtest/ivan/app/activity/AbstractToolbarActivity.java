@@ -21,11 +21,10 @@ import com.mikepenz.materialdrawer.Drawer;
 import java.util.ArrayList;
 
 public abstract class AbstractToolbarActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<ArrayList<Category>> {
-    private static final String CURRENT_POSITION_KEY = "currentPosition";
     public static final int MENU_FIRST_CATEGORY_POSITION = 5; //for DrawerMenuManager позиция, начиная с которой категории вставляются
 
     protected CategoryLoader mCategoryLoader;
-    protected String[] mBestCategories;
+    protected String[] mCategories;
 
     protected Toolbar mToolbar;
     protected RelativeLayout mLayout;
@@ -69,25 +68,16 @@ public abstract class AbstractToolbarActivity extends AppCompatActivity implemen
 
         mLayout.addView(addingView);
         setContentView(mLayout);
+
         setToolbarAndMenu();
-        if (savedInstanceState != null) {
-            int currentPosition = savedInstanceState.getInt(CURRENT_POSITION_KEY);
-            Log.d("myapp " + this.getClass().toString(), "current position from saved instance state");
-            //TODO set current position
-        }
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onRestart() {
+        super.onRestart();
         mDrawer.setSelectionAtPosition(getMenuPosition());
     }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putInt(CURRENT_POSITION_KEY, getMenuPosition());
-    }
 
     @Override
     public Loader<ArrayList<Category>> onCreateLoader(int id, Bundle args) {
@@ -107,13 +97,13 @@ public abstract class AbstractToolbarActivity extends AppCompatActivity implemen
         Category category2 = new Category("friends");
         data.add(category);
         data.add(category2);
-        this.mBestCategories = Category.toStringArray(data);
-        DrawerMenuManager.setCategoriesSubItems(this, mBestCategories);
+        mCategories = Category.toStringArray(data);
+        DrawerMenuManager.setCategoriesSubItems(this, mCategories);
         mDrawer.setSelectionAtPosition(getMenuPosition());
     }
 
     @Override
     public void onLoaderReset(Loader<ArrayList<Category>> loader) {
-        this.mBestCategories = null;
+        this.mCategories = null;
     }
 }
