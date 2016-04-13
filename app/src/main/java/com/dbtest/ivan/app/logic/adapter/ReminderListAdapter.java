@@ -1,7 +1,6 @@
 package com.dbtest.ivan.app.logic.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +23,6 @@ public class ReminderListAdapter extends ArrayAdapter<Reminder> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Log.v("myapp", "adapter get view on position : " + position);
         View reminderRow = convertView;
         Reminder reminderItem = getItem(position);
         if (convertView == null) {
@@ -32,9 +30,11 @@ public class ReminderListAdapter extends ArrayAdapter<Reminder> {
         }
 
         TextView date = (TextView) reminderRow.findViewById(R.id.reminder_item_date);
+        TextView time = (TextView) reminderRow.findViewById(R.id.reminder_item_time);
         TextView text = (TextView) reminderRow.findViewById(R.id.reminder_item_text);
 
-        date.setText(reminderItem.getStringReminderTime());
+        date.setText(reminderItem.getStringReminderDate());
+        time.setText(reminderItem.getStringReminderTime());
         text.setText(reminderItem.getText());
 
         return reminderRow;

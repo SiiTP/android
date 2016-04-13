@@ -45,9 +45,6 @@ public abstract class AbstractToolbarActivity extends AppCompatActivity implemen
         if (mToolbar != null) {
             setSupportActionBar(mToolbar);
             mDrawer = DrawerMenuManager.buildDrawerMenu(this, mToolbar);
-            mCategoryLoader.forceLoad(); // загружем категории из базы
-//            DrawerMenuManager.setCategoriesSubItems(this, CategoryManager.getBestCategories());
-            Log.d("myapp", "categories installed");
         } else {
             Log.e("myapp", "no toolbar");
         }
@@ -70,6 +67,8 @@ public abstract class AbstractToolbarActivity extends AppCompatActivity implemen
         setContentView(mLayout);
 
         setToolbarAndMenu();
+        mCategoryLoader.forceLoad(); // загружем категории из базы
+        Log.d("myapp", "categories installed");
     }
 
     @Override

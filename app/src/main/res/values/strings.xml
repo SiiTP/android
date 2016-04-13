@@ -22,6 +22,7 @@
 
     <string name="signin_button_submit">Sign in</string>
     <string name="signup_submit">Register</string>
+    <string name="list_category_preheader">Category :&#160;</string>
 
 
 </resources>
