@@ -6,13 +6,13 @@ import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dbtest.ivan.app.R;
 import com.dbtest.ivan.app.receiver.CustomReceiver;
@@ -32,8 +32,7 @@ public class SignUpActivity extends AbstractToolbarActivity implements WaitingAc
     private Button submit;
     private BroadcastReceiver receiver;
     private ProgressBar bar;
-    private Snackbar snackbar;
-
+    private Toast toast;
     @NonNull
     @Override
     protected Integer getBodyResId() {
@@ -83,17 +82,17 @@ public class SignUpActivity extends AbstractToolbarActivity implements WaitingAc
                     Bundle bundle = new Bundle();
                     bundle.putString(SIGNUP_EMAIL,email);
                     bundle.putString(SIGNUP_PASS,pass);
-                    bundle.putString(SIGNUP_USERNAME,username);
+                    bundle.putString(SIGNUP_USERNAME, username);
 
                     IntentFilter filter = new IntentFilter(CustomReceiver.WAITING_ACTION);
                     filter.addCategory(Intent.CATEGORY_DEFAULT);
                     receiver = new CustomReceiver(SignUpActivity.this);
                     LocalBroadcastManager.getInstance(SignUpActivity.this).registerReceiver(receiver, filter);
-
                     Intent intent = new Intent(SignUpActivity.this, SignUpIntentService.class);
                     intent.putExtras(bundle);
                     startService(intent);
                     setWaiting(true);
+//                    submit.startAnimation(AnimationUtils.loadAnimation(SignUpActivity.this,R.anim.fade_out));
                 }
             });
         }
@@ -109,8 +108,12 @@ public class SignUpActivity extends AbstractToolbarActivity implements WaitingAc
     public void setWaiting(boolean isWaiting) {
         if(isWaiting){
             bar.setVisibility(View.VISIBLE);
+            bar.startAnimation(AnimationUtils.loadAnimation(this,R.anim.fade_in));
+            submit.setTextColor(Color.GRAY);
         }else{
+            bar.startAnimation(AnimationUtils.loadAnimation(this,R.anim.fade_out));
             bar.setVisibility(View.GONE);
+            submit.setTextColor(Color.parseColor("#FF5722"));
         }
         bar.getIndeterminateDrawable().setColorFilter(0xFFFF0000, android.graphics.PorterDuff.Mode.MULTIPLY);
         isWaiting = !isWaiting;
@@ -124,16 +127,20 @@ public class SignUpActivity extends AbstractToolbarActivity implements WaitingAc
         repeatPasswordView.setFocusableInTouchMode(isWaiting);
         submit.setEnabled(isWaiting);
         submit.setFocusableInTouchMode(isWaiting);
+
     }
 
     @Override
     public void notifyResult(String result) {
-        if(snackbar == null) {
-            snackbar = Snackbar.make(findViewById(R.id.signup_layout), "None", Snackbar.LENGTH_LONG);
-            TextView textView = (TextView)snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.WHITE);
+        if(toast == null) {
+            toast = Toast.makeText(SignUpActivity.this, "", Toast.LENGTH_LONG);
+//            snackbar = Snackbar.make(findViewById(R.id.signup_layout), "None", Snackbar.LENGTH_LONG);
+//            TextView textView = (TextView)snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
+//            textView.setTextColor(Color.WHITE);
         }
-        snackbar.setText(result);
-        snackbar.show();
+//        snackbar.setText(result);
+//        snackbar.show();
+        toast.setText(result);
+        toast.show();
     }
 }

@@ -18,6 +18,7 @@
             style="?android:attr/progressBarStyleLarge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/circ"
             android:id="@+id/signup_bar"
             android:layout_marginTop="170dp"
             android:elevation="5dp"

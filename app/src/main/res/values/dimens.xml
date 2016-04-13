@@ -15,4 +15,5 @@
 
     <dimen name="sign_inputs_width">259dp</dimen>
     <dimen name="sign_label_width">100dp</dimen>
+    <dimen name="sign_button_height">32dp</dimen>
 </resources>

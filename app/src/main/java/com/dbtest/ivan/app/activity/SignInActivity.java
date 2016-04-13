@@ -5,13 +5,13 @@ import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dbtest.ivan.app.R;
 import com.dbtest.ivan.app.receiver.CustomReceiver;
@@ -29,7 +29,7 @@ public class SignInActivity extends AbstractToolbarActivity implements WaitingAc
     private Button submit;
     private ProgressBar bar;
     private CustomReceiver receiver;
-    private Snackbar snackbar;
+    private Toast toast;
     @NonNull
     @Override
     protected Integer getBodyResId() {
@@ -93,10 +93,14 @@ public class SignInActivity extends AbstractToolbarActivity implements WaitingAc
 
     @Override
     public void setWaiting(boolean isWaiting) {
-        if(isWaiting) {
+        if(isWaiting){
             bar.setVisibility(View.VISIBLE);
+            bar.startAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in));
+            submit.setTextColor(Color.GRAY);
         }else{
+            bar.startAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_out));
             bar.setVisibility(View.GONE);
+            submit.setTextColor(Color.parseColor("#FF5722"));//todo color accent app theme
         }
         bar.getIndeterminateDrawable().setColorFilter(0xFFFF0000, android.graphics.PorterDuff.Mode.MULTIPLY);
         isWaiting = !isWaiting;
@@ -112,13 +116,16 @@ public class SignInActivity extends AbstractToolbarActivity implements WaitingAc
 
     @Override
     public void notifyResult(String result) {
-        if(snackbar == null) {
-            snackbar = Snackbar.make(findViewById(R.id.signin_layout), "None", Snackbar.LENGTH_LONG);
-            TextView textView = (TextView)snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.WHITE);
+        if(toast == null) {
+            toast = Toast.makeText(SignInActivity.this, "", Toast.LENGTH_LONG);
+//            snackbar = Snackbar.make(findViewById(R.id.signin_layout), "None", Snackbar.LENGTH_LONG);
+//            TextView textView = (TextView)snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
+//            textView.setTextColor(Color.WHITE);
         }
-        snackbar.setText(result);
-        snackbar.show();
+//        snackbar.setText(result);
+//        snackbar.show();
+        toast.setText(result);
+        toast.show();
     }
 
 }

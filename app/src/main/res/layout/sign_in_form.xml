@@ -30,5 +30,8 @@
         style="@style/SignSubmit"
         android:text="@string/signin_button_submit"
         android:id="@+id/signin_submit"
-        android:layout_below="@id/signin_password_supp"/>
+        android:layout_below="@id/signin_password_supp"
+        android:layout_alignEnd="@id/signin_password_supp"
+        android:layout_alignRight="@id/signin_password_supp"
+        />
 </RelativeLayout>
