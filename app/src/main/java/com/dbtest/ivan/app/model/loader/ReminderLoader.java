@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReminderLoader extends AsyncTaskLoader<ArrayList<Reminder>> {
-    public static final int LOADER_REMINDER_ID = 1; //todo maybe should be in resources
 
     private OrmHelper mOrmHelper;
 
@@ -26,14 +25,7 @@ public class ReminderLoader extends AsyncTaskLoader<ArrayList<Reminder>> {
     public ArrayList<Reminder> loadInBackground() {
         Log.d("myapp", "reminder loader do in background");
         Dao<Reminder, Long> reminderDao = mOrmHelper.getReminderDao();
-//        try {
-////            Reminder reminder = new Reminder("11.11.2012 10:11", "from db");
-////            reminder.setAuthor("My");
-////            reminderDao.create(reminder);//todo delete this
-////            Log.d("myapp", "id of reminder : " + reminder.getId());
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
+
         List<Reminder> reminders = null;
         try {
             reminders = reminderDao.queryForAll();

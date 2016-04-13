@@ -22,8 +22,8 @@ public final class CategoriesDrawerClickListener implements Drawer.OnDrawerItemC
         Log.d("myapp", "category click, position : " + position);
         drawerItem.withSetSelected(true);
         if ((activity instanceof ListActivity)) {
-            ((ListActivity)activity).renderList(position);
             ((ListActivity)activity).setMenuLastPosition(position);
+            ((ListActivity)activity).renderList();
         } else {
             Intent i = new Intent(activity, ListActivity.class);
             i.putExtra(ExtrasCodes.ACTIVE_MENU_POSITION_CODE, position);

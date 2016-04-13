@@ -16,6 +16,7 @@ import com.dbtest.ivan.app.logic.adapter.ReminderListAdapter;
 import com.dbtest.ivan.app.logic.db.entities.Reminder;
 
 import com.dbtest.ivan.app.model.loader.ReminderLoader;
+import com.dbtest.ivan.app.utils.ExtrasCodes;
 
 
 import java.util.ArrayList;
@@ -35,11 +36,9 @@ public class ReminderListFragment extends ListFragment implements LoaderManager.
         mAdapter = new ReminderListAdapter(inflater.getContext(),
                 R.layout.reminder_item, new ArrayList<Reminder>());
         setListAdapter(mAdapter);
-//        mLoader = getLoaderManager().initLoader(ReminderLoader.LOADER_REMINDER_ID, null, this);
 
-
-        mLoader = (ReminderLoader) getLoaderManager().initLoader(ReminderLoader.LOADER_REMINDER_ID, null, this);
-        Log.d("myapp", "forceload");
+        mLoader = (ReminderLoader) getLoaderManager().initLoader(ExtrasCodes.LOADER_REMINDER_ID, null, this);
+        Log.d("myapp", "reminder forceload on create fragment");
         mLoader.forceLoad();
         return super.onCreateView(inflater, container, savedInstanceState);
     }
@@ -53,7 +52,7 @@ public class ReminderListFragment extends ListFragment implements LoaderManager.
     @Override
     public Loader<ArrayList<Reminder>> onCreateLoader(int id, Bundle args) {
         ReminderLoader mLoader = null;
-        if (id == ReminderLoader.LOADER_REMINDER_ID) {
+        if (id == ExtrasCodes.LOADER_REMINDER_ID) {
             mLoader = new ReminderLoader(this.getActivity());
         } else {
             Log.e("myapp", "incorrect id of loader by it's creation");

@@ -5,6 +5,8 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.util.ArrayList;
+
 /**
  * Created by ivan on 27.03.16.
  */
@@ -67,5 +69,16 @@ public class Category {
 
     public void setIsSynced(Boolean isSynced) {
         this.isSynced = isSynced;
+    }
+
+    //для drawer menu
+    public static String[] toStringArray(ArrayList<Category> categories) {
+        String[] strCategories = new String[categories.size()];
+        int i = 0;
+        for (Category category : categories) {
+            strCategories[i] = category.getName();
+            i++;
+        }
+        return strCategories;
     }
 }
