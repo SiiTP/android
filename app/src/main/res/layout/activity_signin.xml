@@ -6,39 +6,19 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-       <include android:layout_marginTop="80dp"
+        <include android:layout_marginTop="80dp"
            android:layout_height="wrap_content"
            android:layout_width="wrap_content"
            android:layout_centerHorizontal="true"
            layout="@layout/sign_in_form"/>
-    <ProgressBar
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/circ"
-        android:id="@+id/signin_bar"
-        android:layout_marginTop="90dp"
-        android:elevation="5dp"
-        android:layout_centerHorizontal="true" />
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/circ"
+            android:id="@+id/signin_bar"
+            android:layout_marginTop="90dp"
+            android:elevation="5dp"
+            android:layout_centerHorizontal="true" />
     </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>
-
-<!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:id="@+id/signin_layout">
-
-
-       <include android:layout_marginTop="80dp"
-           android:layout_height="wrap_content"
-           android:layout_width="wrap_content"
-           android:layout_centerHorizontal="true"
-           layout="@layout/sign_in_form"/>
-    <ProgressBar
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/signin_bar"
-        android:layout_marginTop="90dp"
-        android:elevation="5dp"
-        android:layout_centerHorizontal="true" />
-</RelativeLayout>-->
