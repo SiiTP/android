@@ -1,22 +1,16 @@
 package com.dbtest.ivan.app.logic.adapter;
 
-import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.dbtest.ivan.app.R;
 import com.dbtest.ivan.app.activity.FriendsActivity;
 import com.dbtest.ivan.app.model.Friend;
-import com.dbtest.ivan.app.services.intent.LoadFriendsIntentService;
-import com.dbtest.ivan.app.services.intent.RemoveFriendIntentService;
 
 import java.util.List;
 
@@ -26,7 +20,6 @@ import java.util.List;
 public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.ViewHolder> {
 
     private List<Friend> friendList;
-    LayoutInflater layoutInflater;
     AppCompatActivity activity;
 
     public FriendListAdapter(AppCompatActivity activity, List<Friend> friendList) {
@@ -68,6 +61,7 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
         @Override
         public void onClick(View v) {
             int position = (int) v.getTag();
+
             ((FriendsActivity) activity).removeFriend(friendList.get(position).getEmail());
             friendList.remove(position);
             notifyItemRemoved(position);
