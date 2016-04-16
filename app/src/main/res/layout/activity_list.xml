@@ -4,23 +4,32 @@
     android:layout_height="match_parent"
     tools:context="com.dbtest.ivan.app.activity.ListActivity">
 
-    <!--<include layout="@layout/mToolbar" android:id="@+id/list_toolbar_container"/>-->
+    <RelativeLayout
+        style="@style/HeaderLargeContainer"
+        android:id="@+id/list_category_header">
 
-    <TextView
-        android:id="@+id/list_category_name"
-        android:text="@string/list_default_category"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/font_size_large"
-        android:layout_centerHorizontal="true" />
+            <!--<TextView-->
+                <!--style="@style/HeaderLargeText"-->
+                <!--android:text="@string/list_category_preheader"-->
+                <!--android:id="@+id/list_category_preheader"/>-->
 
+            <TextView
+                style="@style/HeaderLargeText"
+                android:id="@+id/list_category_name"
+                android:text="@string/list_default_category"
+                android:layout_alignParentTop="true"/>
+    </RelativeLayout>
     <fragment
         android:id="@+id/list_reminders"
         class="com.dbtest.ivan.app.fragment.ReminderListFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/list_category_name"/>
-
+        android:layout_marginLeft="@dimen/mrg_large"
+        android:layout_marginEnd="@dimen/mrg_large"
+        android:layout_marginRight="@dimen/mrg_large"
+        android:layout_marginStart="@dimen/mrg_large"
+        android:layout_below="@id/list_category_header"/>
+    
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

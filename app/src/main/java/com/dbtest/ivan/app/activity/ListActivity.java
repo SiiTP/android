@@ -48,11 +48,7 @@ public class ListActivity extends AbstractToolbarActivity
 
         final Intent intent = getIntent();
         if (intent != null) {
-            int gettedPosition = intent.getIntExtra(ExtrasCodes.ACTIVE_MENU_POSITION_CODE, mMenuLastPosition);
-            if (mMenuLastPosition != gettedPosition) {
-                mMenuLastPosition = gettedPosition;
-            }
-            renderList();
+            mMenuLastPosition = intent.getIntExtra(ExtrasCodes.ACTIVE_MENU_POSITION_CODE, mMenuLastPosition);
             Log.d("myapp", "position from extra : " + mMenuLastPosition);
         }
 
@@ -70,10 +66,8 @@ public class ListActivity extends AbstractToolbarActivity
             mCategories = savedInstanceState.getStringArray(CURRENT_CATEGORIES);
             mMenuLastPosition = savedInstanceState.getInt(CURRENT_POSITION_KEY);;
             Log.d("myapp " + this.getClass().toString(), "current position from saved instance state : " + mMenuLastPosition);
-            Log.d("myapp " + this.getClass().toString(), "render list, category from saved instance state");
-            renderList();
         }
-        mDrawer.setSelectionAtPosition(mMenuLastPosition);
+        mCategoryLoader.forceLoad();
     }
 
     @Override
@@ -83,10 +77,21 @@ public class ListActivity extends AbstractToolbarActivity
     }
 
     @Override
+    protected void afterCategoriesLoaded() {
+        super.afterCategoriesLoaded();
+        renderList();
+    }
+
+    @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt(CURRENT_POSITION_KEY, getMenuPosition());
         outState.putStringArray(CURRENT_CATEGORIES, mCategories);
+    }
+
+    @Override
+    public void onReminderSelected(int position) {
+        Log.d("myapp", "reminder selected");
     }
 
     public void setMenuLastPosition(int mMenuLastPosition) {
@@ -98,13 +103,8 @@ public class ListActivity extends AbstractToolbarActivity
         if (mCategories == null) {
             return;
         }
-        checkedCategory = mCategories[mMenuLastPosition - MENU_FIRST_CATEGORY_POSITION];
-
+        checkedCategory = getCheckedCategory();
         Log.d("myapp", "rendered list of category : " + checkedCategory);
-        Log.d("myapp", "index : " + mMenuLastPosition);
-        for (String c : mCategories) {
-            Log.d("myapp", "category : " + c);
-        }
         TextView textView = (TextView) findViewById(R.id.list_category_name);
         if (textView != null) {
             textView.setText(checkedCategory);
@@ -112,8 +112,7 @@ public class ListActivity extends AbstractToolbarActivity
         //TODO render
     }
 
-    @Override
-    public void onReminderSelected(int position) {
-        Log.d("myapp", "reminder selected");
+    private String getCheckedCategory() {
+        return  mCategories[mMenuLastPosition - MENU_FIRST_CATEGORY_POSITION];
     }
 }

@@ -45,9 +45,6 @@ public abstract class AbstractToolbarActivity extends AppCompatActivity implemen
         if (mToolbar != null) {
             setSupportActionBar(mToolbar);
             mDrawer = DrawerMenuManager.buildDrawerMenu(this, mToolbar);
-            mCategoryLoader.forceLoad(); // загружем категории из базы
-//            DrawerMenuManager.setCategoriesSubItems(this, CategoryManager.getBestCategories());
-            Log.d("myapp", "categories installed");
         } else {
             Log.e("myapp", "no toolbar");
         }
@@ -70,6 +67,8 @@ public abstract class AbstractToolbarActivity extends AppCompatActivity implemen
         setContentView(mLayout);
 
         setToolbarAndMenu();
+        mCategoryLoader.forceLoad(); // загружем категории из базы
+        Log.d("myapp", "categories installed");
     }
 
     @Override
@@ -78,6 +77,10 @@ public abstract class AbstractToolbarActivity extends AppCompatActivity implemen
         mDrawer.setSelectionAtPosition(getMenuPosition());
     }
 
+    protected void afterCategoriesLoaded() {
+        DrawerMenuManager.setCategoriesSubItems(this, mCategories);
+        mDrawer.setSelectionAtPosition(getMenuPosition());
+    }
 
     @Override
     public Loader<ArrayList<Category>> onCreateLoader(int id, Bundle args) {
@@ -86,7 +89,6 @@ public abstract class AbstractToolbarActivity extends AppCompatActivity implemen
         } else {
             Log.e("myapp", "unexcept loader id not equal category loader");
         }
-
         return mCategoryLoader;
     }
 
@@ -97,8 +99,7 @@ public abstract class AbstractToolbarActivity extends AppCompatActivity implemen
         data.add(category);
         data.add(category2);
         mCategories = Category.toStringArray(data);
-        DrawerMenuManager.setCategoriesSubItems(this, mCategories);
-        mDrawer.setSelectionAtPosition(getMenuPosition());
+        afterCategoriesLoaded();
         Log.d("myapp" + this.getClass().toString(), "category load finished : " + data.size());
     }
 
