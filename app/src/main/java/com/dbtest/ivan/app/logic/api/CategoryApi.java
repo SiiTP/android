@@ -5,6 +5,7 @@ import com.dbtest.ivan.app.logic.db.entities.Category;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 
 /**
  * Created by ivan on 02.04.16.
@@ -12,4 +13,7 @@ import retrofit2.http.POST;
 public interface CategoryApi {
     @POST("/category")
     Call<Category> create(@Body Category category);
+
+    @PUT("/category")
+    Call<Category> update(@Body Category category);
 }

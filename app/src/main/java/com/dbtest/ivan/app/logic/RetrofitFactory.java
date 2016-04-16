@@ -26,8 +26,8 @@ public class RetrofitFactory {
     public static final String SESSION_STORAGE_NAME = "sessionStorage";
     public static Retrofit getInstance(){
         OkHttpClient.Builder okBuiler = new OkHttpClient.Builder();
-        okBuiler.readTimeout(10, TimeUnit.SECONDS);
-        okBuiler.connectTimeout(5, TimeUnit.SECONDS);
+        okBuiler.readTimeout(100, TimeUnit.SECONDS);
+        okBuiler.connectTimeout(50, TimeUnit.SECONDS);
         okBuiler.addInterceptor(new Interceptor() {
             @Override
             public Response intercept(Chain chain) throws IOException {

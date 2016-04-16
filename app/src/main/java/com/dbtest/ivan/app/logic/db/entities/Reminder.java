@@ -19,6 +19,8 @@ public class Reminder {
 
     @DatabaseField(generatedId = true)
     private Long id;
+    @DatabaseField(unique = true)
+    private Long serverId;
     @DatabaseField
     private String author;
     @DatabaseField(columnName = "reminder_time",canBeNull = false)
@@ -124,5 +126,13 @@ public class Reminder {
 
     public void setFriendId(Long friendId) {
         this.friendId = friendId;
+    }
+
+    public Long getServerId() {
+        return serverId;
+    }
+
+    public void setServerId(Long serverId) {
+        this.serverId = serverId;
     }
 }

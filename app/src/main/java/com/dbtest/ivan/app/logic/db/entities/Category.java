@@ -18,7 +18,8 @@ public class Category {
     private String name;
     @DatabaseField
     private String picture;
-
+    @DatabaseField(unique = true)
+    private Long serverId;
     @ForeignCollectionField
     private ForeignCollection<Reminder> reminders;
 
@@ -80,5 +81,13 @@ public class Category {
             i++;
         }
         return strCategories;
+    }
+
+    public Long getServerId() {
+        return serverId;
+    }
+
+    public void setServerId(Long serverId) {
+        this.serverId = serverId;
     }
 }

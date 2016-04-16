@@ -30,10 +30,13 @@ public class ReminderSyncService extends AbstractSyncService<Reminder> {
         request = api.create(item);
         Response<Reminder> response = request.execute();
         boolean result = false;
-        if (response.body() != null && response.body().getId() != null) {
-            if(response.body().getId() == -1){//todo add const reminder already exist
+        long serverId = 0;
+        if (response.body() != null) {
+            serverId = response.body().getServerId();
+            if(serverId == -1){//todo add const reminder already exist
                 response = api.update(item).execute();
-                if(response.body() != null && response.body().getId() != null){
+                serverId = response.body().getServerId();
+                if(response.body() != null && serverId != -1){
                     result = true;
                 }
             }else {
@@ -41,6 +44,7 @@ public class ReminderSyncService extends AbstractSyncService<Reminder> {
             }
         }
         if(result) {
+            item.setServerId(serverId);
             item.setIsSynced(true);
             dao.update(item);
         }

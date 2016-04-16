@@ -19,9 +19,9 @@ public class CategoryGsonAdapter extends TypeAdapter<Category> {
             return;
         }
         out.beginObject();
+        out.name("id").value(value.getServerId());
         out.name("name").value(value.getName());
         out.name("picture").value(value.getPicture());
-        out.name("idCategory").value(value.getId());
         out.endObject();
     }
     @Override
@@ -35,8 +35,8 @@ public class CategoryGsonAdapter extends TypeAdapter<Category> {
         while (in.hasNext()){
             String name = in.nextName();
             switch (name){
-                case "userCategoryId":
-                    category.setId(in.nextLong());
+                case "id":
+                    category.setServerId(in.nextLong());
                     break;
                 case "name":
                     category.setName(in.nextString());

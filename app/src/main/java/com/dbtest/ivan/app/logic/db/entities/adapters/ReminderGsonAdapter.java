@@ -22,9 +22,9 @@ public class ReminderGsonAdapter extends TypeAdapter<Reminder> {
         out.beginObject();
         out.name("text").value(value.getText());
         out.name("time").value(value.getReminderTime().getTime());
-        out.name("idCategory").value(value.getCategory().getId());
-        out.name("friendId").value(value.getFriendId());//todo rename mobileFriendId
-        out.name("id").value(value.getId());//todo rename mobileId
+        out.name("idCategory").value(value.getCategory().getServerId());
+        out.name("friendId").value(value.getFriendId());
+        out.name("id").value(value.getServerId());//todo rename mobileFriendId
         out.endObject();
     }
     @Override
@@ -39,7 +39,7 @@ public class ReminderGsonAdapter extends TypeAdapter<Reminder> {
             String name = in.nextName();
             switch (name){
                 case "id":
-                    reminder.setId(in.nextLong());
+                    reminder.setServerId(in.nextLong());
                     break;
                 case "time":
                     reminder.setReminderTime(new Date(in.nextLong()));
