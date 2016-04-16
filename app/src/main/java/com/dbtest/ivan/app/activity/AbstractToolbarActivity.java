@@ -21,7 +21,7 @@ import com.mikepenz.materialdrawer.Drawer;
 import java.util.ArrayList;
 
 public abstract class AbstractToolbarActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<ArrayList<Category>> {
-    public static final int MENU_FIRST_CATEGORY_POSITION = 5; //for DrawerMenuManager позиция, начиная с которой категории вставляются
+    public static final int MENU_FIRST_CATEGORY_POSITION = 4; //for DrawerMenuManager позиция, начиная с которой категории вставляются
 
     protected CategoryLoader mCategoryLoader;
     protected String[] mCategories;
@@ -94,10 +94,10 @@ public abstract class AbstractToolbarActivity extends AppCompatActivity implemen
 
     @Override
     public void onLoadFinished(Loader<ArrayList<Category>> loader, ArrayList<Category> data) {
-        Category category = new Category("all");
-        Category category2 = new Category("friends");
-        data.add(category);
-        data.add(category2);
+//        Category category = new Category("all");
+//        Category category2 = new Category("friends");
+//        data.add(category);
+//        data.add(category2);
         mCategories = Category.toStringArray(data);
         afterCategoriesLoaded();
         Log.d("myapp" + this.getClass().toString(), "category load finished : " + data.size());

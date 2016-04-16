@@ -10,9 +10,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.dbtest.ivan.app.R;
@@ -25,7 +25,8 @@ public class ListActivity extends AbstractToolbarActivity
                           implements ReminderListFragment.OnItemSelectedListener {
     private static final String CURRENT_POSITION_KEY = "currentPosition";
     private static final String CURRENT_CATEGORIES = "currentCategories";
-    private int mMenuLastPosition = 5;
+    private int mMenuLastPosition = 4;
+    FloatingActionButton mButtonAdd;
 
     @NonNull
     @Override
@@ -52,19 +53,19 @@ public class ListActivity extends AbstractToolbarActivity
             Log.d("myapp", "position from extra : " + mMenuLastPosition);
         }
 
-        Button add =(Button) findViewById(R.id.list_add_reminder);
-        if (add != null) {
-            add.setOnClickListener(new View.OnClickListener() {
+        mButtonAdd =(FloatingActionButton) findViewById(R.id.list_add_reminder);
+        if (mButtonAdd != null) {
+            mButtonAdd.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent1 = new Intent(ListActivity.this,DetailReminderActivity.class);
+                    Intent intent1 = new Intent(ListActivity.this, DetailReminderActivity.class);
                     startActivity(intent1);
                 }
             });
         }
         if (savedInstanceState != null) {
             mCategories = savedInstanceState.getStringArray(CURRENT_CATEGORIES);
-            mMenuLastPosition = savedInstanceState.getInt(CURRENT_POSITION_KEY);;
+            mMenuLastPosition = savedInstanceState.getInt(CURRENT_POSITION_KEY);
             Log.d("myapp " + this.getClass().toString(), "current position from saved instance state : " + mMenuLastPosition);
         }
         mCategoryLoader.forceLoad();
