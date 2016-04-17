@@ -16,6 +16,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dbtest.ivan.app.R;
+import com.dbtest.ivan.app.activity.abstract_toolbar_activity.AbstractToolbarActivity;
+import com.dbtest.ivan.app.activity.list_activity.ListActivity;
 import com.dbtest.ivan.app.fragment.CategoryDialog;
 import com.dbtest.ivan.app.fragment.DateTimePickerDialog;
 import com.dbtest.ivan.app.logic.db.OrmHelper;
@@ -31,6 +33,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
 
 public class DetailReminderActivity extends AbstractToolbarActivity implements DateTimePickerDialog.DateTimeDialogListener, CategoryDialog.CategoryDialogListener, WaitingActivity {
     private OrmHelper helper;
@@ -163,13 +166,6 @@ public class DetailReminderActivity extends AbstractToolbarActivity implements D
 
     @Override
     public void setWaiting(boolean isWaiting) {
-//        isWaiting = !isWaiting;
-//        insert.setFocusableInTouchMode(isWaiting);
-//        insert.setEnabled(isWaiting);
-//        pickButton.setFocusableInTouchMode(isWaiting);
-//        pickButton.setEnabled(isWaiting);
-//        categoryButton.setFocusableInTouchMode(isWaiting);
-//        categoryButton.setEnabled(isWaiting);
         WaitingManager.makeWaitingButton(this, insert, isWaiting);
         WaitingManager.makeWaitingButton(this, pickButton, isWaiting);
         WaitingManager.makeWaitingButton(this, categoryButton, isWaiting);

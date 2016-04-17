@@ -1,28 +1,26 @@
-package com.dbtest.ivan.app.activity.drawer_menu;
+package com.dbtest.ivan.app.activity.abstract_toolbar_activity;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.View;
 
 import com.dbtest.ivan.app.R;
-import com.dbtest.ivan.app.activity.AbstractToolbarActivity;
 import com.dbtest.ivan.app.activity.FriendsActivity;
-import com.dbtest.ivan.app.activity.ListActivity;
+import com.dbtest.ivan.app.activity.list_activity.ListActivity;
 import com.dbtest.ivan.app.activity.SettingsActivity;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.holder.BadgeStyle;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
-import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 public class DrawerMenuManager {
-    private static boolean logged = false;
+    private static boolean isLogged = false;
+
     public static final int ID_CATEGORIES_ITEM = 1;
     private static final int CATEGORY_SUBITEMS_LEVEL = 2;
 
@@ -30,44 +28,41 @@ public class DrawerMenuManager {
         DrawerBuilder builder = new DrawerBuilder(activity)
                 .withToolbar(toolbar);
 
-        if (logged) { //if you logged
+        if (isLogged) { //if you log
             builder.withAccountHeader(getAccountHeaderLogged(activity));
-        } else { //if you not logged
+        } else { //if you not log
             builder.withHeader(R.layout.drawer_header_unlogged)
                     .withOnDrawerListener(new AuthHeaderDrawerClickListener(activity));
         }
 
         builder.addDrawerItems(
-                new PrimaryDrawerItem().withName("Friends").withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
-                    @Override
-                    public boolean onItemClick(View view, int i, IDrawerItem iDrawerItem) {
-                        Intent intent = new Intent(activity, FriendsActivity.class);
-                        activity.startActivity(intent);
-                        return false;
-                    }
+                new PrimaryDrawerItem().withName("Friends").withOnDrawerItemClickListener((view, i, iDrawerItem) -> {
+                    Intent intent = new Intent(activity, FriendsActivity.class);
+                    activity.startActivity(intent);
+                    return false;
                 }),
-                new PrimaryDrawerItem().withName("Settings").withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
-                    @Override
-                    public boolean onItemClick(View view, int i, IDrawerItem iDrawerItem) {
-                        Intent intent = new Intent(activity, SettingsActivity.class);
-                        activity.startActivity(intent);
-                        return false;
-                    }
+                new PrimaryDrawerItem().withName("Settings").withOnDrawerItemClickListener((view, i, iDrawerItem) -> {
+                    Intent intent = new Intent(activity, SettingsActivity.class);
+                    activity.startActivity(intent);
+                    return false;
                 }),
                 new PrimaryDrawerItem().withName("Categories").withIdentifier(ID_CATEGORIES_ITEM)
-                        .withIcon(R.drawable.ic_action_refresh)
+                        .withBadge("")
+                        .withBadgeStyle(new BadgeStyle().withBadgeBackground(ContextCompat.getDrawable(activity, R.drawable.ic_action_refresh)))
                         .withIconTintingEnabled(true)
-                        .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
-                            @Override
-                            public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                                Log.d("myapp", "clicked");
-                                return true;
-                            }
-                        })
-                        .withSelectable(false),
-                new SecondaryDrawerItem().withName("Create").withIcon(R.drawable.ic_action_new_label).withLevel(CATEGORY_SUBITEMS_LEVEL)
+                        .withOnDrawerItemClickListener(new ReminderUpdateClickListener(activity))
+                        .withSelectable(false)
+//                new SecondaryDrawerItem().withName("Create").withIcon(R.drawable.ic_action_new_label).withLevel(CATEGORY_SUBITEMS_LEVEL),
         );
         return builder.build();
+    }
+
+    public static boolean getIsLogged() {
+        return isLogged;
+    }
+
+    public static void setIsLogged(boolean isLogged) {
+        DrawerMenuManager.isLogged = isLogged;
     }
 
     private static void eraseCategorieSubItems(Drawer drawer) {

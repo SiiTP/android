@@ -8,6 +8,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.dbtest.ivan.app.activity.SignInActivity;
+import com.dbtest.ivan.app.activity.abstract_toolbar_activity.DrawerMenuManager;
 import com.dbtest.ivan.app.logic.RetrofitFactory;
 import com.dbtest.ivan.app.logic.api.AuthApi;
 import com.dbtest.ivan.app.logic.db.entities.User;
@@ -74,6 +75,7 @@ public class SignInIntentService extends IntentService {
                 SharedPreferences preferences = getSharedPreferences(RetrofitFactory.SESSION_STORAGE_NAME,0);
                 preferences.edit().putString(RetrofitFactory.SESSION_COOKIE_NAME,session).commit();
                 Log.d("myapp " + SignUpIntentService.class.toString(), session);
+                DrawerMenuManager.setIsLogged(true); // TODO после этого надо интентом перекинуть на лист активити чтобы меню пересоздалось и профиль отобразился
                 answer.putString(CustomReceiver.RESULT, "Successful login");
             }else{
                 Log.d("myapp " + SignUpIntentService.class.toString(), "failure login");

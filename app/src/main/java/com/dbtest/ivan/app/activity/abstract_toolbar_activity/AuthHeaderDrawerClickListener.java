@@ -1,4 +1,4 @@
-package com.dbtest.ivan.app.activity.drawer_menu;
+package com.dbtest.ivan.app.activity.abstract_toolbar_activity;
 
 import android.content.Intent;
 import android.os.Handler;
@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.Button;
 
 import com.dbtest.ivan.app.R;
-import com.dbtest.ivan.app.activity.AbstractToolbarActivity;
 import com.dbtest.ivan.app.activity.SignInActivity;
 import com.dbtest.ivan.app.activity.SignUpActivity;
 import com.mikepenz.materialdrawer.Drawer;
@@ -64,11 +63,6 @@ public final class AuthHeaderDrawerClickListener implements Drawer.OnDrawerListe
 
     private void closeDrawerAfterDelay(final Drawer drawer) {
         final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                drawer.closeDrawer();
-            }
-        }, 200);
+        handler.postDelayed(drawer::closeDrawer, 200);
     }
 }
