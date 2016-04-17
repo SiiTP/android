@@ -3,13 +3,10 @@ package com.dbtest.ivan.app.activity;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -18,6 +15,7 @@ import android.widget.Toast;
 import com.dbtest.ivan.app.R;
 import com.dbtest.ivan.app.receiver.CustomReceiver;
 import com.dbtest.ivan.app.services.intent.SignUpIntentService;
+import com.dbtest.ivan.app.utils.WaitingManager;
 
 public class SignUpActivity extends AbstractToolbarActivity implements WaitingActivity {
     private static final int MENU_POSITION = -1; //activity not in menu list
@@ -107,28 +105,12 @@ public class SignUpActivity extends AbstractToolbarActivity implements WaitingAc
 
     @Override
     public void setWaiting(boolean isWaiting) {
-        if(isWaiting){
-            bar.setVisibility(View.VISIBLE);
-            bar.startAnimation(AnimationUtils.loadAnimation(this,R.anim.fade_in));
-            submit.setTextColor(Color.GRAY);
-        }else{
-            bar.startAnimation(AnimationUtils.loadAnimation(this,R.anim.fade_out));
-            bar.setVisibility(View.GONE);
-            submit.setTextColor(ContextCompat.getColor(this, R.color.app_accent));
-        }
-        bar.getIndeterminateDrawable().setColorFilter(0xFFFF0000, android.graphics.PorterDuff.Mode.MULTIPLY);
-        isWaiting = !isWaiting;
-        emailView.setFocusableInTouchMode(isWaiting);
-        emailView.setEnabled(isWaiting);
-        passwordView.setFocusableInTouchMode(isWaiting);
-        passwordView.setEnabled(isWaiting);
-        usernameView.setEnabled(isWaiting);
-        usernameView.setFocusableInTouchMode(isWaiting);
-        repeatPasswordView.setEnabled(isWaiting);
-        repeatPasswordView.setFocusableInTouchMode(isWaiting);
-        submit.setEnabled(isWaiting);
-        submit.setFocusableInTouchMode(isWaiting);
-
+        WaitingManager.makeWaitingView(repeatPasswordView, isWaiting);
+        WaitingManager.makeWaitingView(usernameView, isWaiting);
+        WaitingManager.makeWaitingView(passwordView, isWaiting);
+        WaitingManager.makeWaitingView(emailView, isWaiting);
+        WaitingManager.makeWaitingButton(this, submit, isWaiting);
+        WaitingManager.makeWaitingProgressBar(this, bar, isWaiting);
     }
 
     @Override

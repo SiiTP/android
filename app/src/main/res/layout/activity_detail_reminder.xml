@@ -8,58 +8,75 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.dbtest.ivan.app.activity.DetailReminderActivity">
-    <EditText
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        style="@style/SignRelativeLayout"
+        android:padding="10dp"
+        android:paddingTop="15dp">
+    <TextView
+        android:layout_width="@dimen/sign_inputs_width"
         android:layout_height="wrap_content"
-        android:id="@+id/details_author"
-        android:layout_alignParentTop="true"
-        android:layout_alignLeft="@+id/details_time"
-        android:layout_alignStart="@+id/details_time"
-        android:layout_alignRight="@+id/details_time"
-        android:layout_alignEnd="@+id/details_time"
-        android:hint="author" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="time"
-        android:ems="10"
-        android:id="@+id/details_time"
-        android:layout_below="@+id/details_author"
-        android:layout_centerHorizontal="true"
-        android:hint="time" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/details_text"
-        android:layout_below="@+id/details_time"
-        android:layout_alignRight="@+id/details_time"
-        android:layout_alignEnd="@+id/details_time"
-        android:layout_alignLeft="@+id/details_time"
-        android:layout_alignStart="@+id/details_time"
-        android:hint="text"
-        android:lines="3" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/details_category"
-        android:layout_below="@+id/details_text"
-        android:layout_alignLeft="@+id/details_text"
-        android:layout_alignStart="@+id/details_text"
-        android:layout_alignRight="@+id/details_text"
-        android:layout_alignEnd="@+id/details_text"
-        android:hint="category name" />
-
+        android:hint="pick reminder time"
+        android:id="@+id/details_picked_date"
+        android:layout_marginTop="6dp"
+        android:gravity="center"
+        android:textSize="@dimen/font_size_medium"/>
     <Button
-        android:layout_width="wrap_content"
+        style="@style/SignSubmit"
+        android:text="@string/details_date_pick_button"
+        android:layout_toRightOf="@id/details_picked_date"
+        android:id="@+id/pick_date_button"
+        android:layout_width="@dimen/details_button_width" />
+    <android.support.design.widget.TextInputLayout
+        style="@style/SupportInput"
+        android:id="@+id/details_text_supp"
+        android:layout_below="@id/pick_date_button"
+        android:layout_width="@dimen/details_text_width"
+        android:paddingTop="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="15dp"
+        android:paddingBottom="10dp">
+        <EditText
+            style="@style/TextInput"
+
+            android:id="@+id/details_text"
+            android:hint="@string/details_text"
+            android:lines="7"
+            android:minLines="1"
+            android:inputType="textMultiLine"/>
+    </android.support.design.widget.TextInputLayout>
+
+    <Spinner
+        android:layout_width="@dimen/sign_inputs_width"
         android:layout_height="wrap_content"
+        android:id="@+id/details_category_spinner"
+        android:layout_below="@id/details_text_supp"/>
+    <Button
+        style="@style/SignSubmit"
+        android:text="@string/details_create_category"
+        android:layout_toRightOf="@id/details_category_spinner"
+        android:id="@+id/details_add_category_button"
+        android:layout_below="@+id/details_text_supp"
+        android:layout_above="@+id/details_add"
+        android:layout_width="@dimen/details_button_width" />
+    <Button
+        style="@style/SignSubmit"
+        android:layout_marginTop="10dp"
         android:text="Add"
         android:id="@+id/details_add"
-        android:layout_below="@+id/details_category"
-        android:layout_alignLeft="@+id/details_category"
-        android:layout_alignStart="@+id/details_category"
-        android:layout_alignRight="@+id/details_category"
-        android:layout_alignEnd="@+id/details_category" />
+        android:layout_below="@+id/details_category_spinner"
+        android:layout_alignLeft="@+id/details_category_spinner"
+        android:layout_alignStart="@+id/details_category_spinner"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+    <ProgressBar
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/circ"
+        android:id="@+id/details_bar"
+        android:layout_marginTop="90dp"
+        android:elevation="5dp"
+        android:layout_centerHorizontal="true" />
+    </RelativeLayout>
+
 </RelativeLayout>

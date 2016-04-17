@@ -4,17 +4,17 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 
 import com.dbtest.ivan.app.logic.db.OrmHelper;
 import com.dbtest.ivan.app.logic.db.entities.Category;
 import com.dbtest.ivan.app.logic.db.entities.Reminder;
+import com.dbtest.ivan.app.receiver.CustomReceiver;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -22,12 +22,10 @@ import java.util.List;
  * Created by ivan on 02.04.16.
  */
 public class ReminderIntentService extends IntentService {
-    public static final String AUTHOR = "AUTHOR";
     public static final String TIME = "TIME";
     public static final String TEXT = "TEXT";
     public static final String CATEGORY = "CATEGORY";
     public static final String ID = "ID";
-    public static final String ID_USER = "ID_USER";
     public ReminderIntentService() {
         super("reminder intent service");
     }
@@ -36,10 +34,8 @@ public class ReminderIntentService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         Bundle bundle = intent.getExtras();
         Long id = bundle.getLong(ID);
-        Long idUser = bundle.getLong(ID_USER);
-        String author = bundle.getString(AUTHOR);
         String text = bundle.getString(TEXT);
-        String time = bundle.getString(TIME);
+        Long time = bundle.getLong(TIME);
         String categoryName = bundle.getString(CATEGORY);
         Date date = null;
 
@@ -48,8 +44,8 @@ public class ReminderIntentService extends IntentService {
         Dao<Category,Long> categoryDao = helper.getCategoryDao();
         Reminder reminder;
         try {
-            if(time != null && !time.isEmpty()) {
-                date = new SimpleDateFormat("yyyyMMdd").parse(time);
+            if(time != 0) {
+                date = new Date(time);
             }
 
             if(id != -1){
@@ -77,7 +73,19 @@ public class ReminderIntentService extends IntentService {
             }
             Intent sync = new Intent(this,SynchronizeIntentService.class);
             startService(sync);
-        } catch (SQLException | IOException | ParseException e) {
+
+            Bundle answer = new Bundle();
+            answer.putString(CustomReceiver.RESULT,"Reminder created");
+            try {
+                Thread.sleep(1500L);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            Intent activityNotify = new Intent(CustomReceiver.WAITING_ACTION);
+            activityNotify.addCategory(Intent.CATEGORY_DEFAULT);
+            activityNotify.putExtras(answer);
+            LocalBroadcastManager.getInstance(ReminderIntentService.this).sendBroadcast(activityNotify);
+        } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
         OpenHelperManager.releaseHelper();

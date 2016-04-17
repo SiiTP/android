@@ -2,13 +2,10 @@ package com.dbtest.ivan.app.activity;
 
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -17,6 +14,7 @@ import android.widget.Toast;
 import com.dbtest.ivan.app.R;
 import com.dbtest.ivan.app.receiver.CustomReceiver;
 import com.dbtest.ivan.app.services.intent.SignInIntentService;
+import com.dbtest.ivan.app.utils.WaitingManager;
 
 public class SignInActivity extends AbstractToolbarActivity implements WaitingActivity {
     private static final int MENU_POSITION = -1; //activity not in menu list
@@ -94,25 +92,10 @@ public class SignInActivity extends AbstractToolbarActivity implements WaitingAc
 
     @Override
     public void setWaiting(boolean isWaiting) {
-        if(isWaiting){
-            bar.setVisibility(View.VISIBLE);
-            bar.startAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in));
-            submit.setTextColor(Color.GRAY);
-        }else{
-            bar.startAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_out));
-            bar.setVisibility(View.GONE);
-            submit.setTextColor(ContextCompat.getColor(this,R.color.app_accent));//todo color accent app theme
-        }
-        bar.getIndeterminateDrawable().setColorFilter(0xFFFF0000, android.graphics.PorterDuff.Mode.MULTIPLY);
-        isWaiting = !isWaiting;
-        submit.setFocusableInTouchMode(isWaiting);
-        submit.setEnabled(isWaiting);
-        passwordView.setFocusableInTouchMode(isWaiting);
-        passwordView.setEnabled(isWaiting);
-        emailView.setFocusableInTouchMode(isWaiting);
-        emailView.setEnabled(isWaiting);
-
-
+        WaitingManager.makeWaitingProgressBar(this, bar, isWaiting);
+        WaitingManager.makeWaitingButton(this, submit, isWaiting);
+        WaitingManager.makeWaitingView(passwordView, isWaiting);
+        WaitingManager.makeWaitingView(emailView, isWaiting);
     }
 
     @Override
