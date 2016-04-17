@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 
 import com.dbtest.ivan.app.R;
 import com.dbtest.ivan.app.activity.AbstractToolbarActivity;
@@ -19,7 +18,6 @@ import com.mikepenz.materialdrawer.holder.BadgeStyle;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
-import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 public class DrawerMenuManager {
     private static boolean isLogged = false;
@@ -39,21 +37,15 @@ public class DrawerMenuManager {
         }
 
         builder.addDrawerItems(
-                new PrimaryDrawerItem().withName("Friends").withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
-                    @Override
-                    public boolean onItemClick(View view, int i, IDrawerItem iDrawerItem) {
-                        Intent intent = new Intent(activity, FriendsActivity.class);
-                        activity.startActivity(intent);
-                        return false;
-                    }
+                new PrimaryDrawerItem().withName("Friends").withOnDrawerItemClickListener((view, i, iDrawerItem) -> {
+                    Intent intent = new Intent(activity, FriendsActivity.class);
+                    activity.startActivity(intent);
+                    return false;
                 }),
-                new PrimaryDrawerItem().withName("Settings").withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
-                    @Override
-                    public boolean onItemClick(View view, int i, IDrawerItem iDrawerItem) {
-                        Intent intent = new Intent(activity, SettingsActivity.class);
-                        activity.startActivity(intent);
-                        return false;
-                    }
+                new PrimaryDrawerItem().withName("Settings").withOnDrawerItemClickListener((view, i, iDrawerItem) -> {
+                    Intent intent = new Intent(activity, SettingsActivity.class);
+                    activity.startActivity(intent);
+                    return false;
                 }),
                 new PrimaryDrawerItem().withName("Categories").withIdentifier(ID_CATEGORIES_ITEM)
                         .withBadge("")

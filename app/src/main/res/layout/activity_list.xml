@@ -22,11 +22,13 @@
         android:layout_marginRight="@dimen/mrg_large"
         android:layout_marginStart="@dimen/mrg_large"
         android:layout_below="@id/list_category_header">
-        <fragment
+
+
+        <android.support.v7.widget.RecyclerView
             android:id="@+id/list_reminders"
-            class="com.dbtest.ivan.app.fragment.ReminderListFragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/list_category_header"/>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/list_add_reminder"
