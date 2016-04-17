@@ -4,7 +4,7 @@
 //TODO ResultReceiver???
 
 
-package com.dbtest.ivan.app.activity;
+package com.dbtest.ivan.app.activity.list_activity;
 
 import android.app.LoaderManager;
 import android.content.Intent;
@@ -16,10 +16,11 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.View;
 import android.widget.TextView;
 
 import com.dbtest.ivan.app.R;
+import com.dbtest.ivan.app.activity.abstract_toolbar_activity.AbstractToolbarActivity;
+import com.dbtest.ivan.app.activity.DetailReminderActivity;
 import com.dbtest.ivan.app.logic.RetrofitFactory;
 import com.dbtest.ivan.app.logic.adapter.ReminderListAdapter;
 import com.dbtest.ivan.app.logic.db.entities.Reminder;
@@ -58,24 +59,21 @@ public class ListActivity extends AbstractToolbarActivity {
         SharedPreferences preferences = getSharedPreferences(RetrofitFactory.SESSION_STORAGE_NAME,0);
         RetrofitFactory.setSession(preferences.getString(RetrofitFactory.SESSION_COOKIE_NAME, null));
 
+        mButtonAdd =(FloatingActionButton) findViewById(R.id.list_add_reminder);
+        if (mButtonAdd != null) {
+            mButtonAdd.setOnClickListener(v -> {
+                Intent intent1 = new Intent(ListActivity.this, DetailReminderActivity.class);
+                startActivity(intent1);
+            });
+        }
         addRemindersRecyclerView();
 
-        final Intent intent = getIntent();
+        Intent intent = getIntent();
         if (intent != null) {
             mMenuLastPosition = intent.getIntExtra(ExtrasCodes.ACTIVE_MENU_POSITION_CODE, mMenuLastPosition);
             Log.d("myapp", "position from extra : " + mMenuLastPosition);
         }
 
-        mButtonAdd =(FloatingActionButton) findViewById(R.id.list_add_reminder);
-        if (mButtonAdd != null) {
-            mButtonAdd.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent1 = new Intent(ListActivity.this, DetailReminderActivity.class);
-                    startActivity(intent1);
-                }
-            });
-        }
         if (savedInstanceState != null) {
             mCategories = savedInstanceState.getStringArray(CURRENT_CATEGORIES);
             mMenuLastPosition = savedInstanceState.getInt(CURRENT_POSITION_KEY);
@@ -119,7 +117,8 @@ public class ListActivity extends AbstractToolbarActivity {
         if (textView != null) {
             textView.setText(checkedCategory);
         }
-        //TODO render
+        mReminderLoader.setCategoryLoaded(checkedCategory);
+        mReminderLoader.forceLoad();
     }
 
     private String getCheckedCategory() {
@@ -128,31 +127,12 @@ public class ListActivity extends AbstractToolbarActivity {
 
     private void addRemindersRecyclerView() {
         mReminderLoader = (ReminderLoader) getLoaderManager().initLoader(ExtrasCodes.LOADER_REMINDER_ID, null, new RemindersCallbacks(this));
-        mRemindersAdapter = new ReminderListAdapter(this, new ArrayList<>());
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
 
         mRemindersRecyclerView = (RecyclerView) findViewById(R.id.list_reminders);
         mRemindersRecyclerView.setLayoutManager(layoutManager);
         mRemindersRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-        mRemindersRecyclerView.setAdapter(mRemindersAdapter);
-        mRemindersRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-
-                if (dy > 3) {
-                    mButtonAdd.hide();
-                }
-                if (dy < - 3) {
-                    mButtonAdd.show();
-                }
-            }
-        });
+        mRemindersRecyclerView.addOnScrollListener(new OnScrolledListenerReminders(mButtonAdd));
     }
 
     private class RemindersCallbacks implements LoaderManager.LoaderCallbacks<ArrayList<Reminder>> {
@@ -175,8 +155,9 @@ public class ListActivity extends AbstractToolbarActivity {
 
         @Override
         public void onLoadFinished(Loader<ArrayList<Reminder>> reminders, ArrayList<Reminder> data) {
-            mRemindersAdapter.setData(data);
-            Log.i("myapp " + this.getClass().toString(), "reminders load finished : " + data.size());
+            mRemindersAdapter = new ReminderListAdapter(activity, data);
+            mRemindersRecyclerView.setAdapter(mRemindersAdapter);
+            Log.i("myapp " + this.getClass().toString(), "reminders load finished : " + data.size() + ". Setted in adapter");
         }
 
         @Override

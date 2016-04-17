@@ -1,4 +1,4 @@
-package com.dbtest.ivan.app.activity.drawer_menu;
+package com.dbtest.ivan.app.activity.abstract_toolbar_activity;
 
 import android.app.Activity;
 import android.content.Intent;

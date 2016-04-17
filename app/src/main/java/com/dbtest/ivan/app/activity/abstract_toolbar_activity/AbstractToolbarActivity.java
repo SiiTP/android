@@ -1,4 +1,4 @@
-package com.dbtest.ivan.app.activity;
+package com.dbtest.ivan.app.activity.abstract_toolbar_activity;
 
 import android.app.LoaderManager;
 import android.content.Loader;
@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.dbtest.ivan.app.R;
-import com.dbtest.ivan.app.activity.drawer_menu.DrawerMenuManager;
 import com.dbtest.ivan.app.logic.db.entities.Category;
 import com.dbtest.ivan.app.model.loader.CategoryLoader;
 import com.dbtest.ivan.app.utils.ExtrasCodes;

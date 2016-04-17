@@ -8,7 +8,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.dbtest.ivan.app.activity.SignInActivity;
-import com.dbtest.ivan.app.activity.drawer_menu.DrawerMenuManager;
+import com.dbtest.ivan.app.activity.abstract_toolbar_activity.DrawerMenuManager;
 import com.dbtest.ivan.app.logic.RetrofitFactory;
 import com.dbtest.ivan.app.logic.api.AuthApi;
 import com.dbtest.ivan.app.logic.db.entities.User;

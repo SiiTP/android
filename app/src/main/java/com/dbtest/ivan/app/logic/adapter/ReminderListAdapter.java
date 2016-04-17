@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.dbtest.ivan.app.R;
-import com.dbtest.ivan.app.activity.AbstractToolbarActivity;
+import com.dbtest.ivan.app.activity.abstract_toolbar_activity.AbstractToolbarActivity;
 import com.dbtest.ivan.app.logic.db.entities.Reminder;
 
 import java.util.ArrayList;
@@ -50,7 +50,7 @@ public class ReminderListAdapter extends RecyclerView.Adapter<ReminderListAdapte
 
         public ReminderViewHolder(View itemView) {
             super(itemView);
-            
+
             date = (TextView) itemView.findViewById(R.id.reminder_item_date);
             time = (TextView) itemView.findViewById(R.id.reminder_item_time);
             text = (TextView) itemView.findViewById(R.id.reminder_item_text);
