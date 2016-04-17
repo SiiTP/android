@@ -9,7 +9,6 @@ package com.dbtest.ivan.app.activity.list_activity;
 import android.app.LoaderManager;
 import android.content.Intent;
 import android.content.Loader;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -19,9 +18,8 @@ import android.util.Log;
 import android.widget.TextView;
 
 import com.dbtest.ivan.app.R;
-import com.dbtest.ivan.app.activity.abstract_toolbar_activity.AbstractToolbarActivity;
 import com.dbtest.ivan.app.activity.DetailReminderActivity;
-import com.dbtest.ivan.app.logic.RetrofitFactory;
+import com.dbtest.ivan.app.activity.abstract_toolbar_activity.AbstractToolbarActivity;
 import com.dbtest.ivan.app.logic.adapter.ReminderListAdapter;
 import com.dbtest.ivan.app.logic.db.entities.Reminder;
 import com.dbtest.ivan.app.logic.divider.DividerItemDecoration;
@@ -55,9 +53,6 @@ public class ListActivity extends AbstractToolbarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        SharedPreferences preferences = getSharedPreferences(RetrofitFactory.SESSION_STORAGE_NAME,0);
-        RetrofitFactory.setSession(preferences.getString(RetrofitFactory.SESSION_COOKIE_NAME, null));
 
         mButtonAdd =(FloatingActionButton) findViewById(R.id.list_add_reminder);
         if (mButtonAdd != null) {

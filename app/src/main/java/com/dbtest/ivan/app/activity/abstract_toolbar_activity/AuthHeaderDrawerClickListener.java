@@ -63,11 +63,6 @@ public final class AuthHeaderDrawerClickListener implements Drawer.OnDrawerListe
 
     private void closeDrawerAfterDelay(final Drawer drawer) {
         final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                drawer.closeDrawer();
-            }
-        }, 200);
+        handler.postDelayed(drawer::closeDrawer, 200);
     }
 }
