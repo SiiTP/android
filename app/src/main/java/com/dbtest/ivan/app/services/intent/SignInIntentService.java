@@ -4,6 +4,7 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
@@ -26,6 +27,7 @@ import retrofit2.Response;
  */
 public class SignInIntentService extends IntentService {
     public static final String PREF_SESSION = "sessionPreference";
+    public static final long ERROR_WRONG_USER_OR_PASS = -1L;
     public SignInIntentService() {
         super("SignInService");
     }
@@ -68,11 +70,12 @@ public class SignInIntentService extends IntentService {
             Log.d("myapp " + SignUpIntentService.class.toString(), userResponse.headers().toMultimap().toString());
             Log.d("myapp " + SignUpIntentService.class.toString(),userResponse.body().getId() != null? userResponse.body().getId().toString() : "WTF?");
             String session;
-            if(userResponse.body().getId() != -1) {
+            if(userResponse.body().getId() != ERROR_WRONG_USER_OR_PASS) {
                 List<String> cookies = userResponse.headers().toMultimap().get("Set-Cookie");
                 session = CookieExtractor.getCookie(cookies.get(0), RetrofitFactory.SESSION_COOKIE_NAME);
                 RetrofitFactory.setSession(session);
-                SharedPreferences preferences = getSharedPreferences(RetrofitFactory.SESSION_STORAGE_NAME,0);
+
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
                 preferences.edit().putString(RetrofitFactory.SESSION_COOKIE_NAME,session).commit();
                 Log.d("myapp " + SignUpIntentService.class.toString(), session);
                 DrawerMenuManager.setIsLogged(true); // TODO после этого надо интентом перекинуть на лист активити чтобы меню пересоздалось и профиль отобразился

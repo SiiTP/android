@@ -26,6 +26,7 @@ public class ReminderIntentService extends IntentService {
     public static final String TEXT = "TEXT";
     public static final String CATEGORY = "CATEGORY";
     public static final String ID = "ID";
+    public static final long CREATE_ID = -1;
     public ReminderIntentService() {
         super("reminder intent service");
     }
@@ -48,7 +49,7 @@ public class ReminderIntentService extends IntentService {
                 date = new Date(time);
             }
 
-            if(id != -1){
+            if(id != CREATE_ID){
                 reminder = reminderDao.queryForId(id);
                 if(text != null && !text.isEmpty()){
                     reminder.setText(text);
@@ -64,7 +65,7 @@ public class ReminderIntentService extends IntentService {
                 category = createCategory(categoryDao,categoryName);
             }
             reminder.setCategory(category);
-            if(id != -1){
+            if(id != CREATE_ID){
                 reminder.setIsSynced(false);
                 reminderDao.update(reminder);
             } else {

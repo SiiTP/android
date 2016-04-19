@@ -3,10 +3,10 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
+    <fragment
+        android:id="@+id/settings_fragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Settings Ativity"
-        android:textSize="@dimen/font_size_xxlarge"/>
+        android:layout_height="match_parent"
+        android:name="com.dbtest.ivan.app.fragment.SettingsFragment"/>
 
 </RelativeLayout>

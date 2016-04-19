@@ -141,4 +141,5 @@ public class Reminder {
     public void setServerId(Long serverId) {
         this.serverId = serverId;
     }
+
 }

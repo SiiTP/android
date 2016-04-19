@@ -20,7 +20,7 @@ import retrofit2.Retrofit;
 
 
 public class SignUpIntentService extends IntentService {
-
+    public static final long ERROR_SUCH_USER_EXIST = -1L;
     public SignUpIntentService() {
         super("SIgnUpIntentService");
     }
@@ -40,7 +40,7 @@ public class SignUpIntentService extends IntentService {
             System.out.println(userResponse.headers().toMultimap().toString());
             long id = userResponse.body().getId();
             Log.d("myapp " + SignUpIntentService.class.toString(), Long.toString(id));
-            if(id != -1) {
+            if(id != ERROR_SUCH_USER_EXIST) {
                 answer.putString(CustomReceiver.RESULT, "Successful registration");
             }else{
                 answer.putString(CustomReceiver.RESULT,"Such user already exist");

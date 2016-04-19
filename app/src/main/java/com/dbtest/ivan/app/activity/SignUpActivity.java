@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 import android.widget.Button;
@@ -16,7 +17,10 @@ import com.dbtest.ivan.app.R;
 import com.dbtest.ivan.app.activity.abstract_toolbar_activity.AbstractToolbarActivity;
 import com.dbtest.ivan.app.receiver.CustomReceiver;
 import com.dbtest.ivan.app.services.intent.SignUpIntentService;
+import com.dbtest.ivan.app.utils.EmailFocusListener;
 import com.dbtest.ivan.app.utils.WaitingManager;
+import com.dbtest.ivan.app.utils.watchers.MaxLengthTextWatcher;
+import com.dbtest.ivan.app.utils.watchers.PasswordsTextWatcher;
 
 public class SignUpActivity extends AbstractToolbarActivity implements WaitingActivity {
     private static final int MENU_POSITION = -1; //activity not in menu list
@@ -24,6 +28,7 @@ public class SignUpActivity extends AbstractToolbarActivity implements WaitingAc
     public static final String SIGNUP_EMAIL = "signup.Email";
     public static final String SIGNUP_PASS = "signup.Password";
     public static final String SIGNUP_USERNAME = "signup.Username";
+
 
     private EditText emailView;
     private EditText passwordView;
@@ -54,33 +59,47 @@ public class SignUpActivity extends AbstractToolbarActivity implements WaitingAc
         usernameView = (EditText) findViewById(R.id.signup_username);
         passwordView = (EditText) findViewById(R.id.signup_password);
         repeatPasswordView = (EditText) findViewById(R.id.signup_repeat_password);
-        submit = (Button) findViewById(R.id.signup_submit);
-        if (submit != null) {
-            submit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+        submit = (Button) findViewById(R.id.signup_submit);//todo KAK BLYAT YBRAT KRASNYU LINIYU??!?!?!?!?!?!?!? POCHEMY ONA MENYAETSYA KOGDA OWIBKY ISPRAVIT V DRYGOY VIEW!?!?!?
 
+        repeatPasswordView.addTextChangedListener(new PasswordsTextWatcher((TextInputLayout)findViewById(R.id.signup_repeat_password_supp),passwordView));
+        passwordView.addTextChangedListener(new MaxLengthTextWatcher((TextInputLayout)findViewById(R.id.signup_password_supp),16));
+        passwordView.addTextChangedListener(new PasswordsTextWatcher((TextInputLayout)findViewById(R.id.signup_repeat_password_supp),repeatPasswordView));
+        usernameView.addTextChangedListener(new MaxLengthTextWatcher((TextInputLayout)findViewById(R.id.signup_username_supp),32));
+        emailView.addTextChangedListener(new MaxLengthTextWatcher((TextInputLayout) findViewById(R.id.signup_email_supp), 48));
+        emailView.setOnFocusChangeListener(new EmailFocusListener((TextInputLayout) findViewById(R.id.signup_email_supp)));
+        if (submit != null) {
+            submit.setOnClickListener(v -> {
+
+                CharSequence f  = ((TextInputLayout)findViewById(R.id.signup_repeat_password_supp)).getError();
+                if(f == null) {
+                    f = ((TextInputLayout) findViewById(R.id.signup_password_supp)).getError();
+                }
+                if(f == null){
+                    f = ((TextInputLayout) findViewById(R.id.signup_email_supp)).getError();
+                }
+                if(f == null){
+                    f = ((TextInputLayout) findViewById(R.id.signup_username_supp)).getError();
+                }
+
+
+                if(f == null) {
                     String email = null;
-                    if(emailView != null){
+                    if (emailView != null) {
                         email = emailView.getText().toString();
                     }
 
                     String username = null;
-                    if(usernameView != null){
+                    if (usernameView != null) {
                         username = usernameView.getText().toString();
                     }
 
                     String pass = null;
-                    if(passwordView != null){
+                    if (passwordView != null) {
                         pass = passwordView.getText().toString();
                     }
 
-                    String repeatPass = null;
-                    if(repeatPasswordView != null){
-                        repeatPass = repeatPasswordView.getText().toString();//todo check pass equality
-                    }
                     Bundle bundle = new Bundle();
-                    bundle.putString(SIGNUP_EMAIL,email);
+                    bundle.putString(SIGNUP_EMAIL, email);
                     bundle.putString(SIGNUP_PASS, pass);
                     bundle.putString(SIGNUP_USERNAME, username);
 
@@ -92,7 +111,6 @@ public class SignUpActivity extends AbstractToolbarActivity implements WaitingAc
                     intent.putExtras(bundle);
                     startService(intent);
                     setWaiting(true);
-//                    submit.startAnimation(AnimationUtils.loadAnimation(SignUpActivity.this,R.anim.fade_out));
                 }
             });
         }
@@ -113,17 +131,11 @@ public class SignUpActivity extends AbstractToolbarActivity implements WaitingAc
         WaitingManager.makeWaitingButton(this, submit, isWaiting);
         WaitingManager.makeWaitingProgressBar(this, bar, isWaiting);
     }
-
     @Override
     public void notifyResult(String result) {
         if(toast == null) {
             toast = Toast.makeText(SignUpActivity.this, "", Toast.LENGTH_LONG);
-//            snackbar = Snackbar.make(findViewById(R.id.signup_layout), "None", Snackbar.LENGTH_LONG);
-//            TextView textView = (TextView)snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
-//            textView.setTextColor(Color.WHITE);
         }
-//        snackbar.setText(result);
-//        snackbar.show();
         toast.setText(result);
         toast.show();
     }

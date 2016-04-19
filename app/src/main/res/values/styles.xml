@@ -8,7 +8,6 @@
         <item name="android:textColorPrimary">@color/app_primary_text</item>
         <item name="android:textColorSecondary">@color/app_secondary_light</item>
         <item name="android:textColor">@color/app_primary_text</item>
-
         <!--<item name="">@color/app_primaryDark</item>-->
         <!--<item name="colorPrimaryDark">@color/app_primaryDark</item>-->
         <!--<item name="colorPrimaryDark">@color/app_primaryDark</item>-->
@@ -25,15 +24,18 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:imeOptions">flagNoExtractUi</item>
         <item name="android:textSize">@dimen/font_size_medium</item>
+        <item name="android:maxLength">32</item>
     </style>
 
     <style name="TextInput.PasswordInput">
         <item name="android:inputType">textPassword</item>
+        <item name="android:maxLength">16</item>
     </style>
 
     <style name="TextInput.EmailInput">
         <item name="android:inputType">textEmailAddress</item>
         <item name="android:hint">@string/email_hint</item>
+        <item name="android:maxLength">48</item>
     </style>
 
     <!--TODO only theme colors!!! md_white_1000-->

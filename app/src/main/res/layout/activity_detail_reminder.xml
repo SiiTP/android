@@ -42,7 +42,8 @@
             android:hint="@string/details_text"
             android:lines="7"
             android:minLines="1"
-            android:inputType="textMultiLine"/>
+            android:inputType="textMultiLine"
+            android:maxLength="1024"/>
     </android.support.design.widget.TextInputLayout>
 
     <Spinner
