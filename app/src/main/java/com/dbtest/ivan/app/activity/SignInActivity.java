@@ -49,7 +49,7 @@ public class SignInActivity extends AbstractToolbarActivity implements WaitingAc
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);//todo постоянное открытие одной и той же аквтивити каждый раз создает новую аквтивити на верх стека??!?
+        super.onCreate(savedInstanceState);
         bar = (ProgressBar) findViewById(R.id.signin_bar);
         emailView = (EditText)findViewById(R.id.signin_email);
         passwordView = (EditText) findViewById(R.id.signin_password);

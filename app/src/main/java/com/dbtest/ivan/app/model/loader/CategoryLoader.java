@@ -24,7 +24,6 @@ public class CategoryLoader extends AsyncTaskLoader<ArrayList<Category>> {
 
     @Override
     public ArrayList<Category> loadInBackground() {
-        Log.d("myapp", "category loader do in background");
         Dao<Category, Long> categoryDao = mOrmHelper.getCategoryDao();
         List<Category> categories = null;
         try {

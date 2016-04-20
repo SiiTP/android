@@ -24,10 +24,12 @@ import com.dbtest.ivan.app.logic.adapter.ReminderListAdapter;
 import com.dbtest.ivan.app.logic.db.entities.Reminder;
 import com.dbtest.ivan.app.logic.divider.DividerItemDecoration;
 import com.dbtest.ivan.app.model.loader.ReminderLoader;
+import com.dbtest.ivan.app.utils.AlarmManager;
 import com.dbtest.ivan.app.utils.ExtrasCodes;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class ListActivity extends AbstractToolbarActivity {
     private static final String CURRENT_POSITION_KEY = "currentPosition";
@@ -54,6 +56,8 @@ public class ListActivity extends AbstractToolbarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+//        testAlarms();
+
         mButtonAdd =(FloatingActionButton) findViewById(R.id.list_add_reminder);
         if (mButtonAdd != null) {
             mButtonAdd.setOnClickListener(v -> {
@@ -61,18 +65,17 @@ public class ListActivity extends AbstractToolbarActivity {
                 startActivity(intent1);
             });
         }
+
         addRemindersRecyclerView();
 
         Intent intent = getIntent();
         if (intent != null) {
             mMenuLastPosition = intent.getIntExtra(ExtrasCodes.ACTIVE_MENU_POSITION_CODE, mMenuLastPosition);
-            Log.d("myapp", "position from extra : " + mMenuLastPosition);
         }
 
         if (savedInstanceState != null) {
             mCategories = savedInstanceState.getStringArray(CURRENT_CATEGORIES);
             mMenuLastPosition = savedInstanceState.getInt(CURRENT_POSITION_KEY);
-            Log.d("myapp " + this.getClass().toString(), "current position from saved instance state : " + mMenuLastPosition);
         }
         mCategoryLoader.forceLoad();
         mReminderLoader.forceLoad();
@@ -107,7 +110,6 @@ public class ListActivity extends AbstractToolbarActivity {
             return;
         }
         checkedCategory = getCheckedCategory();
-        Log.d("myapp", "rendered list of category : " + checkedCategory);
         TextView textView = (TextView) findViewById(R.id.list_category_name);
         if (textView != null) {
             textView.setText(checkedCategory);
@@ -152,7 +154,6 @@ public class ListActivity extends AbstractToolbarActivity {
         public void onLoadFinished(Loader<ArrayList<Reminder>> reminders, ArrayList<Reminder> data) {
             mRemindersAdapter = new ReminderListAdapter(activity, data);
             mRemindersRecyclerView.setAdapter(mRemindersAdapter);
-            Log.i("myapp " + this.getClass().toString(), "reminders load finished : " + data.size() + ". Setted in adapter");
         }
 
         @Override
@@ -160,5 +161,16 @@ public class ListActivity extends AbstractToolbarActivity {
             Log.d("myapp " + this.getClass().toString(), "reminder loader reset");
             mRemindersAdapter.reset();
         }
+    }
+
+    public void testAlarms() {
+        long time = new Date().getTime();
+        AlarmManager.setAlarm(this, 1000, time + 3000);
+//        try {
+//            Thread.sleep(4000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+
     }
 }
