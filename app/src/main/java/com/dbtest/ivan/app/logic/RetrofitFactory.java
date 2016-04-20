@@ -22,14 +22,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitFactory {
     public static final String GENYMOTION_URI = "http://10.0.3.2:8080";
     public static final String LOCALHOST_URI = "http://localhost:8080";
-    public static String BASE_URL = GENYMOTION_URI;//todo add from resources
+    public static String BASE_URL = LOCALHOST_URI;//todo add from resources
     private static String JSESSION_ID = null;
     public static final String SESSION_COOKIE_NAME = "JSESSIONID";
     public static final String URI_NAME = "pref_server_ip";
     public static Retrofit getInstance(){
         OkHttpClient.Builder okBuiler = new OkHttpClient.Builder();
-        okBuiler.readTimeout(100, TimeUnit.SECONDS);
-        okBuiler.connectTimeout(50, TimeUnit.SECONDS);
+        okBuiler.readTimeout(10, TimeUnit.SECONDS);
+        okBuiler.connectTimeout(5, TimeUnit.SECONDS);
         okBuiler.addInterceptor(new Interceptor() {
             @Override
             public Response intercept(Chain chain) throws IOException {

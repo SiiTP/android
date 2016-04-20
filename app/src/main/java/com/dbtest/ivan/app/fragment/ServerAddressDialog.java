@@ -66,17 +66,18 @@ public class ServerAddressDialog extends DialogPreference {
         isCustom.setChecked(false);
         WaitingManager.makeWaitingView(custom, true);
         String uri = getSharedPreferences().getString(getKey(),null);
-
-        switch (uri){
-            case RetrofitFactory.GENYMOTION_URI:
-                geny.setChecked(true);
-                break;
-            case RetrofitFactory.LOCALHOST_URI:
-                local.setChecked(true);
-                break;
-            default:
-                ((EditText)dialogView.findViewById(R.id.addr_custom)).setText(uri);
-                isCustom.setChecked(true);
+        if(uri != null) {
+            switch (uri) {
+                case RetrofitFactory.GENYMOTION_URI:
+                    geny.setChecked(true);
+                    break;
+                case RetrofitFactory.LOCALHOST_URI:
+                    local.setChecked(true);
+                    break;
+                default:
+                    ((EditText) dialogView.findViewById(R.id.addr_custom)).setText(uri);
+                    isCustom.setChecked(true);
+            }
         }
     }
 
@@ -87,6 +88,7 @@ public class ServerAddressDialog extends DialogPreference {
             String uri = getUri();
             persistString(uri);
             RetrofitFactory.setServerURI(uri);
+            System.out.println(RetrofitFactory.BASE_URL);
         }
 
     }

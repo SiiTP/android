@@ -38,29 +38,22 @@
         <item name="android:maxLength">48</item>
     </style>
 
-    <!--TODO only theme colors!!! md_white_1000-->
     <style name="SignRelativeLayout">
-        <item name="android:background">@color/md_white_1000</item>
+        <!--<item name="android:background">@color/md_white_1000</item>-->
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:elevation">3dp</item>
-        <item name="android:padding">10dp</item>
+        <!--<item name="android:elevation">3dp</item>-->
+        <!--<item name="android:padding">10dp</item>-->
         <item name="android:gravity">center_horizontal</item>
         <item name="android:layout_centerHorizontal">true</item>
     </style>
 
     <style name="SignSubmit" parent="Base.Widget.AppCompat.Button.Borderless">
-        <!--<item name="android:layout_width">@dimen/sign_inputs_width</item>-->
-        <!--<item name="android:background">@color/app_accent</item>-->
-        <!--<item name="android:textSize">@dimen/font_size_medium</item>-->
-        <!--<item name="android:layout_height">@dimen/sign_button_height</item>-->
-        <!--<item name="android:layout_centerHorizontal">true</item>-->
-        <!--TODO only theme colors!!! md_white_1000-->
-        <item name="android:background">@color/md_white_1000</item>
+        <!--<item name="android:background">@color/md_white_1000</item>-->
         <item name="android:textColor">@color/app_accent</item>
         <item name="android:textSize">@dimen/font_size_medium</item>
-        <item name="android:layout_height">@dimen/sign_button_height</item>
         <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_centerHorizontal">true</item>
     </style>
 
