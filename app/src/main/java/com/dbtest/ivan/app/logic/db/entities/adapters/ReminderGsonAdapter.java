@@ -1,5 +1,6 @@
 package com.dbtest.ivan.app.logic.db.entities.adapters;
 
+import com.dbtest.ivan.app.logic.db.entities.Category;
 import com.dbtest.ivan.app.logic.db.entities.Reminder;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
@@ -40,6 +41,11 @@ public class ReminderGsonAdapter extends TypeAdapter<Reminder> {
             switch (name){
                 case "id":
                     reminder.setServerId(in.nextLong());
+                    break;
+                case "idCategory":
+                    Category c = new Category();
+                    c.setServerId(in.nextLong());
+                    reminder.setCategory(c);
                     break;
                 case "time":
                     reminder.setReminderTime(new Date(in.nextLong()));

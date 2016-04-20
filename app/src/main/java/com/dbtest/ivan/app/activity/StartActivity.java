@@ -35,7 +35,10 @@ public class StartActivity extends Activity {
         setContentView(R.layout.activity_start);
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         RetrofitFactory.setSession(preferences.getString(RetrofitFactory.SESSION_COOKIE_NAME, null));
-        RetrofitFactory.setServerURI(preferences.getString(RetrofitFactory.URI_NAME, null));// use preferences URI from settings
+        String uri = preferences.getString(RetrofitFactory.URI_NAME, null);
+        if(uri != null) {
+            RetrofitFactory.setServerURI(uri);
+        }
 
         mOrmHelper = new OrmHelper(this);
         Dao<Category, Long> categoryDao = mOrmHelper.getCategoryDao();

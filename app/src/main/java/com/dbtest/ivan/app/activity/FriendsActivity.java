@@ -67,14 +67,13 @@ public class FriendsActivity extends AbstractToolbarActivity {
 
     @Override
     public void onDestroy() {
-        this.unregisterReceiver(receiver);
+        if(receiver != null) this.unregisterReceiver(receiver);
         super.onDestroy();
     }
 
     public void setFriendListAdapter(List<Friend> friendsList) {
         if (friendListAdapter == null) {
             friendListAdapter = new FriendListAdapter(this, friendsList);
-
             recyclerView.setAdapter(friendListAdapter);
         }
     }

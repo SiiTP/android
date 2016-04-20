@@ -67,6 +67,7 @@ public class SignUpActivity extends AbstractToolbarActivity implements WaitingAc
         usernameView.addTextChangedListener(new MaxLengthTextWatcher((TextInputLayout)findViewById(R.id.signup_username_supp),32));
         emailView.addTextChangedListener(new MaxLengthTextWatcher((TextInputLayout) findViewById(R.id.signup_email_supp), 48));
         emailView.setOnFocusChangeListener(new EmailFocusListener((TextInputLayout) findViewById(R.id.signup_email_supp)));
+
         if (submit != null) {
             submit.setOnClickListener(v -> {
 

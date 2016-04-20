@@ -28,6 +28,7 @@
         <service android:name=".services.intent.CategoryIntentService" />
         <service android:name=".services.intent.FriendIntentService" />
         <service android:name=".services.intent.SynchronizeIntentService"/>
+        <service android:name=".services.intent.FullSyncService"/>
 
         <receiver android:name=".receiver.AlarmReceiver"/>
     </application>
