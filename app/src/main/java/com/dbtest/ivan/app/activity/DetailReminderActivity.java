@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -29,6 +30,7 @@ import com.dbtest.ivan.app.utils.WaitingManager;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -66,6 +68,8 @@ public class DetailReminderActivity extends AbstractToolbarActivity implements D
         bar.setVisibility(View.GONE);
         helper = OpenHelperManager.getHelper(this,OrmHelper.class);
         List<Category> categoryList;
+        TextInputLayout layout = (TextInputLayout) findViewById(R.id.details_text_supp);
+        layout.setCounterEnabled(true);
         try {
             categoryList = helper.getCategoryDao().queryForAll();
             List<String> categoriesNames = new ArrayList<>(categoryList.size());
@@ -144,7 +148,9 @@ public class DetailReminderActivity extends AbstractToolbarActivity implements D
         TextView dateTextView = (TextView) findViewById(R.id.details_picked_date);
         if (dateTextView != null) {
             reminderDate = calendar;
-            dateTextView.setText( new Date(calendar.getTimeInMillis()).toString());
+            Date d = new Date(calendar.getTimeInMillis());
+            SimpleDateFormat format = new SimpleDateFormat("EEEE dd.MM.yyyy HH:mm");
+            dateTextView.setText(format.format(d));
         }
     }
 

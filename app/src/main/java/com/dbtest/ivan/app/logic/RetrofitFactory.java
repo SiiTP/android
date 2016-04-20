@@ -20,14 +20,16 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by ivan on 26.03.16.
  */
 public class RetrofitFactory {
-    private static final String BASE_URL ="http://localhost:8080";//todo add from resources
+    public static final String GENYMOTION_URI = "http://10.0.3.2:8080";
+    public static final String LOCALHOST_URI = "http://localhost:8080";
+    public static String BASE_URL = LOCALHOST_URI;//todo add from resources
     private static String JSESSION_ID = null;
     public static final String SESSION_COOKIE_NAME = "JSESSIONID";
-    public static final String SESSION_STORAGE_NAME = "sessionStorage";
+    public static final String URI_NAME = "pref_server_ip";
     public static Retrofit getInstance(){
         OkHttpClient.Builder okBuiler = new OkHttpClient.Builder();
-        okBuiler.readTimeout(100, TimeUnit.SECONDS);
-        okBuiler.connectTimeout(50, TimeUnit.SECONDS);
+        okBuiler.readTimeout(10, TimeUnit.SECONDS);
+        okBuiler.connectTimeout(5, TimeUnit.SECONDS);
         okBuiler.addInterceptor(new Interceptor() {
             @Override
             public Response intercept(Chain chain) throws IOException {
@@ -45,5 +47,8 @@ public class RetrofitFactory {
     }
     public static void setSession(String session){
         JSESSION_ID = session;
+    }
+    public static void setServerURI(String uri){
+        BASE_URL = uri;
     }
 }

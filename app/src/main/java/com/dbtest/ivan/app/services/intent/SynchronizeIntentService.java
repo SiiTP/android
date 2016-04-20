@@ -17,7 +17,7 @@ import java.sql.SQLException;
 import retrofit2.Retrofit;
 
 public class SynchronizeIntentService extends IntentService {
-
+    public static final String FULL_SYNC_ACTION ="sync.full";
     private OrmHelper helper;
     public SynchronizeIntentService() {
         super("SynchronizeIntentService");
@@ -32,6 +32,7 @@ public class SynchronizeIntentService extends IntentService {
             Retrofit retrofit = RetrofitFactory.getInstance();
             CategorySyncService categorySyncService = new CategorySyncService(helper.getCategoryDao(),retrofit.create(CategoryApi.class));
             ReminderSyncService reminderSyncService = new ReminderSyncService(helper.getReminderDao(),retrofit.create(ReminderApi.class));
+
             try {
                 categorySyncService.syncAll();
                 if(categorySyncService.isSynced()) {
@@ -40,10 +41,12 @@ public class SynchronizeIntentService extends IntentService {
             } catch (IOException | SQLException e) {
                 e.printStackTrace();
             }
-
-            OpenHelperManager.releaseHelper();
         }
     }
 
-
+    @Override
+    public void onDestroy() {
+        OpenHelperManager.releaseHelper();
+        super.onDestroy();
+    }
 }

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 import android.widget.Button;
@@ -13,9 +14,12 @@ import android.widget.Toast;
 
 import com.dbtest.ivan.app.R;
 import com.dbtest.ivan.app.activity.abstract_toolbar_activity.AbstractToolbarActivity;
+import com.dbtest.ivan.app.activity.list_activity.ListActivity;
 import com.dbtest.ivan.app.receiver.CustomReceiver;
 import com.dbtest.ivan.app.services.intent.SignInIntentService;
+import com.dbtest.ivan.app.utils.EmailFocusListener;
 import com.dbtest.ivan.app.utils.WaitingManager;
+import com.dbtest.ivan.app.utils.watchers.MaxLengthTextWatcher;
 
 public class SignInActivity extends AbstractToolbarActivity implements WaitingActivity {
     private static final int MENU_POSITION = -1; //activity not in menu list
@@ -51,35 +55,45 @@ public class SignInActivity extends AbstractToolbarActivity implements WaitingAc
         passwordView = (EditText) findViewById(R.id.signin_password);
         submit = (Button) findViewById(R.id.signin_submit);
         bar.setVisibility(View.GONE);
-//        toggleWaitingMode();
+
+        emailView.setOnFocusChangeListener(new EmailFocusListener((TextInputLayout) findViewById(R.id.signin_email_supp)));
+        emailView.addTextChangedListener(new MaxLengthTextWatcher((TextInputLayout) findViewById(R.id.signin_email_supp), 48));
+        passwordView.addTextChangedListener(new MaxLengthTextWatcher((TextInputLayout) findViewById(R.id.signin_password_supp),16));
         if (submit != null) {
-            submit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+            submit.setOnClickListener(v -> {
+                CharSequence f = ((TextInputLayout) findViewById(R.id.signin_email_supp)).getError();
+                if(f == null){
+                    f = ((TextInputLayout) findViewById(R.id.signin_password_supp)).getError();
+                }
+                if(f == null) {
                     String email = null;
-                    if ( emailView != null) {
+                    if (emailView != null) {
                         email = emailView.getText().toString();
+                    }else{
+                        email = "";
                     }
                     String password = null;
-                    if(passwordView != null){
+                    if (passwordView != null) {
                         password = passwordView.getText().toString();
+                    }else{
+                        password = "";
                     }
                     System.out.println(email + ' ' + password);
-
-                    Bundle bundle = new Bundle();
-                    bundle.putString(SIGNIN_EMAIL, email);
-                    bundle.putString(SIGNIN_PASSWORD, password);
-                    Intent intent = new Intent(SignInActivity.this, SignInIntentService.class);
-                    intent.putExtras(bundle);
-                    startService(intent);
-                    setWaiting(true);
-                    IntentFilter filter = new IntentFilter(CustomReceiver.WAITING_ACTION);
-                    filter.addCategory(Intent.CATEGORY_DEFAULT);
-                    receiver = new CustomReceiver(SignInActivity.this);
-                    LocalBroadcastManager.getInstance(SignInActivity.this).registerReceiver(receiver, filter);
-
-
+                    if(!email.isEmpty() && !password.isEmpty()) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString(SIGNIN_EMAIL, email);
+                        bundle.putString(SIGNIN_PASSWORD, password);
+                        Intent intent = new Intent(SignInActivity.this, SignInIntentService.class);
+                        intent.putExtras(bundle);
+                        startService(intent);
+                        setWaiting(true);
+                        IntentFilter filter = new IntentFilter(CustomReceiver.WAITING_ACTION);
+                        filter.addCategory(Intent.CATEGORY_DEFAULT);
+                        receiver = new CustomReceiver(SignInActivity.this);
+                        LocalBroadcastManager.getInstance(SignInActivity.this).registerReceiver(receiver, filter);
+                    }
                 }
+
             });
         }
 
@@ -103,14 +117,13 @@ public class SignInActivity extends AbstractToolbarActivity implements WaitingAc
     public void notifyResult(String result) {
         if(toast == null) {
             toast = Toast.makeText(SignInActivity.this, "", Toast.LENGTH_LONG);
-//            snackbar = Snackbar.make(findViewById(R.id.signin_layout), "None", Snackbar.LENGTH_LONG);
-//            TextView textView = (TextView)snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
-//            textView.setTextColor(Color.WHITE);
         }
-//        snackbar.setText(result);
-//        snackbar.show();
         toast.setText(result);
         toast.show();
+        if(result.equals(SignInIntentService.SUCCESS_MSG)){
+            Intent intent = new Intent(this, ListActivity.class);
+            startActivity(intent);
+        }
     }
 
 }

@@ -21,6 +21,7 @@
     <Button
         style="@style/SignSubmit"
         android:text="@string/category_dialog_submit"
+        android:layout_height="wrap_content"
         android:id="@+id/category_add_button"
         android:layout_below="@+id/category_name_supp"
         />

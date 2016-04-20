@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="20dp"
+    android:paddingTop="20dp">
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:id="@+id/addr_radio_grp">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Genymotion"
+            android:id="@+id/addr_geny"
+            android:layout_alignParentTop="true"
+            android:layout_alignLeft="@+id/editText"
+            android:layout_alignStart="@+id/editText" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Localhost"
+            android:id="@+id/addr_localhost"
+            android:layout_below="@+id/addr_geny"
+            android:layout_alignLeft="@+id/editText"
+            android:layout_alignStart="@+id/editText" />
+    </RadioGroup>
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Custom"
+        android:layout_marginTop="20dp"
+        android:id="@+id/addr_custom_check"
+        android:layout_below="@+id/addr_radio_grp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+    <android.support.design.widget.TextInputLayout
+        style="@style/SupportInput"
+        android:id="@+id/addr_custom_supp"
+        android:layout_below="@+id/addr_custom_check"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+        <EditText
+            android:layout_width="@dimen/sign_inputs_width"
+            android:layout_height="wrap_content"
+            android:id="@+id/addr_custom"
+            android:inputType="textUri"
+            android:hint="custom address"
+             />
+    </android.support.design.widget.TextInputLayout>
+
+</RelativeLayout>
