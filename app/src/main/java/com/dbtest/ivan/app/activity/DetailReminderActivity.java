@@ -46,6 +46,7 @@ public class DetailReminderActivity extends AbstractToolbarActivity implements D
     private Button categoryButton;
     private Button insert;
     private EditText textView;
+    private TextInputLayout textLayout;
     private ProgressBar bar;
     private BroadcastReceiver receiver;
 
@@ -84,7 +85,8 @@ public class DetailReminderActivity extends AbstractToolbarActivity implements D
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
+        textView = ((EditText) findViewById(R.id.details_text));
+        textLayout = ((TextInputLayout) findViewById(R.id.details_text_supp));
         pickButton = (Button) findViewById(R.id.pick_date_button);
         if (pickButton != null) {
             pickButton.setOnClickListener(new View.OnClickListener() {
@@ -109,23 +111,24 @@ public class DetailReminderActivity extends AbstractToolbarActivity implements D
             insert.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Long time = reminderDate.getTimeInMillis();
-                    textView = ((EditText) findViewById(R.id.details_text));
                     String text = textView.getText().toString();
                     String categoryName = (String) spinner.getSelectedItem();
-                    Bundle bundle = new Bundle();
-                    bundle.putLong(ReminderIntentService.TIME, time);
-                    bundle.putString(ReminderIntentService.TEXT, text);
-                    bundle.putString(ReminderIntentService.CATEGORY, categoryName);
-                    bundle.putLong(ReminderIntentService.ID, -1L);
-                    Intent intent = new Intent(DetailReminderActivity.this, ReminderIntentService.class);
-                    intent.putExtras(bundle);
-                    startService(intent);
-                    setWaiting(true);
-                    IntentFilter filter = new IntentFilter(CustomReceiver.WAITING_ACTION);
-                    filter.addCategory(Intent.CATEGORY_DEFAULT);
-                    receiver = new CustomReceiver(DetailReminderActivity.this);
-                    LocalBroadcastManager.getInstance(DetailReminderActivity.this).registerReceiver(receiver, filter);
+                    if((reminderDate != null && categoryName != null) && !text.isEmpty()) {
+                        Long time = reminderDate.getTimeInMillis();
+                        Bundle bundle = new Bundle();
+                        bundle.putLong(ReminderIntentService.TIME, time);
+                        bundle.putString(ReminderIntentService.TEXT, text);
+                        bundle.putString(ReminderIntentService.CATEGORY, categoryName);
+                        bundle.putLong(ReminderIntentService.ID, -1L);
+                        Intent intent = new Intent(DetailReminderActivity.this, ReminderIntentService.class);
+                        intent.putExtras(bundle);
+                        startService(intent);
+                        setWaiting(true);
+                        IntentFilter filter = new IntentFilter(CustomReceiver.WAITING_ACTION);
+                        filter.addCategory(Intent.CATEGORY_DEFAULT);
+                        receiver = new CustomReceiver(DetailReminderActivity.this);
+                        LocalBroadcastManager.getInstance(DetailReminderActivity.this).registerReceiver(receiver, filter);
+                    }
                 }
             });
 
@@ -133,7 +136,7 @@ public class DetailReminderActivity extends AbstractToolbarActivity implements D
 
         }
     }
-    void showDateTimeDialog(){
+    public void showDateTimeDialog(){
         DateTimePickerDialog dateTimePickerDialog = new DateTimePickerDialog();
         dateTimePickerDialog.show(getFragmentManager(),"Choose date");
     }
@@ -154,7 +157,7 @@ public class DetailReminderActivity extends AbstractToolbarActivity implements D
         }
     }
 
-    void showCategoryDialog(){
+    public void showCategoryDialog(){
         CategoryDialog categoryDialog = new CategoryDialog();
         categoryDialog.show(getFragmentManager(), "Create category");
     }
