@@ -69,14 +69,10 @@ public class SignInActivity extends AbstractToolbarActivity implements WaitingAc
                     String email = null;
                     if (emailView != null) {
                         email = emailView.getText().toString();
-                    }else{
-                        email = "";
                     }
                     String password = null;
                     if (passwordView != null) {
                         password = passwordView.getText().toString();
-                    }else{
-                        password = "";
                     }
                     System.out.println(email + ' ' + password);
                     if(!email.isEmpty() && !password.isEmpty()) {

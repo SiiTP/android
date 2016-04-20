@@ -85,23 +85,17 @@ public class SignUpActivity extends AbstractToolbarActivity implements WaitingAc
                 if(f == null) {
                     String email = null;
                     if (emailView != null) {
-                        email = emailView.getText().toString();
-                    }else{
-                        email = "";
+                        email = emailView.getText().toString();//kak delat validaciyu?
                     }
 
                     String username = null;
                     if (usernameView != null) {
                         username = usernameView.getText().toString();
-                    }else{
-                        username = "";
                     }
 
                     String pass = null;
                     if (passwordView != null) {
                         pass = passwordView.getText().toString();
-                    }else{
-                        pass = "";
                     }
                     if((!email.isEmpty() && !pass.isEmpty()) && !username.isEmpty()) {
                         Bundle bundle = new Bundle();

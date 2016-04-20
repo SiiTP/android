@@ -31,7 +31,7 @@ public class ReminderSyncService extends AbstractSyncService<Reminder> {
         Response<Reminder> response = request.execute();
         boolean result = false;
         long serverId = 0;
-        if (response.body() != null) {
+        if (response.body() != null && response.body().getServerId() != null) {
             serverId = response.body().getServerId();
             if(serverId == -1){//todo add const reminder already exist
                 response = api.update(item).execute();
