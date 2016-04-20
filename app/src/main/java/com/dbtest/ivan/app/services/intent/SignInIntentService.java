@@ -26,7 +26,9 @@ import retrofit2.Response;
  * Created by ivan on 25.03.16.
  */
 public class SignInIntentService extends IntentService {
-    public static final String PREF_SESSION = "sessionPreference";
+    public static final String SUCCESS_MSG = "Successful login";
+    public static final String FAILURE_MSG = "Wrong email or password";
+    public static final String SOMETHING_WRONG_MSG = "Something went wrong";
     public static final long ERROR_WRONG_USER_OR_PASS = -1L;
     public SignInIntentService() {
         super("SignInService");
@@ -79,15 +81,15 @@ public class SignInIntentService extends IntentService {
                 preferences.edit().putString(RetrofitFactory.SESSION_COOKIE_NAME,session).commit();
                 Log.d("myapp " + SignUpIntentService.class.toString(), session);
                 DrawerMenuManager.setIsLogged(true); // TODO после этого надо интентом перекинуть на лист активити чтобы меню пересоздалось и профиль отобразился
-                answer.putString(CustomReceiver.RESULT, "Successful login");
+                answer.putString(CustomReceiver.RESULT, SUCCESS_MSG);
             }else{
                 Log.d("myapp " + SignUpIntentService.class.toString(), "failure login");
-                answer.putString(CustomReceiver.RESULT, "Wrong email or password");
+                answer.putString(CustomReceiver.RESULT, FAILURE_MSG);
             }
 
             //todo sendbroadcast intent with session & user data??!?!
         } catch (IOException e) {
-            answer.putString(CustomReceiver.RESULT, "Something went wrong");
+            answer.putString(CustomReceiver.RESULT, SOMETHING_WRONG_MSG);
             e.printStackTrace();
         }
         try {

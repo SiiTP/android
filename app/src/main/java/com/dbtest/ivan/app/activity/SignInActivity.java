@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.dbtest.ivan.app.R;
 import com.dbtest.ivan.app.activity.abstract_toolbar_activity.AbstractToolbarActivity;
+import com.dbtest.ivan.app.activity.list_activity.ListActivity;
 import com.dbtest.ivan.app.receiver.CustomReceiver;
 import com.dbtest.ivan.app.services.intent.SignInIntentService;
 import com.dbtest.ivan.app.utils.EmailFocusListener;
@@ -68,24 +69,29 @@ public class SignInActivity extends AbstractToolbarActivity implements WaitingAc
                     String email = null;
                     if (emailView != null) {
                         email = emailView.getText().toString();
+                    }else{
+                        email = "";
                     }
                     String password = null;
                     if (passwordView != null) {
                         password = passwordView.getText().toString();
+                    }else{
+                        password = "";
                     }
                     System.out.println(email + ' ' + password);
-
-                    Bundle bundle = new Bundle();
-                    bundle.putString(SIGNIN_EMAIL, email);
-                    bundle.putString(SIGNIN_PASSWORD, password);
-                    Intent intent = new Intent(SignInActivity.this, SignInIntentService.class);
-                    intent.putExtras(bundle);
-                    startService(intent);
-                    setWaiting(true);
-                    IntentFilter filter = new IntentFilter(CustomReceiver.WAITING_ACTION);
-                    filter.addCategory(Intent.CATEGORY_DEFAULT);
-                    receiver = new CustomReceiver(SignInActivity.this);
-                    LocalBroadcastManager.getInstance(SignInActivity.this).registerReceiver(receiver, filter);
+                    if(!email.isEmpty() && !password.isEmpty()) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString(SIGNIN_EMAIL, email);
+                        bundle.putString(SIGNIN_PASSWORD, password);
+                        Intent intent = new Intent(SignInActivity.this, SignInIntentService.class);
+                        intent.putExtras(bundle);
+                        startService(intent);
+                        setWaiting(true);
+                        IntentFilter filter = new IntentFilter(CustomReceiver.WAITING_ACTION);
+                        filter.addCategory(Intent.CATEGORY_DEFAULT);
+                        receiver = new CustomReceiver(SignInActivity.this);
+                        LocalBroadcastManager.getInstance(SignInActivity.this).registerReceiver(receiver, filter);
+                    }
                 }
 
             });
@@ -111,14 +117,13 @@ public class SignInActivity extends AbstractToolbarActivity implements WaitingAc
     public void notifyResult(String result) {
         if(toast == null) {
             toast = Toast.makeText(SignInActivity.this, "", Toast.LENGTH_LONG);
-//            snackbar = Snackbar.make(findViewById(R.id.signin_layout), "None", Snackbar.LENGTH_LONG);
-//            TextView textView = (TextView)snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
-//            textView.setTextColor(Color.WHITE);
         }
-//        snackbar.setText(result);
-//        snackbar.show();
         toast.setText(result);
         toast.show();
+        if(result.equals(SignInIntentService.SUCCESS_MSG)){
+            Intent intent = new Intent(this, ListActivity.class);
+            startActivity(intent);
+        }
     }
 
 }

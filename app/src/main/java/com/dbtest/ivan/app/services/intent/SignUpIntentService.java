@@ -20,6 +20,9 @@ import retrofit2.Retrofit;
 
 
 public class SignUpIntentService extends IntentService {
+    public static final String SUCCESS_MSG = "Successful registration";
+    public static final String FAILURE_MSG = "Such user already exist";
+    public static final String SOMETHING_WRONG_MSG = "Something went wrong";
     public static final long ERROR_SUCH_USER_EXIST = -1L;
     public SignUpIntentService() {
         super("SIgnUpIntentService");
@@ -41,13 +44,13 @@ public class SignUpIntentService extends IntentService {
             long id = userResponse.body().getId();
             Log.d("myapp " + SignUpIntentService.class.toString(), Long.toString(id));
             if(id != ERROR_SUCH_USER_EXIST) {
-                answer.putString(CustomReceiver.RESULT, "Successful registration");
+                answer.putString(CustomReceiver.RESULT, SUCCESS_MSG);
             }else{
-                answer.putString(CustomReceiver.RESULT,"Such user already exist");
+                answer.putString(CustomReceiver.RESULT,FAILURE_MSG);
             }
 
         } catch (IOException e) {
-            answer.putString(CustomReceiver.RESULT,"Something went wrong");
+            answer.putString(CustomReceiver.RESULT,SOMETHING_WRONG_MSG);
             e.printStackTrace();
         }
         try {

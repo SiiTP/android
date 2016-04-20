@@ -86,31 +86,38 @@ public class SignUpActivity extends AbstractToolbarActivity implements WaitingAc
                     String email = null;
                     if (emailView != null) {
                         email = emailView.getText().toString();
+                    }else{
+                        email = "";
                     }
 
                     String username = null;
                     if (usernameView != null) {
                         username = usernameView.getText().toString();
+                    }else{
+                        username = "";
                     }
 
                     String pass = null;
                     if (passwordView != null) {
                         pass = passwordView.getText().toString();
+                    }else{
+                        pass = "";
                     }
+                    if((!email.isEmpty() && !pass.isEmpty()) && !username.isEmpty()) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString(SIGNUP_EMAIL, email);
+                        bundle.putString(SIGNUP_PASS, pass);
+                        bundle.putString(SIGNUP_USERNAME, username);
 
-                    Bundle bundle = new Bundle();
-                    bundle.putString(SIGNUP_EMAIL, email);
-                    bundle.putString(SIGNUP_PASS, pass);
-                    bundle.putString(SIGNUP_USERNAME, username);
-
-                    IntentFilter filter = new IntentFilter(CustomReceiver.WAITING_ACTION);
-                    filter.addCategory(Intent.CATEGORY_DEFAULT);
-                    receiver = new CustomReceiver(SignUpActivity.this);
-                    LocalBroadcastManager.getInstance(SignUpActivity.this).registerReceiver(receiver, filter);
-                    Intent intent = new Intent(SignUpActivity.this, SignUpIntentService.class);
-                    intent.putExtras(bundle);
-                    startService(intent);
-                    setWaiting(true);
+                        IntentFilter filter = new IntentFilter(CustomReceiver.WAITING_ACTION);
+                        filter.addCategory(Intent.CATEGORY_DEFAULT);
+                        receiver = new CustomReceiver(SignUpActivity.this);
+                        LocalBroadcastManager.getInstance(SignUpActivity.this).registerReceiver(receiver, filter);
+                        Intent intent = new Intent(SignUpActivity.this, SignUpIntentService.class);
+                        intent.putExtras(bundle);
+                        startService(intent);
+                        setWaiting(true);
+                    }
                 }
             });
         }
@@ -136,7 +143,13 @@ public class SignUpActivity extends AbstractToolbarActivity implements WaitingAc
         if(toast == null) {
             toast = Toast.makeText(SignUpActivity.this, "", Toast.LENGTH_LONG);
         }
+
         toast.setText(result);
         toast.show();
+
+        if(result.equals(SignUpIntentService.SUCCESS_MSG)){
+            Intent intent = new Intent(this,SignInActivity.class);
+            startActivity(intent);
+        }
     }
 }
