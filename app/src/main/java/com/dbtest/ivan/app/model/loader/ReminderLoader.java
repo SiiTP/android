@@ -27,7 +27,6 @@ public class ReminderLoader extends AsyncTaskLoader<ArrayList<Reminder>> {
 
     @Override
     public ArrayList<Reminder> loadInBackground() {
-        Log.d("myapp", "reminder loader do in background");
         Dao<Reminder, Long> reminderDao = ormHelper.getReminderDao();
         Dao<Category, Long> categoryDao = ormHelper.getCategoryDao();
 
@@ -42,7 +41,6 @@ public class ReminderLoader extends AsyncTaskLoader<ArrayList<Reminder>> {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        Log.d("myapp", "reminder return from doInBackground size : " + (!reminders.isEmpty() ? reminders.size() : 0));
         return (ArrayList<Reminder>)reminders;
     }
 

@@ -20,16 +20,16 @@
         <activity android:name=".activity.SignUpActivity" />
         <activity android:name=".activity.FriendsActivity" />
         <activity android:name=".activity.SettingsActivity" />
+        <activity android:name=".activity.DetailReminderActivity" />
 
         <service android:name=".services.intent.SignInIntentService" />
         <service android:name=".services.intent.SignUpIntentService" />
         <service android:name=".services.intent.ReminderIntentService" />
         <service android:name=".services.intent.CategoryIntentService" />
         <service android:name=".services.intent.FriendIntentService" />
-
-        <activity android:name=".activity.DetailReminderActivity" />
-
         <service android:name=".services.intent.SynchronizeIntentService"/>
+
+        <receiver android:name=".receiver.AlarmReceiver"/>
     </application>
 
 </manifest>

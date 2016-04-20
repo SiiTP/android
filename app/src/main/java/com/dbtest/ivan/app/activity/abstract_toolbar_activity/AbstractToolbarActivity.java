@@ -51,7 +51,6 @@ public abstract class AbstractToolbarActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.v("myapp", "abstract activity on create");
         RelativeLayout mLayout = (RelativeLayout) getLayoutInflater().inflate(R.layout.activity_abstract, null);
         View addingView = getLayoutInflater().inflate(getBodyResId(), null);
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
@@ -66,7 +65,6 @@ public abstract class AbstractToolbarActivity extends AppCompatActivity {
 
         setToolbarAndMenu();
         mCategoryLoader.forceLoad(); // загружем категории из базы
-        Log.d("myapp", "categories installed");
     }
 
     @Override
@@ -107,7 +105,6 @@ public abstract class AbstractToolbarActivity extends AppCompatActivity {
 //        data.add(category2);
             mCategories = Category.toStringArray(data);
             afterCategoriesLoaded();
-            Log.d("myapp" + this.getClass().toString(), "category load finished : " + data.size());
         }
 
         @Override
