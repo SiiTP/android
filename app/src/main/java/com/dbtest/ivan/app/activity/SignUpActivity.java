@@ -59,7 +59,7 @@ public class SignUpActivity extends AbstractToolbarActivity implements WaitingAc
         usernameView = (EditText) findViewById(R.id.signup_username);
         passwordView = (EditText) findViewById(R.id.signup_password);
         repeatPasswordView = (EditText) findViewById(R.id.signup_repeat_password);
-        submit = (Button) findViewById(R.id.signup_submit);//todo KAK BLYAT YBRAT KRASNYU LINIYU??!?!?!?!?!?!?!? POCHEMY ONA MENYAETSYA KOGDA OWIBKY ISPRAVIT V DRYGOY VIEW!?!?!?
+        submit = (Button) findViewById(R.id.signup_submit);
 
         repeatPasswordView.addTextChangedListener(new PasswordsTextWatcher((TextInputLayout)findViewById(R.id.signup_repeat_password_supp),passwordView));
         passwordView.addTextChangedListener(new MaxLengthTextWatcher((TextInputLayout)findViewById(R.id.signup_password_supp),16));
@@ -86,7 +86,7 @@ public class SignUpActivity extends AbstractToolbarActivity implements WaitingAc
                 if(f == null) {
                     String email = null;
                     if (emailView != null) {
-                        email = emailView.getText().toString();//kak delat validaciyu?
+                        email = emailView.getText().toString();
                     }
 
                     String username = null;

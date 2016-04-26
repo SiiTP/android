@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
-
+apply plugin: 'com.google.gms.google-services'
 buildscript {
     repositories {
         mavenCentral()
@@ -47,4 +47,5 @@ dependencies {
     compile 'com.j256.ormlite:ormlite-android:4.48'
     compile 'com.android.support:recyclerview-v7:23.2.0'
     compile 'com.android.support:design:23.2.0'
+    compile "com.google.android.gms:play-services-gcm:8.3.0"
 }

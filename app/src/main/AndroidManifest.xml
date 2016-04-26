@@ -3,7 +3,10 @@
     package="com.dbtest.ivan.app">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
+    <permission android:name="com.dbtest.ivan.app.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="com.dbtest.ivan.app.permission.C2D_MESSAGE" />
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -12,10 +15,11 @@
         <activity android:name=".activity.StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.main" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.list_activity.ListActivity"/>
+        <activity android:name=".activity.list_activity.ListActivity" />
         <activity android:name=".activity.SignInActivity" />
         <activity android:name=".activity.SignUpActivity" />
         <activity android:name=".activity.FriendsActivity" />
@@ -27,10 +31,38 @@
         <service android:name=".services.intent.ReminderIntentService" />
         <service android:name=".services.intent.CategoryIntentService" />
         <service android:name=".services.intent.FriendIntentService" />
-        <service android:name=".services.intent.SynchronizeIntentService"/>
-        <service android:name=".services.intent.FullSyncService"/>
+        <service android:name=".services.intent.SynchronizeIntentService" />
+        <service android:name=".services.intent.FullSyncService" />
 
-        <receiver android:name=".receiver.AlarmReceiver"/>
+        <receiver android:name=".receiver.AlarmReceiver" />
+
+        <activity android:name=".activity.GCM"></activity>
+
+        <!-- GCM -->
+        <receiver
+            android:name="com.google.android.gms.gcm.GcmReceiver"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <category android:name="com.dbtest.ivan.app" />
+            </intent-filter>
+        </receiver>
+        <service
+            android:name="com.dbtest.ivan.app.services.CustomGcmListener"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            </intent-filter>
+        </service>
+        <service
+            android:name="com.dbtest.ivan.app.services.CustomInstanceIdListener"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.android.gms.iid.InstanceID" />
+            </intent-filter>
+        </service>
+
     </application>
 
 </manifest>
