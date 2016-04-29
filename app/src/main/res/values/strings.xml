@@ -2,6 +2,7 @@
     <string name="app_name">FriendReminder</string>
     <string name="dev_key">AIzaSyDP2sfM-IkVJy_ksC-Sr3V-LEM6YLlkZJE</string>
     <string name="dev_key2">AIzaSyC1O99_tQxjrQ2uRJpv8CduyCulPZEaFTA</string>
+    <string name="proj_numb">114694038794</string>
     <string name="title_activity_list">ListActivity</string>
 
     <string name="hello_world">Hello world!</string>

@@ -6,11 +6,13 @@ import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
+import com.dbtest.ivan.app.R;
 import com.dbtest.ivan.app.activity.SignUpActivity;
 import com.dbtest.ivan.app.logic.RetrofitFactory;
 import com.dbtest.ivan.app.logic.api.AuthApi;
 import com.dbtest.ivan.app.logic.db.entities.User;
 import com.dbtest.ivan.app.receiver.CustomReceiver;
+import com.dbtest.ivan.app.utils.TokenHelper;
 
 import java.io.IOException;
 
@@ -34,6 +36,10 @@ public class SignUpIntentService extends IntentService {
         String password = bundle.getString(SignUpActivity.SIGNUP_PASS);
         String username = bundle.getString(SignUpActivity.SIGNUP_USERNAME);
         User user = new User(username,password,email);
+        String token = TokenHelper.getToken(this, getString(R.string.proj_numb));
+        if(token != null) {
+            user.setToken(token);
+        }
         Retrofit retrofit = RetrofitFactory.getInstance();
         AuthApi authApi = retrofit.create(AuthApi.class);
         Call<User> userCall = authApi.register(user);
@@ -45,6 +51,7 @@ public class SignUpIntentService extends IntentService {
             Log.d("myapp " + SignUpIntentService.class.toString(), Long.toString(id));
             if(id != ERROR_SUCH_USER_EXIST) {
                 answer.putString(CustomReceiver.RESULT, SUCCESS_MSG);
+
             }else{
                 answer.putString(CustomReceiver.RESULT,FAILURE_MSG);
             }

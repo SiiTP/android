@@ -14,6 +14,7 @@ import com.dbtest.ivan.app.logic.RetrofitFactory;
 import com.dbtest.ivan.app.logic.api.AuthApi;
 import com.dbtest.ivan.app.logic.db.entities.User;
 import com.dbtest.ivan.app.receiver.CustomReceiver;
+import com.dbtest.ivan.app.services.intent.helpers.SignInHelper;
 import com.dbtest.ivan.app.utils.network.CookieExtractor;
 
 import java.io.IOException;
@@ -29,7 +30,7 @@ public class SignInIntentService extends IntentService {
     public static final String SUCCESS_MSG = "Successful login";
     public static final String FAILURE_MSG = "Wrong email or password";
     public static final String SOMETHING_WRONG_MSG = "Something went wrong";
-    public static final long ERROR_WRONG_USER_OR_PASS = -1L;
+
     public SignInIntentService() {
         super("SignInService");
     }
@@ -72,7 +73,7 @@ public class SignInIntentService extends IntentService {
             Log.d("myapp " + SignUpIntentService.class.toString(), userResponse.headers().toMultimap().toString());
             Log.d("myapp " + SignUpIntentService.class.toString(),userResponse.body().getId() != null? userResponse.body().getId().toString() : "WTF?");
             String session;
-            if(userResponse.body().getId() != ERROR_WRONG_USER_OR_PASS) {
+            if(userResponse.body().getId() != SignInHelper.ERROR_WRONG_USER_OR_PASS) {
                 List<String> cookies = userResponse.headers().toMultimap().get("Set-Cookie");
                 session = CookieExtractor.getCookie(cookies.get(0), RetrofitFactory.SESSION_COOKIE_NAME);
                 RetrofitFactory.setSession(session);
@@ -80,14 +81,12 @@ public class SignInIntentService extends IntentService {
                 SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
                 preferences.edit().putString(RetrofitFactory.SESSION_COOKIE_NAME,session).commit();
                 Log.d("myapp " + SignUpIntentService.class.toString(), session);
-                DrawerMenuManager.setIsLogged(true); // TODO после этого надо интентом перекинуть на лист активити чтобы меню пересоздалось и профиль отобразился
+                DrawerMenuManager.setIsLogged(true);
                 answer.putString(CustomReceiver.RESULT, SUCCESS_MSG);
             }else{
                 Log.d("myapp " + SignUpIntentService.class.toString(), "failure login");
                 answer.putString(CustomReceiver.RESULT, FAILURE_MSG);
             }
-
-            //todo sendbroadcast intent with session & user data??!?!
         } catch (IOException e) {
             answer.putString(CustomReceiver.RESULT, SOMETHING_WRONG_MSG);
             e.printStackTrace();

@@ -12,5 +12,7 @@ public class CustomGcmListener extends GcmListenerService {
     public void onMessageReceived(String from, Bundle data) {
         super.onMessageReceived(from, data);
         System.out.println(from + ' ' + data);
+
     }
+
 }

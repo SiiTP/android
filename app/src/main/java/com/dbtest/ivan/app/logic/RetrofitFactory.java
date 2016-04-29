@@ -51,4 +51,9 @@ public class RetrofitFactory {
     public static void setServerURI(String uri){
         BASE_URL = uri;
     }
+
+    public static void main(String[] args) {
+        String f = "e4oqGb2IHvM:APA91bGJgkjS0O8DbAGWMTd7UG4QsVzrhFOqPgaJy5c12w0lEnzbDoa0xdKADlK_QHYoUvJzRMl2ac-TaFCJwsVANCXOkI0rGrXYAJvKORhMeObg_G1FyQdVWD_9E4FnpgEFW_uoRBff";
+        System.out.println(f.length());
+    }
 }

@@ -33,6 +33,7 @@
         <service android:name=".services.intent.FriendIntentService" />
         <service android:name=".services.intent.SynchronizeIntentService" />
         <service android:name=".services.intent.FullSyncService" />
+        <service android:name=".services.intent.TokenRegisterIntentService" />
 
         <receiver android:name=".receiver.AlarmReceiver" />
 

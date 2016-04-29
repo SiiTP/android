@@ -68,7 +68,6 @@ public class StartActivity extends Activity {
 
     @Override
     protected void onDestroy() {
-        OpenHelperManager.releaseHelper();
         super.onDestroy();
     }
 
