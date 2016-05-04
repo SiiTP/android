@@ -1,5 +1,6 @@
 package com.dbtest.ivan.app.activity;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import com.dbtest.ivan.app.R;
 import com.dbtest.ivan.app.activity.abstract_toolbar_activity.AbstractToolbarActivity;
+import com.dbtest.ivan.app.activity.list_activity.ListActivity;
 import com.dbtest.ivan.app.receiver.CustomReceiver;
 import com.dbtest.ivan.app.services.intent.SignUpIntentService;
 import com.dbtest.ivan.app.utils.EmailFocusListener;
@@ -138,12 +140,20 @@ public class SignUpActivity extends AbstractToolbarActivity implements WaitingAc
         if(toast == null) {
             toast = Toast.makeText(SignUpActivity.this, "", Toast.LENGTH_LONG);
         }
-
         toast.setText(result);
         toast.show();
-
-        if(result.equals(SignUpIntentService.SUCCESS_MSG)){
-            Intent intent = new Intent(this,SignInActivity.class);
+        Class<? extends Activity> nextActivity;
+        switch (result) {
+            case SignUpIntentService.SUCCESS_MSG:
+                nextActivity = ListActivity.class;
+                break;
+            case SignUpIntentService.HALF_SUCCESS_MSG:
+                nextActivity = SignInActivity.class;
+            default:
+                nextActivity = null;
+        }
+        if(nextActivity != null) {
+            Intent intent = new Intent(this, nextActivity);
             startActivity(intent);
         }
     }

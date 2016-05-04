@@ -9,7 +9,6 @@ import com.dbtest.ivan.app.activity.abstract_toolbar_activity.DrawerMenuManager;
 import com.dbtest.ivan.app.logic.RetrofitFactory;
 import com.dbtest.ivan.app.logic.api.AuthApi;
 import com.dbtest.ivan.app.logic.db.entities.User;
-import com.dbtest.ivan.app.services.intent.SignUpIntentService;
 import com.dbtest.ivan.app.utils.network.CookieExtractor;
 
 import java.io.IOException;
@@ -42,10 +41,9 @@ public class SignInHelper {
                 List<String> cookies = userResponse.headers().toMultimap().get("Set-Cookie");
                 session = CookieExtractor.getCookie(cookies.get(0), RetrofitFactory.SESSION_COOKIE_NAME);
                 RetrofitFactory.setSession(session);
-
                 SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
                 preferences.edit().putString(RetrofitFactory.SESSION_COOKIE_NAME, session).commit();
-                Log.d("myapp " + SignUpIntentService.class.toString(), session);
+                Log.d("myapp " + SignInHelper.class.toString(), session);
                 DrawerMenuManager.setIsLogged(true);
                 isSuccess = true;
             }
@@ -53,7 +51,7 @@ public class SignInHelper {
             e.printStackTrace();
         }
     }
-    public boolean isSuccess() {
+    public boolean isLogged() {
         return  isSuccess;
     }
 }
