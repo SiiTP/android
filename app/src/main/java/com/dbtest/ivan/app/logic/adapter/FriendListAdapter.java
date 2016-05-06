@@ -11,6 +11,8 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.daimajia.swipe.SwipeLayout;
+import com.daimajia.swipe.adapters.RecyclerSwipeAdapter;
 import com.dbtest.ivan.app.R;
 import com.dbtest.ivan.app.activity.FriendsActivity;
 import com.dbtest.ivan.app.model.Friend;
@@ -20,7 +22,7 @@ import java.util.List;
 /**
  * Created by said on 07.04.16.
  */
-public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.ViewHolder> {
+public class FriendListAdapter extends RecyclerSwipeAdapter<FriendListAdapter.ViewHolder> {
 
     private List<Friend> friendList;
     FriendsActivity activity;
@@ -39,17 +41,32 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        holder.swipeLayout.setShowMode(SwipeLayout.ShowMode.LayDown);
         holder.name.setText(friendList.get(position).getName());
-        holder.addReminder.setTag(position);
-        holder.deleteBtn.setTag(position);
+        holder.deleteBtn.setOnClickListener((v) -> {
+            Toast.makeText(activity, "Click delete friend", Toast.LENGTH_SHORT).show();
+            mItemManger.closeAllItems();
+            activity.showDeleteFriendDialog(new ChooseCallback(position, holder));
+        });
+        holder.addReminder.setOnClickListener((v) -> {
+            Toast.makeText(activity, "Click add reminder", Toast.LENGTH_SHORT).show();
+        });
+        mItemManger.bindView(holder.itemView, position);
+    }
+
+    @Override
+    public int getSwipeLayoutResourceId(int position) {
+        return R.id.swipe_layout;
     }
 
     private class ChooseCallback implements MaterialDialog.SingleButtonCallback {
 
         private int position;
+        private ViewHolder holder;
 
-        public ChooseCallback(int position) {
+        public ChooseCallback(int position, ViewHolder holder) {
             this.position = position;
+            this.holder = holder;
         }
 
         @Override
@@ -57,10 +74,11 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
             switch (which) {
                 case POSITIVE:
                     Toast.makeText(activity, "Positive" + position, Toast.LENGTH_SHORT).show();
-                    //activity.removeFriend(friendList.get(position).getEmail());
+                    mItemManger.removeShownLayouts(holder.swipeLayout);
                     friendList.remove(position);
                     notifyItemRemoved(position);
                     notifyItemRangeChanged(position, friendList.size());
+                    //activity.removeFriend(friendList.get(position).getEmail());
                 case NEGATIVE:
                     Toast.makeText(activity, "Negative" + position, Toast.LENGTH_SHORT).show();
             }
@@ -73,6 +91,7 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        SwipeLayout swipeLayout;
         TextView name;
         ImageView addReminder;
         TextView deleteBtn;
@@ -80,18 +99,10 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
         public ViewHolder(View itemView) {
             super(itemView);
 
+            swipeLayout = (SwipeLayout) itemView.findViewById(R.id.swipe_layout);
             name = (TextView) itemView.findViewById(R.id.friend_name);
             addReminder = (ImageView) itemView.findViewById(R.id.add_reminder);
             deleteBtn = (TextView) itemView.findViewById(R.id.delete_text);
-            deleteBtn.setOnClickListener((v) -> {
-                Toast.makeText(activity, "Click delete friend", Toast.LENGTH_SHORT).show();
-                int position = (int) v.getTag();
-                activity.showDeleteFriendDialog(new ChooseCallback(position));
-            });
-            addReminder.setOnClickListener((v) -> {
-                Toast.makeText(activity, "Click add reminder", Toast.LENGTH_SHORT).show();
-            });
-
         }
     }
 }
