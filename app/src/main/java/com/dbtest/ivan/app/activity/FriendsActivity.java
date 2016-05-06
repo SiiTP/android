@@ -10,7 +10,9 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.dbtest.ivan.app.R;
 import com.dbtest.ivan.app.activity.abstract_toolbar_activity.AbstractToolbarActivity;
 import com.dbtest.ivan.app.logic.adapter.FriendListAdapter;
@@ -19,6 +21,7 @@ import com.dbtest.ivan.app.model.Friend;
 import com.dbtest.ivan.app.services.intent.LoadFriendsIntentService;
 import com.dbtest.ivan.app.services.intent.RemoveFriendIntentService;
 
+import java.util.Collections;
 import java.util.List;
 
 public class FriendsActivity extends AbstractToolbarActivity {
@@ -61,10 +64,11 @@ public class FriendsActivity extends AbstractToolbarActivity {
                 Log.d("myapp", "onScrolled, dx, dy : " + dx + " " + dy);
             }
         });
-        Intent intent = new Intent(FriendsActivity.this, LoadFriendsIntentService.class);
         IntentFilter filter = new IntentFilter(FriendsWebRequestReceiver.PROCESS_RESPONSE);
+        receiver = new FriendsWebRequestReceiver(this);
         filter.addCategory(Intent.CATEGORY_DEFAULT);
         LocalBroadcastManager.getInstance(this).registerReceiver(receiver, filter);
+        Intent intent = new Intent(FriendsActivity.this, LoadFriendsIntentService.class);
         startService(intent);
     }
 
@@ -93,14 +97,30 @@ public class FriendsActivity extends AbstractToolbarActivity {
         }
     }
 
+    public void showDeleteFriendDialog(MaterialDialog.SingleButtonCallback callback) {
+        new MaterialDialog.Builder(this)
+                .content("Are you sure?")
+                .positiveText("Agree")
+                .onPositive(callback)
+                .negativeText("Disagree")
+                .onNegative(callback)
+                .show();
+    }
+
     public class FriendsWebRequestReceiver extends BroadcastReceiver {
 
         public static final String PROCESS_RESPONSE = "com.dbtest.ivan.intent.action.PROCESS_RESPONSE";
+        private FriendsActivity activity;
+
+        public FriendsWebRequestReceiver(FriendsActivity activity) {
+            this.activity = activity;
+        }
         @Override
         public void onReceive(Context context, Intent intent) {
             List<Friend> friendList = intent.getParcelableArrayListExtra("FriendsList");
 
-            ((FriendsActivity) context).setFriendListAdapter(friendList);
+            Collections.sort(friendList);
+            activity.setFriendListAdapter(friendList);
         }
     }
 }
