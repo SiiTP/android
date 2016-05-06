@@ -1,5 +1,6 @@
 package com.dbtest.ivan.app.logic.db.entities.adapters;
 
+import com.dbtest.ivan.app.logic.db.entities.Category;
 import com.dbtest.ivan.app.logic.db.entities.Reminder;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
@@ -22,9 +23,9 @@ public class ReminderGsonAdapter extends TypeAdapter<Reminder> {
         out.beginObject();
         out.name("text").value(value.getText());
         out.name("time").value(value.getReminderTime().getTime());
-        out.name("idCategory").value(value.getCategory().getId());
-        out.name("friendId").value(value.getFriendId());//todo rename mobileFriendId
-        out.name("id").value(value.getId());//todo rename mobileId
+        out.name("idCategory").value(value.getCategory().getServerId());
+        out.name("friendId").value(value.getFriendId());
+        out.name("id").value(value.getServerId());
         out.endObject();
     }
     @Override
@@ -39,7 +40,12 @@ public class ReminderGsonAdapter extends TypeAdapter<Reminder> {
             String name = in.nextName();
             switch (name){
                 case "id":
-                    reminder.setId(in.nextLong());
+                    reminder.setServerId(in.nextLong());
+                    break;
+                case "idCategory":
+                    Category c = new Category();
+                    c.setServerId(in.nextLong());
+                    reminder.setCategory(c);
                     break;
                 case "time":
                     reminder.setReminderTime(new Date(in.nextLong()));

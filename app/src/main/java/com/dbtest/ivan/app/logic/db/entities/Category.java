@@ -12,13 +12,15 @@ import java.util.ArrayList;
  */
 @DatabaseTable(tableName = "category")
 public class Category {
+    public static final String CATEGORY_ALL_NAME = "all";
     @DatabaseField(generatedId = true)
     private Long id;
     @DatabaseField(unique = true)
     private String name;
     @DatabaseField
     private String picture;
-
+    @DatabaseField(unique = true)
+    private Long serverId;
     @ForeignCollectionField
     private ForeignCollection<Reminder> reminders;
 
@@ -80,5 +82,13 @@ public class Category {
             i++;
         }
         return strCategories;
+    }
+
+    public Long getServerId() {
+        return serverId;
+    }
+
+    public void setServerId(Long serverId) {
+        this.serverId = serverId;
     }
 }

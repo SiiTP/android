@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 
 import com.dbtest.ivan.app.R;
+import com.dbtest.ivan.app.activity.abstract_toolbar_activity.AbstractToolbarActivity;
+import com.dbtest.ivan.app.fragment.SettingsFragment;
 
 public class SettingsActivity extends AbstractToolbarActivity {
     private static final int MENU_POSITION = 2;
@@ -23,5 +25,6 @@ public class SettingsActivity extends AbstractToolbarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getFragmentManager().beginTransaction().add(R.id.settings_fragment,new SettingsFragment()).commit();
     }
 }

@@ -6,19 +6,21 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.ListActivity">
+        <activity android:name=".activity.StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activity.list_activity.ListActivity"/>
         <activity android:name=".activity.SignInActivity" />
         <activity android:name=".activity.SignUpActivity" />
         <activity android:name=".activity.FriendsActivity" />
         <activity android:name=".activity.SettingsActivity" />
+        <activity android:name=".activity.DetailReminderActivity" />
 
         <service android:name=".services.intent.SignInIntentService" />
         <service android:name=".services.intent.SignUpIntentService" />
@@ -26,9 +28,10 @@
         <service android:name=".services.intent.LoadFriendsIntentService" />
         <service android:name=".services.intent.RemoveFriendIntentService" />
 
-        <activity android:name=".activity.DetailReminderActivity" />
-
         <service android:name=".services.intent.SynchronizeIntentService"/>
+        <service android:name=".services.intent.FullSyncService"/>
+
+        <receiver android:name=".receiver.AlarmReceiver"/>
     </application>
 
 </manifest>

@@ -6,10 +6,13 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import com.dbtest.ivan.app.R;
+import com.dbtest.ivan.app.activity.abstract_toolbar_activity.AbstractToolbarActivity;
 import com.dbtest.ivan.app.logic.adapter.FriendListAdapter;
 import com.dbtest.ivan.app.logic.divider.DividerItemDecoration;
 import com.dbtest.ivan.app.model.Friend;
@@ -41,15 +44,27 @@ public class FriendsActivity extends AbstractToolbarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        IntentFilter filter = new IntentFilter(FriendsWebRequestReceiver.PROCESS_RESPONSE);
-        filter.addCategory(Intent.CATEGORY_DEFAULT);
-        receiver = new FriendsWebRequestReceiver();
-        registerReceiver(receiver, filter);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                Log.d("myapp", "scroll state changed, new state : " + newState);
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                Log.d("myapp", "onScrolled, dx, dy : " + dx + " " + dy);
+            }
+        });
         Intent intent = new Intent(FriendsActivity.this, LoadFriendsIntentService.class);
+        IntentFilter filter = new IntentFilter(FriendsWebRequestReceiver.PROCESS_RESPONSE);
+        filter.addCategory(Intent.CATEGORY_DEFAULT);
+        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, filter);
         startService(intent);
     }
 
@@ -74,7 +89,6 @@ public class FriendsActivity extends AbstractToolbarActivity {
     public void setFriendListAdapter(List<Friend> friendsList) {
         if (friendListAdapter == null) {
             friendListAdapter = new FriendListAdapter(this, friendsList);
-
             recyclerView.setAdapter(friendListAdapter);
         }
     }

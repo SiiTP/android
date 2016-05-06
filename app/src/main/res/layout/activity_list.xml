@@ -1,32 +1,43 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.dbtest.ivan.app.activity.ListActivity">
+    tools:context=".activity.list_activity.ListActivity">
 
-    <!--<include layout="@layout/mToolbar" android:id="@+id/list_toolbar_container"/>-->
-
-    <TextView
-        android:id="@+id/list_category_name"
-        android:text="@string/list_default_category"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/font_size_large"
-        android:layout_centerHorizontal="true" />
-
-    <fragment
-        android:id="@+id/list_reminders"
-        class="com.dbtest.ivan.app.fragment.ReminderListFragment"
+    <RelativeLayout
+        style="@style/HeaderLargeContainer"
+        android:id="@+id/list_category_header">
+            <TextView
+                style="@style/HeaderLargeText"
+                android:id="@+id/list_category_name"
+                android:text="@string/list_default_category"
+                android:layout_alignParentTop="true"/>
+    </RelativeLayout>
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/list_category_name"/>
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/mrg_large"
+        android:layout_marginEnd="@dimen/mrg_large"
+        android:layout_marginRight="@dimen/mrg_large"
+        android:layout_marginStart="@dimen/mrg_large"
+        android:layout_below="@id/list_category_header">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add Reminder"
-        android:id="@+id/list_add_reminder"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/list_reminders"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/list_category_header"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/list_add_reminder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:clickable="true"
+            android:src="@drawable/ic_action_new"
+            app:layout_anchor="@id/list_reminders"
+            app:layout_anchorGravity="bottom|right|end"/>
+    </android.support.design.widget.CoordinatorLayout>
 </RelativeLayout>

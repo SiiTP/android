@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    style="@style/SignRelativeLayout">
+    <android.support.design.widget.TextInputLayout
+        style="@style/SupportInput"
+        android:id="@+id/category_name_supp"
+        android:layout_width="@dimen/sign_inputs_width"
+        android:paddingTop="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="15dp"
+        android:paddingBottom="10dp">
+        <EditText
+            style="@style/TextInput"
+
+            android:id="@+id/category_name"
+            android:hint="category name..."
+            android:lines="5" />
+    </android.support.design.widget.TextInputLayout>
+    <Button
+        style="@style/SignSubmit"
+        android:text="@string/category_dialog_submit"
+        android:layout_height="wrap_content"
+        android:id="@+id/category_add_button"
+        android:layout_below="@+id/category_name_supp"
+        />
+</LinearLayout>

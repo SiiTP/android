@@ -3,18 +3,33 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <RelativeLayout
+        android:id="@+id/reminder_item_date_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/reminder_item_date"
+            android:textSize="@dimen/font_size_large"
+            android:text="11.11.2012"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/reminder_item_time"
+            android:layout_centerHorizontal="true"
+            android:text="16:45"
+            android:layout_below="@id/reminder_item_date"
+            android:textSize="@dimen/font_size_xlarge"/>
+    </RelativeLayout>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/reminder_item_date"
-        android:text="21:00 17.11.1995"
-        android:layout_centerHorizontal="true"
-        android:textSize="@dimen/font_size_xlarge"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/reminder_item_text"
-        android:text="It is description of item"
-        android:layout_below="@+id/reminder_item_date"
+        android:text="azaza zazaza zazaza zazaza"
+        android:layout_toLeftOf="@id/reminder_item_date_container"
         android:textSize="@dimen/font_size_medium"/>
 </RelativeLayout>
+        <!--android:text="azaza zazaza zazaza zazaza zazaza zaaza zazazaz az azaza zazazaza zazaza zaz zaza zaz azaz azazazaz aza"-->

@@ -3,6 +3,7 @@ package com.dbtest.ivan.app.services.intent;
 import android.app.IntentService;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.dbtest.ivan.app.activity.FriendsActivity;
@@ -61,7 +62,7 @@ public class LoadFriendsIntentService extends IntentService {
             broadcastIntent.setAction(FriendsActivity.FriendsWebRequestReceiver.PROCESS_RESPONSE);
             broadcastIntent.addCategory(Intent.CATEGORY_DEFAULT);
             broadcastIntent.putParcelableArrayListExtra("FriendsList", (ArrayList<Friend>) friendList);
-            sendBroadcast(broadcastIntent);
+            LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
         } catch (IOException e) {
             e.printStackTrace();
         }

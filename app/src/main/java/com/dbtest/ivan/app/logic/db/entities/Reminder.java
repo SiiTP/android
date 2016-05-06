@@ -15,10 +15,14 @@ import java.util.Locale;
  */
 @DatabaseTable(tableName = "reminder")
 public class Reminder {
-    public static final String REMINDER_TIME_FORMAT = "dd.MM.yyyy HH:mm";
+    public static final String REMINDER_FULL_TIME_FORMAT = "dd.MM.yyyy HH:mm";
+    public static final String REMINDER_TIME_FORMAT = "HH:mm";
+    public static final String REMINDER_DATE_FORMAT = "dd.MM.yyyy";
 
     @DatabaseField(generatedId = true)
     private Long id;
+    @DatabaseField(unique = true)
+    private Long serverId;
     @DatabaseField
     private String author;
     @DatabaseField(columnName = "reminder_time",canBeNull = false)
@@ -58,7 +62,7 @@ public class Reminder {
     public Reminder(String date, String text) {
         this.text = text;
         try {
-            this.reminderTime = new SimpleDateFormat(REMINDER_TIME_FORMAT, Locale.US).parse(date);
+            this.reminderTime = new SimpleDateFormat(REMINDER_FULL_TIME_FORMAT, Locale.US).parse(date);
         } catch (ParseException e) {
             Log.e("myapp " + this.getClass(), "date was not parsed");
             this.reminderTime = new Date();
@@ -80,6 +84,10 @@ public class Reminder {
 
     public String getStringReminderTime() {
         return new SimpleDateFormat(REMINDER_TIME_FORMAT, Locale.US).format(reminderTime);
+    }
+
+    public String getStringReminderDate() {
+        return new SimpleDateFormat(REMINDER_DATE_FORMAT, Locale.US).format(reminderTime);
     }
 
     public void setReminderTime(Date reminderTime) {
@@ -125,4 +133,13 @@ public class Reminder {
     public void setFriendId(Long friendId) {
         this.friendId = friendId;
     }
+
+    public Long getServerId() {
+        return serverId;
+    }
+
+    public void setServerId(Long serverId) {
+        this.serverId = serverId;
+    }
+
 }

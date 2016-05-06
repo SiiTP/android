@@ -22,6 +22,13 @@
 
     <string name="signin_button_submit">Sign in</string>
     <string name="signup_submit">Register</string>
+    <string name="list_category_preheader">Category :&#160;</string>
+    <string name="date_picker_label">Choose date</string>
+    <string name="time_picker_label">Choose time</string>
+    <string name="details_date_pick_button">pick</string>
+    <string name="details_create_category">New</string>
+    <string name="category_dialog_submit">Create</string>
+    <string name="details_text">reminder text...</string>
 
 
 </resources>

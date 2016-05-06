@@ -11,6 +11,7 @@ import com.dbtest.ivan.app.activity.WaitingActivity;
  */
 public class CustomReceiver extends BroadcastReceiver {
     public static final String WAITING_ACTION = "wait";
+    public static final String RESULT = "wait.result";
     private WaitingActivity activity;
 
     public CustomReceiver(WaitingActivity activity) {
@@ -26,7 +27,9 @@ public class CustomReceiver extends BroadcastReceiver {
         switch (action){
             case WAITING_ACTION:
                 if(activity != null) {
+                    String result = intent.getExtras().getString(RESULT);
                     activity.setWaiting(false);
+                    activity.notifyResult(result);
                 }
                 break;
         }

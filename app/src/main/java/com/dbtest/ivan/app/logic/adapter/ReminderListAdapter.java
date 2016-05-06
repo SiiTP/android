@@ -1,42 +1,68 @@
 package com.dbtest.ivan.app.logic.adapter;
 
-import android.content.Context;
-import android.util.Log;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.dbtest.ivan.app.R;
+import com.dbtest.ivan.app.activity.abstract_toolbar_activity.AbstractToolbarActivity;
 import com.dbtest.ivan.app.logic.db.entities.Reminder;
 
 import java.util.ArrayList;
 
-public class ReminderListAdapter extends ArrayAdapter<Reminder> {
+/**
+ * Created by Ivan on 17.04.2016.
+ */
+public class ReminderListAdapter extends RecyclerView.Adapter<ReminderListAdapter.ReminderViewHolder> {
+    AbstractToolbarActivity activity;
+    ArrayList<Reminder> reminders;
 
-    private LayoutInflater lInflater;
-
-    public ReminderListAdapter(Context context, int resource, ArrayList<Reminder> objects) {
-        super(context, resource, objects);
-        this.lInflater = LayoutInflater.from(context);
+    public ReminderListAdapter(AbstractToolbarActivity activity, ArrayList<Reminder> reminders) {
+        this.reminders = reminders;
+        this.activity = activity;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        Log.v("myapp", "adapter get view on position : " + position);
-        View reminderRow = convertView;
-        Reminder reminderItem = getItem(position);
-        if (convertView == null) {
-            reminderRow = lInflater.inflate(R.layout.reminder_item, parent, false);
-        }
-
-        TextView date = (TextView) reminderRow.findViewById(R.id.reminder_item_date);
-        TextView text = (TextView) reminderRow.findViewById(R.id.reminder_item_text);
-
-        date.setText(reminderItem.getStringReminderTime());
-        text.setText(reminderItem.getText());
-
-        return reminderRow;
+    public ReminderViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(activity).inflate(R.layout.reminder_item, null);
+        return new ReminderViewHolder(view);
     }
+
+    @Override
+    public void onBindViewHolder(ReminderViewHolder holder, int position) {
+        Reminder reminderItem = reminders.get(position);
+        holder.date.setText(reminderItem.getStringReminderDate());
+        holder.time.setText(reminderItem.getStringReminderTime());
+        holder.text.setText(reminderItem.getText());
+    }
+
+    @Override
+    public int getItemCount() {
+        return reminders.size();
+    }
+
+    public class ReminderViewHolder extends RecyclerView.ViewHolder {
+        TextView date;
+        TextView time;
+        TextView text;
+
+        public ReminderViewHolder(View itemView) {
+            super(itemView);
+
+            date = (TextView) itemView.findViewById(R.id.reminder_item_date);
+            time = (TextView) itemView.findViewById(R.id.reminder_item_time);
+            text = (TextView) itemView.findViewById(R.id.reminder_item_text);
+        }
+    }
+
+    public void setData(ArrayList<Reminder> data) {
+        this.reminders = data;
+    }
+
+    public void reset() {
+        this.reminders = null;
+    }
+
 }

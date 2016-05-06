@@ -4,15 +4,22 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.dbtest.ivan.app.R;
+import com.dbtest.ivan.app.activity.abstract_toolbar_activity.AbstractToolbarActivity;
+import com.dbtest.ivan.app.activity.list_activity.ListActivity;
 import com.dbtest.ivan.app.receiver.CustomReceiver;
 import com.dbtest.ivan.app.services.intent.SignInIntentService;
+import com.dbtest.ivan.app.utils.EmailFocusListener;
+import com.dbtest.ivan.app.utils.WaitingManager;
+import com.dbtest.ivan.app.utils.watchers.MaxLengthTextWatcher;
 
 public class SignInActivity extends AbstractToolbarActivity implements WaitingActivity {
     private static final int MENU_POSITION = -1; //activity not in menu list
@@ -26,6 +33,7 @@ public class SignInActivity extends AbstractToolbarActivity implements WaitingAc
     private Button submit;
     private ProgressBar bar;
     private CustomReceiver receiver;
+    private Toast toast;
     @NonNull
     @Override
     protected Integer getBodyResId() {
@@ -41,39 +49,48 @@ public class SignInActivity extends AbstractToolbarActivity implements WaitingAc
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);//todo постоянное открытие одной и той же аквтивити каждый раз создает новую аквтивити на верх стека??!?
+        super.onCreate(savedInstanceState);
         bar = (ProgressBar) findViewById(R.id.signin_bar);
         emailView = (EditText)findViewById(R.id.signin_email);
         passwordView = (EditText) findViewById(R.id.signin_password);
         submit = (Button) findViewById(R.id.signin_submit);
         bar.setVisibility(View.GONE);
-//        toggleWaitingMode();
+
+        emailView.setOnFocusChangeListener(new EmailFocusListener((TextInputLayout) findViewById(R.id.signin_email_supp)));
+        emailView.addTextChangedListener(new MaxLengthTextWatcher((TextInputLayout) findViewById(R.id.signin_email_supp), 48));
+        passwordView.addTextChangedListener(new MaxLengthTextWatcher((TextInputLayout) findViewById(R.id.signin_password_supp),16));
         if (submit != null) {
-            submit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+            submit.setOnClickListener(v -> {
+                CharSequence f = ((TextInputLayout) findViewById(R.id.signin_email_supp)).getError();
+                if(f == null){
+                    f = ((TextInputLayout) findViewById(R.id.signin_password_supp)).getError();
+                }
+                if(f == null) {
                     String email = null;
-                    if ( emailView != null) {
+                    if (emailView != null) {
                         email = emailView.getText().toString();
                     }
                     String password = null;
-                    if(passwordView != null){
+                    if (passwordView != null) {
                         password = passwordView.getText().toString();
                     }
                     System.out.println(email + ' ' + password);
 
-                    Bundle bundle = new Bundle();
-                    bundle.putString(SIGNIN_EMAIL, email);
-                    bundle.putString(SIGNIN_PASSWORD, password);
-                    Intent intent = new Intent(SignInActivity.this, SignInIntentService.class);
-                    intent.putExtras(bundle);
-                    startService(intent);
-                    setWaiting(true);
-                    IntentFilter filter = new IntentFilter(CustomReceiver.WAITING_ACTION);
-                    filter.addCategory(Intent.CATEGORY_DEFAULT);
-                    receiver = new CustomReceiver(SignInActivity.this);
-                    LocalBroadcastManager.getInstance(SignInActivity.this).registerReceiver(receiver, filter);
+                    if(!email.isEmpty() && !password.isEmpty()) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString(SIGNIN_EMAIL, email);
+                        bundle.putString(SIGNIN_PASSWORD, password);
+                        Intent intent = new Intent(SignInActivity.this, SignInIntentService.class);
+                        intent.putExtras(bundle);
+                        startService(intent);
+                        setWaiting(true);
+                        IntentFilter filter = new IntentFilter(CustomReceiver.WAITING_ACTION);
+                        filter.addCategory(Intent.CATEGORY_DEFAULT);
+                        receiver = new CustomReceiver(SignInActivity.this);
+                        LocalBroadcastManager.getInstance(SignInActivity.this).registerReceiver(receiver, filter);
+                    }
                 }
+
             });
         }
 
@@ -87,21 +104,23 @@ public class SignInActivity extends AbstractToolbarActivity implements WaitingAc
 
     @Override
     public void setWaiting(boolean isWaiting) {
-        if(isWaiting) {
-            bar.setVisibility(View.VISIBLE);
-        }else{
-            bar.setVisibility(View.GONE);
+        WaitingManager.makeWaitingProgressBar(this, bar, isWaiting);
+        WaitingManager.makeWaitingButton(this, submit, isWaiting);
+        WaitingManager.makeWaitingView(passwordView, isWaiting);
+        WaitingManager.makeWaitingView(emailView, isWaiting);
+    }
+
+    @Override
+    public void notifyResult(String result) {
+        if(toast == null) {
+            toast = Toast.makeText(SignInActivity.this, "", Toast.LENGTH_LONG);
         }
-        bar.getIndeterminateDrawable().setColorFilter(0xFFFF0000, android.graphics.PorterDuff.Mode.MULTIPLY);
-        isWaiting = !isWaiting;
-        submit.setFocusableInTouchMode(isWaiting);
-        submit.setEnabled(isWaiting);
-        passwordView.setFocusableInTouchMode(isWaiting);
-        passwordView.setEnabled(isWaiting);
-        emailView.setFocusableInTouchMode(isWaiting);
-        emailView.setEnabled(isWaiting);
-
-
+        toast.setText(result);
+        toast.show();
+        if(result.equals(SignInIntentService.SUCCESS_MSG)){
+            Intent intent = new Intent(this, ListActivity.class);
+            startActivity(intent);
+        }
     }
 
 }

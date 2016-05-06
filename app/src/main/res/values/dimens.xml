@@ -3,16 +3,23 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
-    <dimen name="mrg_small">3dp</dimen>
-    <dimen name="mrg_medium">6dp</dimen>
-    <dimen name="mrg_large">12dp</dimen>
+    <dimen name="elev_medium">4dp</dimen>
+    <dimen name="elev_small">3dp</dimen>
 
-    <dimen name="font_size_small">11sp</dimen>
-    <dimen name="font_size_medium">14sp</dimen>
-    <dimen name="font_size_large">20sp</dimen>
-    <dimen name="font_size_xlarge">28sp</dimen>
-    <dimen name="font_size_xxlarge">36sp</dimen>
+    <dimen name="mrg_small">4dp</dimen>
+    <dimen name="mrg_medium">8dp</dimen>
+    <dimen name="mrg_large">16dp</dimen>
+
+    <dimen name="font_size_small">12sp</dimen>
+    <dimen name="font_size_medium">16sp</dimen>
+    <dimen name="font_size_large">24sp</dimen>
+    <dimen name="font_size_xlarge">32sp</dimen>
+    <dimen name="font_size_xxlarge">40sp</dimen>
 
     <dimen name="sign_inputs_width">259dp</dimen>
     <dimen name="sign_label_width">100dp</dimen>
+    <dimen name="sign_button_height">32dp</dimen>
+
+    <dimen name="details_button_width">70dp</dimen>
+    <dimen name="details_text_width">329dp</dimen>
 </resources>

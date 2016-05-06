@@ -28,10 +28,24 @@ public class CategorySyncService extends AbstractSyncService<Category> {
 
         Response<Category> response = request.execute();
         boolean result = false;
-        if (response.body() != null && response.body().getId() != null) {
+        long serverId = 0;
+        if (response.body() != null && response.body().getServerId() != null) {
+            serverId = response.body().getServerId();
+            if(serverId == -1){//todo add const reminder already exist
+                response = api.update(item).execute();
+                serverId = response.body().getServerId();
+                if(response.body() != null && serverId != -1){
+                    result = true;
+                }
+            }else {
+                result = true;
+            }
+
+        }
+        if(result){
             item.setIsSynced(true);
+            item.setServerId(serverId);
             dao.update(item);
-            result = true;
         }
         return result;
     }

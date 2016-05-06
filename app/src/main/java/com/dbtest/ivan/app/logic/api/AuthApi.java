@@ -4,6 +4,7 @@ import com.dbtest.ivan.app.logic.db.entities.User;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.POST;
 
 /**
@@ -15,4 +16,7 @@ public interface AuthApi {
 
     @POST("/auth/login")
     Call<User> login(@Body User user);
+
+    @DELETE("/auth")
+    Call<User> logout();
 }
