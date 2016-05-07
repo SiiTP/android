@@ -1,0 +1,35 @@
+{
+  "project_info": {
+    "project_number": "114694038794",
+    "project_id": "technopark-android"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:114694038794:android:22a6834a894ac39e",
+        "android_client_info": {
+          "package_name": "com.dbtest.ivan.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC1O99_tQxjrQ2uRJpv8CduyCulPZEaFTA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

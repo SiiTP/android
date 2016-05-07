@@ -49,4 +49,5 @@ public class SynchronizeIntentService extends IntentService {
         OpenHelperManager.releaseHelper();
         super.onDestroy();
     }
+    
 }
