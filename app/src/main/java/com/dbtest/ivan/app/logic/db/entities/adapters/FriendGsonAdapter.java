@@ -22,6 +22,7 @@ public class FriendGsonAdapter extends TypeAdapter<Friend> {
         }
         out.beginObject();
         out.name("friendEmail").value(value.getEmail());
+        out.name("state").value(value.getState());
         out.endObject();
     }
 

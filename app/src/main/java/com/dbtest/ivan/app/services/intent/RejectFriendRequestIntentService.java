@@ -2,13 +2,11 @@ package com.dbtest.ivan.app.services.intent;
 
 import android.app.IntentService;
 import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
 
 import com.dbtest.ivan.app.logic.RetrofitFactory;
 import com.dbtest.ivan.app.logic.api.FriendApi;
 import com.dbtest.ivan.app.model.Friend;
-import com.dbtest.ivan.app.model.RemoveFriendResponse;
 
 import java.io.IOException;
 
@@ -17,27 +15,26 @@ import retrofit2.Call;
 /**
  * Created by said on 07.05.16.
  */
-public class InviteFriendService extends IntentService {
+public class RejectFriendRequestIntentService extends IntentService {
 
-    public InviteFriendService() {
-        super("InviteFriendService");
+    public RejectFriendRequestIntentService() {
+        super("RejectFriendRequestIntentService");
     }
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        Bundle bundle = intent.getExtras();
-        FriendApi api = RetrofitFactory.getInstance().create(FriendApi.class);
-        String email = bundle.getString("email");
+        String email = intent.getStringExtra("email");
+        FriendApi friendApi = RetrofitFactory.getInstance().create(FriendApi.class);
         Friend friend = new Friend();
         friend.setEmail(email);
-        friend.setState(0);
-        Call<Friend> call = api.inviteFriend(friend);
+        friend.setState(2);
+        Call<Friend> call = friendApi.confirm(friend);
         try {
             Friend response = call.execute().body();
-            Log.d("Ivite", "Yes");
-            //TODO: return result to activity????
+            Log.d("Reject", "YES");
         } catch (IOException e) {
             e.printStackTrace();
         }
+        Log.d("Reject", "service");
     }
 }

@@ -36,7 +36,8 @@
         <service android:name=".services.intent.CategoryIntentService" />
         <service android:name=".services.intent.TokenRegisterIntentService" />
         <service android:name=".services.intent.InviteFriendService"/>
-
+        <service android:name=".services.intent.AcceptFriendRequestIntentService" />
+        <service android:name=".services.intent.RejectFriendRequestIntentService"/>
         <receiver android:name=".receiver.AlarmReceiver" />
 
         <activity android:name=".activity.GCM"/>

@@ -1,15 +1,20 @@
 package com.dbtest.ivan.app.activity;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
@@ -20,6 +25,7 @@ import com.dbtest.ivan.app.logic.adapter.FriendListAdapter;
 import com.dbtest.ivan.app.logic.divider.DividerItemDecoration;
 import com.dbtest.ivan.app.model.Friend;
 import com.dbtest.ivan.app.receiver.CustomReceiver;
+import com.dbtest.ivan.app.services.intent.AcceptFriendRequestIntentService;
 import com.dbtest.ivan.app.services.intent.InviteFriendService;
 import com.dbtest.ivan.app.services.intent.LoadFriendsIntentService;
 import com.dbtest.ivan.app.services.intent.RemoveFriendIntentService;
