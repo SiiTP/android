@@ -3,7 +3,9 @@ package com.dbtest.ivan.app.logic;
 import com.dbtest.ivan.app.logic.db.entities.Category;
 import com.dbtest.ivan.app.logic.db.entities.Reminder;
 import com.dbtest.ivan.app.logic.db.entities.adapters.CategoryGsonAdapter;
+import com.dbtest.ivan.app.logic.db.entities.adapters.FriendGsonAdapter;
 import com.dbtest.ivan.app.logic.db.entities.adapters.ReminderGsonAdapter;
+import com.dbtest.ivan.app.model.Friend;
 import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
@@ -43,6 +45,8 @@ public class RetrofitFactory {
         GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(Reminder.class, new ReminderGsonAdapter());
         builder.registerTypeAdapter(Category.class, new CategoryGsonAdapter());
+        builder.registerTypeAdapter(Friend.class, new FriendGsonAdapter());
+
         return new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create(builder.create())).client(okBuiler.build()).baseUrl(BASE_URL).build();
     }
     public static void setSession(String session){

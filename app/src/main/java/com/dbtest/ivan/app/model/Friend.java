@@ -9,9 +9,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by said on 10.04.16.
  */
 public class Friend implements Parcelable, Comparable<Friend> {
-    @SerializedName("friendEmail")
     private String email;
-    @SerializedName("friendName")
     private String name;
     private long invitionTime;
     private int state;

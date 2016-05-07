@@ -60,9 +60,6 @@ public class GCM extends AbstractToolbarActivity {
         if (send_smth != null) {
             send_smth.setOnClickListener(v -> {
                 task.execute(1);
-
-
-
             });
         }
 

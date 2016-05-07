@@ -152,7 +152,7 @@
         jar="/Users/said/Desktop/Study/Techno/Android/android/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
         jumboMode="true"
         revision="23.0.2"
-        sha1="8303ff08b37219c5f290aa1fa4e38ecc5d4dbb76">
+        sha1="f90dd047a51f1b5a5fffcacfefe7dc4e510781c4">
         <dex dex="/Users/said/Desktop/Study/Techno/Android/android/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_7ac032cb11b29fad73527c6e1ec3876924db13e1/classes.dex" />
     </item>
     <item
@@ -166,7 +166,7 @@
         jar="/Users/said/Desktop/Study/Techno/Android/android/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
         jumboMode="true"
         revision="23.0.2"
-        sha1="8fc57333dd87c507b36038fc016222352f1dc93c">
+        sha1="80bc2f206fa6fb7de883ed160834fe54a64adf8b">
         <dex dex="/Users/said/Desktop/Study/Techno/Android/android/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_883b73679fa47b8758004971aa721d85838b4251/classes.dex" />
     </item>
     <item
