@@ -14,6 +14,8 @@ import com.dbtest.ivan.app.services.intent.AcceptFriendRequestIntentService;
 import com.dbtest.ivan.app.services.intent.RejectFriendRequestIntentService;
 import com.google.android.gms.gcm.GcmListenerService;
 
+import java.util.Random;
+
 /**
  * Created by ivan on 26.04.16.
  */
@@ -28,6 +30,7 @@ public class CustomGcmListener extends GcmListenerService {
     }
 
     private void sendNotification(Context context, String msg) {
+        int id = new Random().nextInt(32);
         String email = null;
         if(msg.contains(" ")) {
             email = msg.substring(0, msg.indexOf(" "));
@@ -38,12 +41,15 @@ public class CustomGcmListener extends GcmListenerService {
         builder.setContentText(msg);
         builder.setSmallIcon(R.drawable.ic_launcher);
 
+        Bundle bundle = new Bundle();
         Intent acceptIntent = new Intent(context, AcceptFriendRequestIntentService.class);
-        acceptIntent.putExtra("email", email);
+        bundle.putString("msg", msg);
+        bundle.putInt("notificationID", id);
+        acceptIntent.putExtras(bundle);
         PendingIntent acceptPenIntent = PendingIntent.getService(context, 0, acceptIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Intent rejectIntent = new Intent(context, RejectFriendRequestIntentService.class);
-        rejectIntent.putExtra("email", email);
+        rejectIntent.putExtras(bundle);
         PendingIntent rejectPenIntent = PendingIntent.getService(context, 0, rejectIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         builder.addAction(R.drawable.ic_launcher, "Accept", acceptPenIntent);
@@ -51,6 +57,6 @@ public class CustomGcmListener extends GcmListenerService {
 
         Notification notification = builder.build();
         NotificationManager manager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
-        manager.notify(NOTIFICATION_ID, notification);
+        manager.notify(id, notification);
     }
 }

@@ -1,15 +1,9 @@
 package com.dbtest.ivan.app.activity;
 
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,14 +18,11 @@ import com.dbtest.ivan.app.activity.abstract_toolbar_activity.AbstractToolbarAct
 import com.dbtest.ivan.app.logic.adapter.FriendListAdapter;
 import com.dbtest.ivan.app.logic.divider.DividerItemDecoration;
 import com.dbtest.ivan.app.model.Friend;
-import com.dbtest.ivan.app.receiver.CustomReceiver;
-import com.dbtest.ivan.app.services.intent.AcceptFriendRequestIntentService;
+import com.dbtest.ivan.app.receiver.FriendsWebRequestReceiver;
 import com.dbtest.ivan.app.services.intent.InviteFriendService;
 import com.dbtest.ivan.app.services.intent.LoadFriendsIntentService;
 import com.dbtest.ivan.app.services.intent.RemoveFriendIntentService;
-import com.dbtest.ivan.app.services.intent.SignInIntentService;
 
-import java.util.Collections;
 import java.util.List;
 
 public class FriendsActivity extends AbstractToolbarActivity {
@@ -95,6 +86,7 @@ public class FriendsActivity extends AbstractToolbarActivity {
         LocalBroadcastManager.getInstance(this).registerReceiver(receiver, filter);
         Intent intent = new Intent(FriendsActivity.this, LoadFriendsIntentService.class);
         startService(intent);
+        Button button = (Button) findViewById(R.id.test);
     }
 
     @Override
@@ -103,6 +95,11 @@ public class FriendsActivity extends AbstractToolbarActivity {
             this.unregisterReceiver(receiver);
         }
         super.onDestroy();
+    }
+
+    public void openDetailReminderActivity() {
+        Intent intent = new Intent(FriendsActivity.this, DetailReminderActivity.class);
+        startActivity(intent);
     }
 
     public void removeFriend(String friendEmail) {
@@ -125,27 +122,10 @@ public class FriendsActivity extends AbstractToolbarActivity {
     public void showDeleteFriendDialog(MaterialDialog.SingleButtonCallback callback) {
         new MaterialDialog.Builder(this)
                 .content("Are you sure?")
-                .positiveText("Agree")
+                .positiveText("Yes")
                 .onPositive(callback)
-                .negativeText("Disagree")
+                .negativeText("No")
                 .onNegative(callback)
                 .show();
-    }
-
-    public class FriendsWebRequestReceiver extends BroadcastReceiver {
-
-        public static final String PROCESS_RESPONSE = "com.dbtest.ivan.intent.action.PROCESS_RESPONSE";
-        private FriendsActivity activity;
-
-        public FriendsWebRequestReceiver(FriendsActivity activity) {
-            this.activity = activity;
-        }
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            List<Friend> friendList = intent.getParcelableArrayListExtra("FriendsList");
-
-            Collections.sort(friendList);
-            activity.setFriendListAdapter(friendList);
-        }
     }
 }

@@ -10,6 +10,7 @@ import com.dbtest.ivan.app.activity.FriendsActivity;
 import com.dbtest.ivan.app.logic.RetrofitFactory;
 import com.dbtest.ivan.app.logic.api.FriendApi;
 import com.dbtest.ivan.app.model.Friend;
+import com.dbtest.ivan.app.receiver.FriendsWebRequestReceiver;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -59,7 +60,7 @@ public class LoadFriendsIntentService extends IntentService {
             List<Friend> friendList = callFriends.execute().body();
             Intent broadcastIntent = new Intent();
 
-            broadcastIntent.setAction(FriendsActivity.FriendsWebRequestReceiver.PROCESS_RESPONSE);
+            broadcastIntent.setAction(FriendsWebRequestReceiver.PROCESS_RESPONSE);
             broadcastIntent.addCategory(Intent.CATEGORY_DEFAULT);
             broadcastIntent.putParcelableArrayListExtra("FriendsList", (ArrayList<Friend>) friendList);
             LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
