@@ -90,7 +90,7 @@
     <Button
         style="@style/SignSubmit"
         android:layout_marginTop="10dp"
-        android:text="WTF SYNC ALL"
+        android:text="SYNC ALL"
         android:id="@+id/details_wtf"
         android:layout_alignParentBottom="true"
         android:layout_height="wrap_content"

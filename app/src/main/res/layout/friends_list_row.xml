@@ -1,31 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<com.daimajia.swipe.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/swipe_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingLeft="16dp"
-    android:paddingRight="5dp"
-    android:paddingTop="10dp"
-    android:paddingBottom="10dp"
-    android:orientation="vertical">
+    app:clickToClose="true">
 
-    <TextView
-        android:id="@+id/friend_name"
-        android:text="Friend1"
-        android:textSize="16dp"
-        android:textStyle="bold"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:id="@+id/bottom_wrapper"
+        android:layout_width="160dp"
+        android:layout_height="match_parent"
+        android:background="@color/app_add_reminder"
+        android:tag="Bottom1"
+        android:weightSum="1">
 
-    <ImageButton
-        android:id="@+id/delete_btn"
-        android:text="Delete"
-        android:background="@drawable/oval"
-        android:layout_width="40dp"
-        android:src="@drawable/ic_remove"
-        android:layout_centerVertical="true"
-        android:layout_alignParentRight="true"
-        android:layout_height="40dp"/>
+        <TextView
+            android:id="@+id/delete_text"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="Delete"
+            android:textColor="#000000" />
 
-</RelativeLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="5dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="5dp">
+
+        <TextView
+            android:id="@+id/friend_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="Friend1"
+            android:textSize="16dp"
+            android:textStyle="bold" />
+
+        <ImageButton
+            android:id="@+id/add_reminder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_alarm_add"
+            android:text="Delete" />
+
+    </RelativeLayout>
+</com.daimajia.swipe.SwipeLayout>

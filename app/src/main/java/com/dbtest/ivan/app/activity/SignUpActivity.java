@@ -1,5 +1,6 @@
 package com.dbtest.ivan.app.activity;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import com.dbtest.ivan.app.R;
 import com.dbtest.ivan.app.activity.abstract_toolbar_activity.AbstractToolbarActivity;
+import com.dbtest.ivan.app.activity.list_activity.ListActivity;
 import com.dbtest.ivan.app.receiver.CustomReceiver;
 import com.dbtest.ivan.app.services.intent.SignUpIntentService;
 import com.dbtest.ivan.app.utils.EmailFocusListener;
@@ -59,7 +61,7 @@ public class SignUpActivity extends AbstractToolbarActivity implements WaitingAc
         usernameView = (EditText) findViewById(R.id.signup_username);
         passwordView = (EditText) findViewById(R.id.signup_password);
         repeatPasswordView = (EditText) findViewById(R.id.signup_repeat_password);
-        submit = (Button) findViewById(R.id.signup_submit);//todo KAK BLYAT YBRAT KRASNYU LINIYU??!?!?!?!?!?!?!? POCHEMY ONA MENYAETSYA KOGDA OWIBKY ISPRAVIT V DRYGOY VIEW!?!?!?
+        submit = (Button) findViewById(R.id.signup_submit);
 
         repeatPasswordView.addTextChangedListener(new PasswordsTextWatcher((TextInputLayout)findViewById(R.id.signup_repeat_password_supp),passwordView));
         passwordView.addTextChangedListener(new MaxLengthTextWatcher((TextInputLayout)findViewById(R.id.signup_password_supp),16));
@@ -86,7 +88,7 @@ public class SignUpActivity extends AbstractToolbarActivity implements WaitingAc
                 if(f == null) {
                     String email = null;
                     if (emailView != null) {
-                        email = emailView.getText().toString();//kak delat validaciyu?
+                        email = emailView.getText().toString();
                     }
 
                     String username = null;
@@ -138,12 +140,20 @@ public class SignUpActivity extends AbstractToolbarActivity implements WaitingAc
         if(toast == null) {
             toast = Toast.makeText(SignUpActivity.this, "", Toast.LENGTH_LONG);
         }
-
         toast.setText(result);
         toast.show();
-
-        if(result.equals(SignUpIntentService.SUCCESS_MSG)){
-            Intent intent = new Intent(this,SignInActivity.class);
+        Class<? extends Activity> nextActivity;
+        switch (result) {
+            case SignUpIntentService.SUCCESS_MSG:
+                nextActivity = ListActivity.class;
+                break;
+            case SignUpIntentService.HALF_SUCCESS_MSG:
+                nextActivity = SignInActivity.class;
+            default:
+                nextActivity = null;
+        }
+        if(nextActivity != null) {
+            Intent intent = new Intent(this, nextActivity);
             startActivity(intent);
         }
     }

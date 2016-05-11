@@ -75,6 +75,7 @@ public class SignInActivity extends AbstractToolbarActivity implements WaitingAc
                         password = passwordView.getText().toString();
                     }
                     System.out.println(email + ' ' + password);
+
                     if(!email.isEmpty() && !password.isEmpty()) {
                         Bundle bundle = new Bundle();
                         bundle.putString(SIGNIN_EMAIL, email);
@@ -92,7 +93,14 @@ public class SignInActivity extends AbstractToolbarActivity implements WaitingAc
 
             });
         }
-
+        Button gcm = (Button) findViewById(R.id.gcm_test);
+        gcm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(SignInActivity.this,GCM.class);
+                startActivity(i);
+            }
+        });
     }
 
     @Override

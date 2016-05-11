@@ -8,10 +8,8 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by said on 10.04.16.
  */
-public class Friend implements Parcelable {
-    @SerializedName("friendEmail")
+public class Friend implements Parcelable, Comparable<Friend> {
     private String email;
-    @SerializedName("friendName")
     private String name;
     private long invitionTime;
     private int state;
@@ -88,6 +86,11 @@ public class Friend implements Parcelable {
         dest.writeLong(invitionTime);
         dest.writeInt(state);
         dest.writeLong(id);
+    }
+
+    @Override
+    public int compareTo(Friend another) {
+        return name.compareTo(another.getName());
     }
 
     public static final Parcelable.Creator<Friend> CREATOR = new Parcelable.Creator<Friend>() {

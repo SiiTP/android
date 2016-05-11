@@ -58,7 +58,7 @@ public class ListActivity extends AbstractToolbarActivity {
 
 //        testAlarms();
 
-        mButtonAdd =(FloatingActionButton) findViewById(R.id.list_add_reminder);
+        mButtonAdd = (FloatingActionButton) findViewById(R.id.list_add_reminder);
         if (mButtonAdd != null) {
             mButtonAdd.setOnClickListener(v -> {
                 Intent intent1 = new Intent(ListActivity.this, DetailReminderActivity.class);
@@ -119,7 +119,7 @@ public class ListActivity extends AbstractToolbarActivity {
     }
 
     private String getCheckedCategory() {
-        return  mCategories[mMenuLastPosition - MENU_FIRST_CATEGORY_POSITION];
+        return mCategories[mMenuLastPosition - MENU_FIRST_CATEGORY_POSITION];
     }
 
     private void addRemindersRecyclerView() {
