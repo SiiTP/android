@@ -25,6 +25,7 @@ import com.dbtest.ivan.app.logic.db.OrmHelper;
 import com.dbtest.ivan.app.logic.db.entities.Category;
 import com.dbtest.ivan.app.receiver.CustomReceiver;
 import com.dbtest.ivan.app.services.intent.CategoryIntentService;
+import com.dbtest.ivan.app.services.intent.FullSyncService;
 import com.dbtest.ivan.app.services.intent.ReminderIntentService;
 import com.dbtest.ivan.app.utils.WaitingManager;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
@@ -132,7 +133,16 @@ public class DetailReminderActivity extends AbstractToolbarActivity implements D
                 }
             });
 
-
+            Button wtf = (Button) findViewById(R.id.details_wtf);
+            if (wtf != null) {
+                wtf.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent syncAll = new Intent(DetailReminderActivity.this, FullSyncService.class);
+                        startService(syncAll);
+                    }
+                });
+            }
 
         }
     }
