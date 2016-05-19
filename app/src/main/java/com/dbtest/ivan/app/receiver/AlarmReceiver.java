@@ -23,7 +23,7 @@ public class AlarmReceiver extends BroadcastReceiver {
     }
 
     public void startAlarm(Context context, int id) {
-        Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+        Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         Ringtone r = RingtoneManager.getRingtone(context, notification);
         r.play();
 

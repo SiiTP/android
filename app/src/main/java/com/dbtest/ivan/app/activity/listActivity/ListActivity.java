@@ -77,7 +77,7 @@ public class ListActivity extends AbstractToolbarActivity {
             mCategories = savedInstanceState.getStringArray(CURRENT_CATEGORIES);
             mMenuLastPosition = savedInstanceState.getInt(CURRENT_POSITION_KEY);
         }
-        mCategoryLoader.forceLoad();
+//        mCategoryLoader.forceLoad();
         mReminderLoader.forceLoad();
     }
 

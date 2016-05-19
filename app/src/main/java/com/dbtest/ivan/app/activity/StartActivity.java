@@ -45,7 +45,7 @@ public class StartActivity extends Activity {
             List<Category> categories;
             categories = categoryDao.queryForAll();
             if (categories.isEmpty()) {
-                categoryDao.create(new Category("all"));
+//                categoryDao.create(new Category("all"));
                 categoryDao.create(new Category("from friends"));
             }
         } catch (SQLException e) {

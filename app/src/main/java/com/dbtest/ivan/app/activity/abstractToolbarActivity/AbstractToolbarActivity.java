@@ -27,6 +27,9 @@ public abstract class AbstractToolbarActivity extends AppCompatActivity {
 
     protected Toolbar mToolbar;
     protected Drawer mDrawer;
+
+    private Category allCategory;
+
     @NonNull
     protected abstract Integer getBodyResId();
 
@@ -64,6 +67,8 @@ public abstract class AbstractToolbarActivity extends AppCompatActivity {
         setContentView(mLayout);
 
         setToolbarAndMenu();
+
+        allCategory = new Category(Category.CATEGORY_ALL_NAME);
         mCategoryLoader.forceLoad(); // загружем категории из базы
     }
 
@@ -103,6 +108,7 @@ public abstract class AbstractToolbarActivity extends AppCompatActivity {
 //        Category category2 = new Category("friends");
 //        data.add(category);
 //        data.add(category2);
+            data.add(0, allCategory);
             mCategories = Category.toStringArray(data);
             afterCategoriesLoaded();
         }
