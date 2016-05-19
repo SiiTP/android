@@ -28,7 +28,6 @@ public class CategoryLoader extends AsyncTaskLoader<ArrayList<Category>> {
         List<Category> categories = null;
         try {
             categories = categoryDao.queryForAll();
-            Log.d("myapp", "categories loaded, count : " + categories.size());
         } catch (SQLException e) {
             e.printStackTrace();
         }

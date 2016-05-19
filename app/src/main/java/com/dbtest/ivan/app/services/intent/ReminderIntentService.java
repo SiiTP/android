@@ -10,7 +10,7 @@ import com.dbtest.ivan.app.logic.db.OrmHelper;
 import com.dbtest.ivan.app.logic.db.entities.Category;
 import com.dbtest.ivan.app.logic.db.entities.Reminder;
 import com.dbtest.ivan.app.receiver.CustomReceiver;
-import com.dbtest.ivan.app.utils.AlarmManager;
+import com.dbtest.ivan.app.utils.ReminderAlarmManager;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
 
@@ -74,7 +74,7 @@ public class ReminderIntentService extends IntentService {
                 reminderDao.create(reminder);
             }
             int idReminder = (int) (long) reminder.getId();
-            AlarmManager.setAlarm(this.getApplicationContext(), idReminder, reminder.getReminderTime().getTime());
+            ReminderAlarmManager.setAlarm(this.getApplicationContext(), idReminder, reminder.getReminderTime().getTime());
             Intent sync = new Intent(this,SynchronizeIntentService.class);
             startService(sync);
 

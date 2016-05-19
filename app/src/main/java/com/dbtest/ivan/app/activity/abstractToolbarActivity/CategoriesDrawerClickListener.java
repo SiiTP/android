@@ -18,7 +18,6 @@ public final class CategoriesDrawerClickListener implements Drawer.OnDrawerItemC
 
     @Override
     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-        Log.d("myapp", "category click, position : " + position);
         drawerItem.withSetSelected(true);
         if ((activity instanceof ListActivity)) {
             ((ListActivity)activity).setMenuLastPosition(position);

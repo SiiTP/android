@@ -24,7 +24,7 @@ import com.dbtest.ivan.app.logic.adapter.ReminderListAdapter;
 import com.dbtest.ivan.app.logic.db.entities.Reminder;
 import com.dbtest.ivan.app.logic.divider.DividerItemDecoration;
 import com.dbtest.ivan.app.model.loader.ReminderLoader;
-import com.dbtest.ivan.app.utils.AlarmManager;
+import com.dbtest.ivan.app.utils.ReminderAlarmManager;
 import com.dbtest.ivan.app.utils.ExtrasCodes;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 
@@ -165,7 +165,7 @@ public class ListActivity extends AbstractToolbarActivity {
 
     public void testAlarms() {
         long time = new Date().getTime();
-        AlarmManager.setAlarm(this, 1000, time + 3000);
+        ReminderAlarmManager.setAlarm(this, 1000, time + 3000);
 //        try {
 //            Thread.sleep(4000);
 //        } catch (InterruptedException e) {

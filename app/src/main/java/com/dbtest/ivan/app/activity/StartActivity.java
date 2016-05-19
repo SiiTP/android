@@ -17,7 +17,7 @@ import com.dbtest.ivan.app.logic.db.entities.Category;
 import com.dbtest.ivan.app.logic.db.entities.Reminder;
 import com.dbtest.ivan.app.receiver.AlarmReceiver;
 import com.dbtest.ivan.app.receiver.CustomReceiver;
-import com.dbtest.ivan.app.utils.AlarmManager;
+import com.dbtest.ivan.app.utils.ReminderAlarmManager;
 import com.j256.ormlite.dao.Dao;
 
 import java.sql.SQLException;
@@ -45,7 +45,6 @@ public class StartActivity extends Activity {
             List<Category> categories;
             categories = categoryDao.queryForAll();
             if (categories.isEmpty()) {
-//                categoryDao.create(new Category("all"));
                 categoryDao.create(new Category("from friends"));
             }
         } catch (SQLException e) {
@@ -86,7 +85,7 @@ public class StartActivity extends Activity {
             for (Reminder reminder : reminders) {
                 int idRem = (int)(long)reminder.getId(); //TODO unsafe parse long to int
                 long timeInMills = reminder.getReminderTime().getTime();
-                AlarmManager.setAlarm(this, idRem, timeInMills);
+                ReminderAlarmManager.setAlarm(this, idRem, timeInMills);
             }
         }
     }
