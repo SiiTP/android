@@ -4,8 +4,10 @@ import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.support.v7.app.NotificationCompat;
-import android.widget.Toast;
 
 import com.dbtest.ivan.app.R;
 
@@ -21,7 +23,9 @@ public class AlarmReceiver extends BroadcastReceiver {
     }
 
     public void startAlarm(Context context, int id) {
-        Toast.makeText(context, "Alarm signal! ID : " + id, Toast.LENGTH_LONG).show();
+        Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+        Ringtone r = RingtoneManager.getRingtone(context, notification);
+        r.play();
 
         NotificationCompat.Builder builder = (NotificationCompat.Builder) new NotificationCompat.Builder(context)
                 .setSmallIcon(R.drawable.ic_app_start_activity)

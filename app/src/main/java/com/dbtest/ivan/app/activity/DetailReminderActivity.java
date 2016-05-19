@@ -78,7 +78,7 @@ public class DetailReminderActivity extends AbstractToolbarActivity implements D
             for(Category c : categoryList){
                 categoriesNames.add(c.getName());
             }
-            categoriesAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,categoriesNames );
+            categoriesAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, categoriesNames);
 
             spinner = (Spinner) findViewById(R.id.details_category_spinner);
             categoriesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -90,57 +90,41 @@ public class DetailReminderActivity extends AbstractToolbarActivity implements D
         textLayout = ((TextInputLayout) findViewById(R.id.details_text_supp));
         pickButton = (Button) findViewById(R.id.pick_date_button);
         if (pickButton != null) {
-            pickButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    showDateTimeDialog();
-                }
-            });
+            pickButton.setOnClickListener(v -> showDateTimeDialog());
         }
 
         categoryButton = (Button) findViewById(R.id.details_add_category_button);
         if (categoryButton != null) {
-            categoryButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    showCategoryDialog();
-                }
-            });
+            categoryButton.setOnClickListener(v -> showCategoryDialog());
         }
         insert = (Button) findViewById(R.id.details_add);
         if (insert != null) {
-            insert.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String text = textView.getText().toString();
-                    String categoryName = (String) spinner.getSelectedItem();
-                    if((reminderDate != null && categoryName != null) && !text.isEmpty()) {
-                        Long time = reminderDate.getTimeInMillis();
-                        Bundle bundle = new Bundle();
-                        bundle.putLong(ReminderIntentService.TIME, time);
-                        bundle.putString(ReminderIntentService.TEXT, text);
-                        bundle.putString(ReminderIntentService.CATEGORY, categoryName);
-                        bundle.putLong(ReminderIntentService.ID, -1L);
-                        Intent intent = new Intent(DetailReminderActivity.this, ReminderIntentService.class);
-                        intent.putExtras(bundle);
-                        startService(intent);
-                        setWaiting(true);
-                        IntentFilter filter = new IntentFilter(CustomReceiver.WAITING_ACTION);
-                        filter.addCategory(Intent.CATEGORY_DEFAULT);
-                        receiver = new CustomReceiver(DetailReminderActivity.this);
-                        LocalBroadcastManager.getInstance(DetailReminderActivity.this).registerReceiver(receiver, filter);
-                    }
+            insert.setOnClickListener(v -> {
+                String text = textView.getText().toString();
+                String categoryName = (String) spinner.getSelectedItem();
+                if((reminderDate != null && categoryName != null) && !text.isEmpty()) {
+                    Long time = reminderDate.getTimeInMillis();
+                    Bundle bundle = new Bundle();
+                    bundle.putLong(ReminderIntentService.TIME, time);
+                    bundle.putString(ReminderIntentService.TEXT, text);
+                    bundle.putString(ReminderIntentService.CATEGORY, categoryName);
+                    bundle.putLong(ReminderIntentService.ID, -1L);
+                    Intent intent = new Intent(DetailReminderActivity.this, ReminderIntentService.class);
+                    intent.putExtras(bundle);
+                    startService(intent);
+                    setWaiting(true);
+                    IntentFilter filter = new IntentFilter(CustomReceiver.WAITING_ACTION);
+                    filter.addCategory(Intent.CATEGORY_DEFAULT);
+                    receiver = new CustomReceiver(DetailReminderActivity.this);
+                    LocalBroadcastManager.getInstance(DetailReminderActivity.this).registerReceiver(receiver, filter);
                 }
             });
 
             Button wtf = (Button) findViewById(R.id.details_wtf);
             if (wtf != null) {
-                wtf.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent syncAll = new Intent(DetailReminderActivity.this, FullSyncService.class);
-                        startService(syncAll);
-                    }
+                wtf.setOnClickListener(v -> {
+                    Intent syncAll = new Intent(DetailReminderActivity.this, FullSyncService.class);
+                    startService(syncAll);
                 });
             }
 

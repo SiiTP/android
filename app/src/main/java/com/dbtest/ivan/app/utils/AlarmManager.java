@@ -9,9 +9,6 @@ import com.dbtest.ivan.app.receiver.AlarmReceiver;
 
 import java.util.Date;
 
-/**
- * Created by Ivan on 20.04.2016.
- */
 public class AlarmManager {
     public static void setAlarm(Context context, int idReminder, long timeInMills) {
         android.app.AlarmManager am = (android.app.AlarmManager)context.getSystemService(Context.ALARM_SERVICE);

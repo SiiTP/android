@@ -80,7 +80,7 @@ public class ReminderIntentService extends IntentService {
 
             Bundle answer = new Bundle();
             answer.putString(CustomReceiver.RESULT,"Reminder created");
-            try {
+            try { //TODO зачем это?
                 Thread.sleep(1500L);
             } catch (InterruptedException e) {
                 e.printStackTrace();
