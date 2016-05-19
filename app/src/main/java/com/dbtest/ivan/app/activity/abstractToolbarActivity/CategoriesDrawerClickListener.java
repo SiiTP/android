@@ -1,10 +1,10 @@
-package com.dbtest.ivan.app.activity.abstract_toolbar_activity;
+package com.dbtest.ivan.app.activity.abstractToolbarActivity;
 
 import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 
-import com.dbtest.ivan.app.activity.list_activity.ListActivity;
+import com.dbtest.ivan.app.activity.listActivity.ListActivity;
 import com.dbtest.ivan.app.utils.ExtrasCodes;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;

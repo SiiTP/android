@@ -1,4 +1,4 @@
-package com.dbtest.ivan.app.activity.list_activity;
+package com.dbtest.ivan.app.activity.listActivity;
 
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;

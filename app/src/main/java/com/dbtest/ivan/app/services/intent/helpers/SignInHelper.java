@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-import com.dbtest.ivan.app.activity.abstract_toolbar_activity.DrawerMenuManager;
+import com.dbtest.ivan.app.activity.abstractToolbarActivity.DrawerMenuManager;
 import com.dbtest.ivan.app.logic.RetrofitFactory;
 import com.dbtest.ivan.app.logic.api.AuthApi;
 import com.dbtest.ivan.app.logic.db.entities.User;

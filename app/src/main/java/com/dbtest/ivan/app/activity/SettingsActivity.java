@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 
 import com.dbtest.ivan.app.R;
-import com.dbtest.ivan.app.activity.abstract_toolbar_activity.AbstractToolbarActivity;
+import com.dbtest.ivan.app.activity.abstractToolbarActivity.AbstractToolbarActivity;
 import com.dbtest.ivan.app.fragment.SettingsFragment;
 
 public class SettingsActivity extends AbstractToolbarActivity {

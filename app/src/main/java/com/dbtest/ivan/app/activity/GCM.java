@@ -3,16 +3,13 @@ package com.dbtest.ivan.app.activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.widget.Button;
 
 import com.dbtest.ivan.app.R;
-import com.dbtest.ivan.app.activity.abstract_toolbar_activity.AbstractToolbarActivity;
+import com.dbtest.ivan.app.activity.abstractToolbarActivity.AbstractToolbarActivity;
 import com.dbtest.ivan.app.logic.RetrofitFactory;
 import com.dbtest.ivan.app.services.intent.TokenRegisterIntentService;
-
-import junit.framework.Test;
 
 import java.io.IOException;
 

@@ -17,8 +17,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dbtest.ivan.app.R;
-import com.dbtest.ivan.app.activity.abstract_toolbar_activity.AbstractToolbarActivity;
-import com.dbtest.ivan.app.activity.list_activity.ListActivity;
+import com.dbtest.ivan.app.activity.abstractToolbarActivity.AbstractToolbarActivity;
+import com.dbtest.ivan.app.activity.listActivity.ListActivity;
 import com.dbtest.ivan.app.fragment.CategoryDialog;
 import com.dbtest.ivan.app.fragment.DateTimePickerDialog;
 import com.dbtest.ivan.app.logic.db.OrmHelper;
