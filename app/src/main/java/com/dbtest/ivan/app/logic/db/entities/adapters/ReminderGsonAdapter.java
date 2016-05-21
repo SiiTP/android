@@ -23,7 +23,7 @@ public class ReminderGsonAdapter extends TypeAdapter<Reminder> {
         out.beginObject();
         out.name("text").value(value.getText());
         out.name("time").value(value.getReminderTime().getTime());
-        out.name("idCategory").value(value.getCategory().getServerId());
+        out.name("idCategory").value(value.getCategory() != null? value.getCategory().getServerId() : null);
         out.name("friendId").value(value.getFriendId());
         out.name("id").value(value.getServerId());
         out.endObject();

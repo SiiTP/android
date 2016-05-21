@@ -32,6 +32,8 @@
     <string name="details_create_category">New</string>
     <string name="category_dialog_submit">Create</string>
     <string name="details_text">reminder text...</string>
+    <string name="friend_reminder_send">Send</string>
+    <string name="choose_date_and_time">Choose date and time</string>
 
 
 </resources>

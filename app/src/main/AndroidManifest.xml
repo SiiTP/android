@@ -28,7 +28,7 @@
         <activity android:name=".activity.SignUpActivity" />
         <activity android:name=".activity.FriendsActivity" />
         <activity android:name=".activity.SettingsActivity" />
-        <activity android:name=".activity.DetailReminderActivity" />
+        <activity android:name=".activity.reminder.DetailReminderActivity" />
 
         <service android:name=".services.intent.SignInIntentService" />
         <service android:name=".services.intent.SignUpIntentService" />
@@ -74,6 +74,11 @@
             </intent-filter>
         </service>
 
+        <activity android:name=".activity.reminder.FriendReminderActivity" />
+
+        <service
+            android:name=".services.intent.FriendReminderIntentService"
+            android:exported="false"></service>
     </application>
 
 </manifest>
