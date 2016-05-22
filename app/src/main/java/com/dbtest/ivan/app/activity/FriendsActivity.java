@@ -1,5 +1,6 @@
 package com.dbtest.ivan.app.activity;
 
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import com.dbtest.ivan.app.receiver.FriendsWebRequestReceiver;
 import com.dbtest.ivan.app.services.intent.InviteFriendService;
 import com.dbtest.ivan.app.services.intent.LoadFriendsIntentService;
 import com.dbtest.ivan.app.services.intent.RemoveFriendIntentService;
+import com.dbtest.ivan.app.utils.NotificationHelper;
 
 import java.util.List;
 
@@ -52,47 +54,36 @@ public class FriendsActivity extends AbstractToolbarActivity {
 
         emailView = (EditText) findViewById(R.id.find_friend).findViewById(R.id.friend_email);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                Log.d("myapp", "scroll state changed, new state : " + newState);
-            }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                Log.d("myapp", "onScrolled, dx, dy : " + dx + " " + dy);
-            }
-        });
         button = (ImageButton) findViewById(R.id.add_friend);
-        assert button != null;
-        button.setOnClickListener((v)-> {
-            String email = emailView.getText().toString();
-            if (!email.isEmpty()) {
-                Bundle bundle = new Bundle();
-                bundle.putString("email", email);
-                Intent intent = new Intent(FriendsActivity.this, InviteFriendService.class);
-                intent.putExtras(bundle);
-                startService(intent);
-            }
-        });
+        if (button != null) {
+            button.setOnClickListener((v)-> {
+                String email = emailView.getText().toString();
+
+                if (!email.isEmpty()) {
+                    Bundle bundle = new Bundle();
+                    Intent intent = new Intent(FriendsActivity.this, InviteFriendService.class);
+
+                    bundle.putString("email", email);
+                    intent.putExtras(bundle);
+                    startService(intent);
+                }
+            });
+        }
         IntentFilter filter = new IntentFilter(FriendsWebRequestReceiver.PROCESS_RESPONSE);
-        receiver = new FriendsWebRequestReceiver(this);
-        filter.addCategory(Intent.CATEGORY_DEFAULT);
-        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, filter);
         Intent intent = new Intent(FriendsActivity.this, LoadFriendsIntentService.class);
+
+        filter.addCategory(Intent.CATEGORY_DEFAULT);
+        receiver = new FriendsWebRequestReceiver(this);
+        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, filter);
         startService(intent);
-        Button button = (Button) findViewById(R.id.test);
     }
 
     @Override
     public void onDestroy() {
         if (receiver != null) {
-            this.unregisterReceiver(receiver);
+            LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
         }
         super.onDestroy();
     }
