@@ -73,6 +73,13 @@ public abstract class AbstractToolbarActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        mCategoryLoader = (CategoryLoader) getLoaderManager().initLoader(ExtrasCodes.LOADER_CATEGORY_ID, null, new CategoryCallbacks(this));
+
+    }
+
+    @Override
     protected void onRestart() {
         super.onRestart();
         mCategoryLoader.forceLoad();
@@ -85,12 +92,12 @@ public abstract class AbstractToolbarActivity extends AppCompatActivity {
     }
 
     protected int getCategoryIndexByName(String category) {
-
         for (int categoryIndex = 0; categoryIndex < mCategories.length; categoryIndex++) {
             if (mCategories[categoryIndex].equals(category)) {
                 return categoryIndex;
             }
         }
+        Log.e("myapp AbstractActivity", "no category with name : " + category);
         return -1;
     }
 
@@ -115,7 +122,10 @@ public abstract class AbstractToolbarActivity extends AppCompatActivity {
 
         @Override
         public void onLoadFinished(Loader<ArrayList<Category>> loader, ArrayList<Category> data) {
-            data.add(0, allCategory);
+            Log.d("myapp", "parent loader finished callback");
+            if (!data.get(0).getName().equals(allCategory.getName())) {
+                data.add(0, allCategory);
+            }
             mCategories = Category.toStringArray(data);
             afterCategoriesLoaded();
         }

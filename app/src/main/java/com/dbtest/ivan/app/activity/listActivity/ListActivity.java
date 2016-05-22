@@ -84,23 +84,14 @@ public class ListActivity extends AbstractToolbarActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d("myapp", "activity on resume");
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            Log.d("myapp", "bundle is not null");
-
-            for (String key : bundle.keySet()) {
-                Object value = bundle.get(key);
-                Log.d("myapp", String.format("%s %s (%s)", key,
-                        value.toString(), value.getClass().getName()));
-            }
-
             mMenuLastPosition = bundle.getInt(ExtrasCodes.ACTIVE_MENU_POSITION_CODE, mMenuLastPosition);
             String currentCategory = bundle.getString(CURRENT_CATEGORY);
             if (currentCategory != null) {
                 CategoryNotificationCallbacks notificationCallbacks = new CategoryNotificationCallbacks(this);
                 notificationCallbacks.setCurrentCategory(currentCategory);
-                mCategoryNotificationLoader = (CategoryLoader) getLoaderManager().initLoader(ExtrasCodes.LOADER_CATEGORY_ID, null, notificationCallbacks);
+                mCategoryNotificationLoader = (CategoryLoader) getLoaderManager().initLoader(ExtrasCodes.LOADER_CATEGORY_NOTIFICATION_ID, null, notificationCallbacks);
                 mCategoryNotificationLoader.forceLoad();
             }
         }
@@ -134,18 +125,7 @@ public class ListActivity extends AbstractToolbarActivity {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        Log.d("myapp ListActivity", "in on new intent");
         setIntent(intent);
-//        Bundle bundle = getIntent().getExtras();
-//        if (bundle != null) {
-//            Log.d("myapp", "on new bundle is not null");
-//
-//            for (String key : bundle.keySet()) {
-//                Object value = bundle.get(key);
-//                Log.d("myapp", String.format("%s %s (%s)", key,
-//                        value.toString(), value.getClass().getName()));
-//            }
-//        }
     }
 
     public void setMenuLastPosition(int mMenuLastPosition) {
@@ -214,18 +194,32 @@ public class ListActivity extends AbstractToolbarActivity {
     private class CategoryNotificationCallbacks extends CategoryCallbacks {
 
         private String currentCategory;
+        private AbstractToolbarActivity activity;
 
         public CategoryNotificationCallbacks(AbstractToolbarActivity activity) {
             super(activity);
+            this.activity = activity;
+        }
+
+        @Override
+        public Loader<ArrayList<Category>> onCreateLoader(int id, Bundle args) {
+            if (id == ExtrasCodes.LOADER_CATEGORY_NOTIFICATION_ID) {
+                mCategoryNotificationLoader = new CategoryLoader(activity);
+            } else {
+                Log.e("myapp", "unexcept loader id not equal category notification loader");
+            }
+            return mCategoryNotificationLoader;
         }
 
         @Override
         public void onLoadFinished(Loader<ArrayList<Category>> loader, ArrayList<Category> data) {
-            super.onLoadFinished(loader, data);
-            Log.d("myapp", "current category is not null : " + currentCategory);
+            Log.d("myapp", "soon loader finished callback");
             int index = getCategoryIndexByName(currentCategory);
-            Log.d("myapp", "current category index : " + index);
             mMenuLastPosition = index + MENU_FIRST_CATEGORY_POSITION;
+
+//            Log.d("myapp", "index : " + index);
+//            Log.d("myapp", "current category menu last position : " + mMenuLastPosition);
+            super.onLoadFinished(loader, data);
             renderList();
         }
 
