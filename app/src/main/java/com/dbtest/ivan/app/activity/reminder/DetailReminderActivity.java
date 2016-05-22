@@ -55,7 +55,9 @@ public class DetailReminderActivity extends ReminderActivity implements Category
             categoryList = helper.getCategoryDao().queryForAll();
             List<String> categoriesNames = new ArrayList<>(categoryList.size());
             for(Category c : categoryList){
-                categoriesNames.add(c.getName());
+                if(!c.getName().equals("from friends")) {
+                    categoriesNames.add(c.getName());
+                }
             }
             categoriesAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, categoriesNames);
 
