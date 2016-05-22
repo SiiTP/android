@@ -145,7 +145,7 @@ public class ListActivity extends AbstractToolbarActivity {
             if (id == ExtrasCodes.LOADER_REMINDER_ID) {
                 reminderLoader = new ReminderLoader(activity);
             } else {
-                Log.e("myapp", "unexcept loader id not equal reminder loader");
+                Log.e("myapp", "unexcept, loader id not equal reminder loader");
             }
             return reminderLoader;
         }
@@ -158,7 +158,6 @@ public class ListActivity extends AbstractToolbarActivity {
 
         @Override
         public void onLoaderReset(Loader<ArrayList<Reminder>> loader) {
-            Log.d("myapp " + this.getClass().toString(), "reminder loader reset");
             mRemindersAdapter.reset();
         }
     }

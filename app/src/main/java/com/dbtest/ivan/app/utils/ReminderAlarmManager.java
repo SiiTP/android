@@ -17,11 +17,7 @@ import java.util.Date;
 
 public class ReminderAlarmManager {
     public static void setAlarm(Context context, int idReminder, long timeInMills) {
-        AlarmManager am = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(context, AlarmReceiver.class);
-
-        RegisterReminderAsyncTask registerReminderAsyncTask = new RegisterReminderAsyncTask(context, intent, timeInMills, am);
-        registerReminderAsyncTask.execute(idReminder);
+        new RegisterReminderAsyncTask(context, timeInMills).execute(idReminder);
     }
 
     public static void clearAlarm(Context context, int idReminder) {
@@ -38,7 +34,9 @@ public class ReminderAlarmManager {
         private long timeInMills;
         private AlarmManager alarmManager;
 
-        public RegisterReminderAsyncTask(Context context, Intent intentForPendingIntent, long timeInMills, AlarmManager am) {
+        public RegisterReminderAsyncTask(Context context, long timeInMills) {
+            AlarmManager am = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+            Intent intentForPendingIntent = new Intent(context, AlarmReceiver.class);
             this.context = context;
             this.intentForPendingIntent = intentForPendingIntent;
             this.timeInMills = timeInMills;
