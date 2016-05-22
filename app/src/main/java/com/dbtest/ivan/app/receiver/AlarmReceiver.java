@@ -47,7 +47,7 @@ public class AlarmReceiver extends BroadcastReceiver {
                 notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder builder = (NotificationCompat.Builder) new NotificationCompat.Builder(context)
-                .setSmallIcon(R.drawable.ic_app_start_activity)
+                .setSmallIcon(R.drawable.ic_launcher)
                 .setContentTitle(context.getString(R.string.alarm_notification_title))
                 .setContentInfo(category)
                 .setContentText(text)

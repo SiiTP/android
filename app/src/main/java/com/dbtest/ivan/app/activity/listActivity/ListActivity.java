@@ -92,6 +92,7 @@ public class ListActivity extends AbstractToolbarActivity {
                 CategoryNotificationCallbacks notificationCallbacks = new CategoryNotificationCallbacks(this);
                 notificationCallbacks.setCurrentCategory(currentCategory);
                 mCategoryNotificationLoader = (CategoryLoader) getLoaderManager().initLoader(ExtrasCodes.LOADER_CATEGORY_NOTIFICATION_ID, null, notificationCallbacks);
+                Log.d("myapp", "forceload when resume soon");
                 mCategoryNotificationLoader.forceLoad();
             }
         }

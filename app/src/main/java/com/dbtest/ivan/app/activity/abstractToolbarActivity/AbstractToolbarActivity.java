@@ -69,21 +69,21 @@ public abstract class AbstractToolbarActivity extends AppCompatActivity {
         setToolbarAndMenu();
 
         allCategory = new Category(Category.CATEGORY_ALL_NAME);
+        Log.d("myapp", "forceload when create");
         mCategoryLoader.forceLoad(); // загружем категории из базы
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        mCategoryLoader = (CategoryLoader) getLoaderManager().initLoader(ExtrasCodes.LOADER_CATEGORY_ID, null, new CategoryCallbacks(this));
-
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
+        Log.d("myapp", "forceload when restart");
         mCategoryLoader.forceLoad();
-        mDrawer.setSelectionAtPosition(getMenuPosition());
+//        mDrawer.setSelectionAtPosition(getMenuPosition());
     }
 
     protected void afterCategoriesLoaded() {
