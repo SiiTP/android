@@ -14,13 +14,13 @@ import com.dbtest.ivan.app.fragment.CategoryDialog;
 import com.dbtest.ivan.app.logic.db.OrmHelper;
 import com.dbtest.ivan.app.logic.db.entities.Category;
 import com.dbtest.ivan.app.services.intent.CategoryIntentService;
+import com.dbtest.ivan.app.services.intent.FullSyncService;
 import com.dbtest.ivan.app.services.intent.ReminderIntentService;
 import com.dbtest.ivan.app.utils.WaitingManager;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 
@@ -107,16 +107,16 @@ public class DetailReminderActivity extends ReminderActivity implements Category
 //                    Intent syncAll = new Intent(DetailReminderActivity.this, UpdateDetailReminderActivity.class);
 //                    syncAll.putExtra(FriendReminderActivity.MAIL,"m@m.m");
 //                    startActivity(syncAll);
-//                    Intent syncAll = new Intent(DetailReminderActivity.this, FullSyncService.class);
-//                    startService(syncAll);
-                    Intent syncAll = new Intent(DetailReminderActivity.this, UpdateDetailReminderActivity.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putLong(ReminderIntentService.TIME, new Date().getTime());
-                    bundle.putString(ReminderIntentService.TEXT, "fasfasfasfqweqrwq");
-                    bundle.putString(ReminderIntentService.CATEGORY, "aaa");
-                    bundle.putLong(ReminderIntentService.ID, 2L);
-                    syncAll.putExtras(bundle);
-                    startActivity(syncAll);
+                    Intent syncAll = new Intent(DetailReminderActivity.this, FullSyncService.class);
+                    startService(syncAll);
+//                    Intent syncAll = new Intent(DetailReminderActivity.this, UpdateDetailReminderActivity.class);
+//                    Bundle bundle = new Bundle();
+//                    bundle.putLong(ReminderIntentService.TIME, new Date().getTime());
+//                    bundle.putString(ReminderIntentService.TEXT, "fasfasfasfqweqrwq");
+//                    bundle.putString(ReminderIntentService.CATEGORY, "aaa");
+//                    bundle.putLong(ReminderIntentService.ID, 2L);
+//                    syncAll.putExtras(bundle);
+//                    startActivity(syncAll);
                 });
             }
 
