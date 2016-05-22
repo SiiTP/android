@@ -1,8 +1,11 @@
 package com.dbtest.ivan.app.services;
 
+import android.app.IntentService;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
+import com.dbtest.ivan.app.services.intent.FullSyncService;
 import com.dbtest.ivan.app.utils.JsonParser;
 import com.dbtest.ivan.app.utils.NotificationHelper;
 import com.google.android.gms.gcm.GcmListenerService;
@@ -16,7 +19,7 @@ public class CustomGcmListener extends GcmListenerService {
     @Override
     public void onMessageReceived(String from, Bundle data) {
         super.onMessageReceived(from, data);
-        //sendNotification(getApplicationContext(), data.getString("message"));
+        sendNotification(getApplicationContext(), data.getString("message"));
     }
 
     private void sendNotification(Context context, String message) {
@@ -31,6 +34,8 @@ public class CustomGcmListener extends GcmListenerService {
                 break;
             case "reminder":
                 NotificationHelper.sendReminderNotification(context, msg);
+                Intent syncAll = new Intent(context, FullSyncService.class);
+                startService(syncAll);
         }
     }
 }
