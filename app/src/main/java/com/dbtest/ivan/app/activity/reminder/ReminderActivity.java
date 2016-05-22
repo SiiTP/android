@@ -112,9 +112,12 @@ public abstract class ReminderActivity extends AbstractToolbarActivity implement
     public void onDateTimeSelect(Calendar calendar) {
         if (dateTextView != null) {
             reminderDate = calendar;
-            Date d = new Date(calendar.getTimeInMillis());
-            SimpleDateFormat format = new SimpleDateFormat("EEEE dd.MM.yyyy HH:mm");
-            dateTextView.setText(format.format(d));
+            setFormattedDateTextView(calendar.getTimeInMillis());
         }
+    }
+    protected void setFormattedDateTextView(Long millisec){
+        Date d = new Date(millisec);
+        SimpleDateFormat format = new SimpleDateFormat("EEEE dd.MM.yyyy HH:mm");
+        dateTextView.setText(format.format(d));
     }
 }

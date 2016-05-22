@@ -14,13 +14,13 @@ import com.dbtest.ivan.app.fragment.CategoryDialog;
 import com.dbtest.ivan.app.logic.db.OrmHelper;
 import com.dbtest.ivan.app.logic.db.entities.Category;
 import com.dbtest.ivan.app.services.intent.CategoryIntentService;
-import com.dbtest.ivan.app.services.intent.FullSyncService;
 import com.dbtest.ivan.app.services.intent.ReminderIntentService;
 import com.dbtest.ivan.app.utils.WaitingManager;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -30,6 +30,8 @@ public class DetailReminderActivity extends ReminderActivity implements Category
 
     private Button categoryButton;
 
+
+    private Long id = -1L;
 
 
     @NonNull
@@ -71,6 +73,13 @@ public class DetailReminderActivity extends ReminderActivity implements Category
 
     }
 
+    public Spinner getSpinner() {
+        return spinner;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
     @Override
     public void initSubmitButton() {
         submit = (Button) findViewById(R.id.details_add);
@@ -84,7 +93,7 @@ public class DetailReminderActivity extends ReminderActivity implements Category
                     bundle.putLong(ReminderIntentService.TIME, time);
                     bundle.putString(ReminderIntentService.TEXT, text);
                     bundle.putString(ReminderIntentService.CATEGORY, categoryName);
-                    bundle.putLong(ReminderIntentService.ID, -1L);
+                    bundle.putLong(ReminderIntentService.ID, id);
                     Intent intent = new Intent(DetailReminderActivity.this, ReminderIntentService.class);
                     intent.putExtras(bundle);
                     startService(intent);
@@ -95,11 +104,20 @@ public class DetailReminderActivity extends ReminderActivity implements Category
             Button wtf = (Button) findViewById(R.id.details_wtf);
             if (wtf != null) {
                 wtf.setOnClickListener(v -> {
-                    Intent syncAll = new Intent(DetailReminderActivity.this, FullSyncService.class);
-//                    Intent syncAll = new Intent(DetailReminderActivity.this, FriendReminderActivity.class);
+//                    Intent syncAll = new Intent(DetailReminderActivity.this, UpdateDetailReminder.class);
 //                    syncAll.putExtra(FriendReminderActivity.MAIL,"m@m.m");
 //                    startActivity(syncAll);
-                    startService(syncAll);
+//                    Intent syncAll = new Intent(DetailReminderActivity.this, FullSyncService.class);
+//                    startService(syncAll);
+                    Intent syncAll = new Intent(DetailReminderActivity.this, UpdateDetailReminder.class);
+                    Bundle bundle = new Bundle();
+
+                    bundle.putLong(ReminderIntentService.TIME, new Date().getTime());
+                    bundle.putString(ReminderIntentService.TEXT, "fasfasfasfqweqrwq");
+                    bundle.putString(ReminderIntentService.CATEGORY, "aaa");
+                    bundle.putLong(ReminderIntentService.ID, 2L);
+                    syncAll.putExtras(bundle);
+                    startActivity(syncAll);
                 });
             }
 
@@ -112,10 +130,19 @@ public class DetailReminderActivity extends ReminderActivity implements Category
         CategoryDialog categoryDialog = new CategoryDialog();
         categoryDialog.show(getFragmentManager(), "Create category");
     }
+    protected void setSpinnerCategory(String categoryName){
+        final int OBJECT_NOT_FOUND = -1;
+        if(categoryName != null){
+            int pos = categoriesAdapter.getPosition(categoryName);
+            if(pos != OBJECT_NOT_FOUND) {
+                spinner.setSelection(pos);
+            }
+        }
+    }
     @Override
     public void onNewCategory(Category category) {
         categoriesAdapter.add(category.getName());
-        spinner.setSelection(categoriesAdapter.getPosition(category.getName()));
+        setSpinnerCategory(category.getName());
         Bundle bundle = new Bundle();
         bundle.putString(CategoryIntentService.CATEGORY_NAME, category.getName());
         bundle.putString(CategoryIntentService.CATEGORY_PICTURE, category.getPicture());
