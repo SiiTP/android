@@ -31,6 +31,7 @@
     <string name="category_dialog_submit">Create</string>
     <string name="details_text">reminder text...</string>
     <string name="alarm_notification_title">FriendReminder alarm</string>
-
-
+    <string name="friend_reminder_send">Send</string>
+    <string name="choose_date_and_time">Choose date and time</string>
+    <string name="update_reminder_button">Update</string>
 </resources>

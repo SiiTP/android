@@ -1,29 +1,18 @@
-package com.dbtest.ivan.app.activity;
+package com.dbtest.ivan.app.activity.reminder;
 
-import android.content.BroadcastReceiver;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.TextInputLayout;
-import android.support.v4.content.LocalBroadcastManager;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dbtest.ivan.app.R;
-import com.dbtest.ivan.app.activity.abstractToolbarActivity.AbstractToolbarActivity;
 import com.dbtest.ivan.app.activity.listActivity.ListActivity;
 import com.dbtest.ivan.app.fragment.CategoryDialog;
-import com.dbtest.ivan.app.fragment.DateTimePickerDialog;
 import com.dbtest.ivan.app.logic.db.OrmHelper;
 import com.dbtest.ivan.app.logic.db.entities.Category;
-import com.dbtest.ivan.app.receiver.CustomReceiver;
 import com.dbtest.ivan.app.services.intent.CategoryIntentService;
 import com.dbtest.ivan.app.services.intent.FullSyncService;
 import com.dbtest.ivan.app.services.intent.ReminderIntentService;
@@ -31,25 +20,19 @@ import com.dbtest.ivan.app.utils.WaitingManager;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 
-public class DetailReminderActivity extends AbstractToolbarActivity implements DateTimePickerDialog.DateTimeDialogListener, CategoryDialog.CategoryDialogListener, WaitingActivity {
-    private OrmHelper helper;
+public class DetailReminderActivity extends ReminderActivity implements CategoryDialog.CategoryDialogListener {
     private ArrayAdapter<String> categoriesAdapter;
     private Spinner spinner;
-    private Calendar reminderDate;
-    private Button pickButton;
+
     private Button categoryButton;
-    private Button insert;
-    private EditText textView;
-    private TextInputLayout textLayout;
-    private ProgressBar bar;
-    private BroadcastReceiver receiver;
+
+
+    private Long id = -1L;
+
 
     @NonNull
     @Override
@@ -66,41 +49,45 @@ public class DetailReminderActivity extends AbstractToolbarActivity implements D
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        bar = (ProgressBar) findViewById(R.id.details_bar);
-        bar.setVisibility(View.GONE);
-        helper = OpenHelperManager.getHelper(this,OrmHelper.class);
+        OrmHelper helper = OpenHelperManager.getHelper(this, OrmHelper.class);
         List<Category> categoryList;
-        TextInputLayout layout = (TextInputLayout) findViewById(R.id.details_text_supp);
-        layout.setCounterEnabled(true);
         try {
             categoryList = helper.getCategoryDao().queryForAll();
             List<String> categoriesNames = new ArrayList<>(categoryList.size());
             for(Category c : categoryList){
-                categoriesNames.add(c.getName());
+                if(!c.getName().equals("from friends")) {
+                    categoriesNames.add(c.getName());
+                }
             }
             categoriesAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, categoriesNames);
 
             spinner = (Spinner) findViewById(R.id.details_category_spinner);
             categoriesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner.setAdapter(categoriesAdapter);
+            OpenHelperManager.releaseHelper();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        textView = ((EditText) findViewById(R.id.details_text));
-        textLayout = ((TextInputLayout) findViewById(R.id.details_text_supp));
-        pickButton = (Button) findViewById(R.id.pick_date_button);
-        if (pickButton != null) {
-            pickButton.setOnClickListener(v -> showDateTimeDialog());
-        }
-
         categoryButton = (Button) findViewById(R.id.details_add_category_button);
         if (categoryButton != null) {
             categoryButton.setOnClickListener(v -> showCategoryDialog());
         }
-        insert = (Button) findViewById(R.id.details_add);
-        if (insert != null) {
-            insert.setOnClickListener(v -> {
-                String text = textView.getText().toString();
+
+    }
+
+    public Spinner getSpinner() {
+        return spinner;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+    @Override
+    public void initSubmitButton() {
+        submit = (Button) findViewById(R.id.details_add);
+        if (submit != null) {
+            submit.setOnClickListener(v -> {
+                String text = this.reminderText.getText().toString();
                 String categoryName = (String) spinner.getSelectedItem();
                 if((reminderDate != null && categoryName != null) && !text.isEmpty()) {
                     Long time = reminderDate.getTimeInMillis();
@@ -108,57 +95,55 @@ public class DetailReminderActivity extends AbstractToolbarActivity implements D
                     bundle.putLong(ReminderIntentService.TIME, time);
                     bundle.putString(ReminderIntentService.TEXT, text);
                     bundle.putString(ReminderIntentService.CATEGORY, categoryName);
-                    bundle.putLong(ReminderIntentService.ID, -1L);
+                    bundle.putLong(ReminderIntentService.ID, id);
                     Intent intent = new Intent(DetailReminderActivity.this, ReminderIntentService.class);
                     intent.putExtras(bundle);
                     startService(intent);
-                    setWaiting(true);
-                    IntentFilter filter = new IntentFilter(CustomReceiver.WAITING_ACTION);
-                    filter.addCategory(Intent.CATEGORY_DEFAULT);
-                    receiver = new CustomReceiver(DetailReminderActivity.this);
-                    LocalBroadcastManager.getInstance(DetailReminderActivity.this).registerReceiver(receiver, filter);
+                    startWaitingReceiver();
                 }
             });
 
             Button wtf = (Button) findViewById(R.id.details_wtf);
             if (wtf != null) {
                 wtf.setOnClickListener(v -> {
+//                    Intent syncAll = new Intent(DetailReminderActivity.this, UpdateDetailReminderActivity.class);
+//                    syncAll.putExtra(FriendReminderActivity.MAIL,"m@m.m");
+//                    startActivity(syncAll);
                     Intent syncAll = new Intent(DetailReminderActivity.this, FullSyncService.class);
                     startService(syncAll);
+//                    Intent syncAll = new Intent(DetailReminderActivity.this, UpdateDetailReminderActivity.class);
+//                    Bundle bundle = new Bundle();
+//                    bundle.putLong(ReminderIntentService.TIME, new Date().getTime());
+//                    bundle.putString(ReminderIntentService.TEXT, "fasfasfasfqweqrwq");
+//                    bundle.putString(ReminderIntentService.CATEGORY, "aaa");
+//                    bundle.putLong(ReminderIntentService.ID, 2L);
+//                    syncAll.putExtras(bundle);
+//                    startActivity(syncAll);
                 });
             }
 
         }
     }
-    public void showDateTimeDialog(){
-        DateTimePickerDialog dateTimePickerDialog = new DateTimePickerDialog();
-        dateTimePickerDialog.show(getFragmentManager(),"Choose date");
-    }
-    @Override
-    protected void onDestroy() {
-        OpenHelperManager.releaseHelper();
-        super.onDestroy();
-    }
 
-    @Override
-    public void onDateTimeSelect(Calendar calendar) {
-        TextView dateTextView = (TextView) findViewById(R.id.details_picked_date);
-        if (dateTextView != null) {
-            reminderDate = calendar;
-            Date d = new Date(calendar.getTimeInMillis());
-            SimpleDateFormat format = new SimpleDateFormat("EEEE dd.MM.yyyy HH:mm");
-            dateTextView.setText(format.format(d));
-        }
-    }
+
 
     public void showCategoryDialog(){
         CategoryDialog categoryDialog = new CategoryDialog();
         categoryDialog.show(getFragmentManager(), "Create category");
     }
+    protected void setSpinnerCategory(String categoryName){
+        final int OBJECT_NOT_FOUND = -1;
+        if(categoryName != null){
+            int pos = categoriesAdapter.getPosition(categoryName);
+            if(pos != OBJECT_NOT_FOUND) {
+                spinner.setSelection(pos);
+            }
+        }
+    }
     @Override
     public void onNewCategory(Category category) {
         categoriesAdapter.add(category.getName());
-        spinner.setSelection(categoriesAdapter.getPosition(category.getName()));
+        setSpinnerCategory(category.getName());
         Bundle bundle = new Bundle();
         bundle.putString(CategoryIntentService.CATEGORY_NAME, category.getName());
         bundle.putString(CategoryIntentService.CATEGORY_PICTURE, category.getPicture());
@@ -166,22 +151,16 @@ public class DetailReminderActivity extends AbstractToolbarActivity implements D
         intent.putExtras(bundle);
         startService(intent);
     }
-
     @Override
     public void setWaiting(boolean isWaiting) {
-        WaitingManager.makeWaitingButton(this, insert, isWaiting);
+        WaitingManager.makeWaitingButton(this, submit, isWaiting);
         WaitingManager.makeWaitingButton(this, pickButton, isWaiting);
         WaitingManager.makeWaitingButton(this, categoryButton, isWaiting);
-        WaitingManager.makeWaitingView(textView, isWaiting);
+        WaitingManager.makeWaitingView(reminderText, isWaiting);
         WaitingManager.makeWaitingView(spinner, isWaiting);
         WaitingManager.makeWaitingProgressBar(this, bar, isWaiting);
     }
 
-    @Override
-    protected void onPause() {
-        if(receiver != null) LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
-        super.onPause();
-    }
 
     @Override
     public void notifyResult(String result) {

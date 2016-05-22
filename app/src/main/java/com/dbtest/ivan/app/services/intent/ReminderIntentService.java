@@ -19,9 +19,7 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by ivan on 02.04.16.
- */
+
 public class ReminderIntentService extends IntentService {
     public static final String TIME = "TIME";
     public static final String TEXT = "TEXT";
@@ -49,7 +47,6 @@ public class ReminderIntentService extends IntentService {
             if(time != 0) {
                 date = new Date(time);
             }
-
             if(id != CREATE_ID){
                 reminder = reminderDao.queryForId(id);
                 if(text != null && !text.isEmpty()){
@@ -80,7 +77,7 @@ public class ReminderIntentService extends IntentService {
 
             Bundle answer = new Bundle();
             answer.putString(CustomReceiver.RESULT,"Reminder created");
-            try { //TODO зачем это?
+            try { //TODO зачем это? Ответ: чтобы показать прогрес бар, на локалхосте взаимодействие с сервером очень быстрое
                 Thread.sleep(1500L);
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -103,7 +100,7 @@ public class ReminderIntentService extends IntentService {
         }
         return category;
     }
-    private Category createCategory(Dao<Category,Long> dao,String categoryName) throws SQLException, IOException {
+    protected Category createCategory(Dao<Category,Long> dao,String categoryName) throws SQLException, IOException {
         Category category;
         category = new Category(categoryName);
         dao.create(category);

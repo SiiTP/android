@@ -33,7 +33,7 @@ public class ReminderFullSyncHelper extends FullSyncHelper<Reminder> {
     protected void syncOne(Reminder item) throws SQLException {
         List<Reminder> temp = dao.queryForEq("serverId", item.getServerId());
         if(temp.size() == 0){
-            Category c = categoryDao.queryForEq("serverId",item.getCategory().getServerId()).get(0);
+            Category c = categoryDao.queryForEq("name",item.getCategory().getName()).get(0);
             if(c != null){
                 item.setCategory(c);
             }
