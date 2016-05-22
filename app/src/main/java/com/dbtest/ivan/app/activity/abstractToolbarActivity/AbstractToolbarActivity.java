@@ -28,7 +28,7 @@ public abstract class AbstractToolbarActivity extends AppCompatActivity {
     protected Toolbar mToolbar;
     protected Drawer mDrawer;
 
-    private Category allCategory;
+    protected Category allCategory;
 
     @NonNull
     protected abstract Integer getBodyResId();
@@ -84,9 +84,19 @@ public abstract class AbstractToolbarActivity extends AppCompatActivity {
         mDrawer.setSelectionAtPosition(getMenuPosition());
     }
 
+    protected int getCategoryIndexByName(String category) {
+
+        for (int categoryIndex = 0; categoryIndex < mCategories.length; categoryIndex++) {
+            if (mCategories[categoryIndex].equals(category)) {
+                return categoryIndex;
+            }
+        }
+        return -1;
+    }
 
 
-    private class CategoryCallbacks implements LoaderManager.LoaderCallbacks<ArrayList<Category>> {
+
+    protected class CategoryCallbacks implements LoaderManager.LoaderCallbacks<ArrayList<Category>> {
         private AbstractToolbarActivity activity;
 
         public CategoryCallbacks(AbstractToolbarActivity activity) {
@@ -105,10 +115,6 @@ public abstract class AbstractToolbarActivity extends AppCompatActivity {
 
         @Override
         public void onLoadFinished(Loader<ArrayList<Category>> loader, ArrayList<Category> data) {
-//        Category category = new Category("all");
-//        Category category2 = new Category("friends");
-//        data.add(category);
-//        data.add(category2);
             data.add(0, allCategory);
             mCategories = Category.toStringArray(data);
             afterCategoriesLoaded();

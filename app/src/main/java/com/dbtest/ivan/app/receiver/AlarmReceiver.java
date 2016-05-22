@@ -39,12 +39,12 @@ public class AlarmReceiver extends BroadcastReceiver {
         r.play();
 
         Intent notificationIntent = new Intent(context, ListActivity.class);
-
-        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
-                | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        Log.d("myapp Alarmreceiver", "start alarm, category : " + category);
+        notificationIntent.putExtra(ListActivity.CURRENT_CATEGORY, category);
 
         PendingIntent intent = PendingIntent.getActivity(context, 0,
-                notificationIntent, 0);
+                notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder builder = (NotificationCompat.Builder) new NotificationCompat.Builder(context)
                 .setSmallIcon(R.drawable.ic_app_start_activity)

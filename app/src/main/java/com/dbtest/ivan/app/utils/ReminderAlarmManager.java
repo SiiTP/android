@@ -71,13 +71,13 @@ public class ReminderAlarmManager {
                     pi = PendingIntent.getBroadcast(context, idReminder, intentForPendingIntent, 0);
                     this.alarmManager.set(android.app.AlarmManager.RTC_WAKEUP, timeInMills, pi);
 
-                    Log.i("myapp AlarmReceiver", "alarm setted, id : " + idReminder + " time mills : " + timeInMills + " time now : " + new Date().getTime());
+                    Log.v("myapp AlarmReceiver", "alarm setted, id : " + idReminder + " time mills : " + timeInMills + " time now : " + new Date().getTime());
                 } else {
                     //TODO переинициализировать с новыми данными... наверное
-                    Log.i("myapp AlarmReceiver", "alarm already exists, id : " + idReminder  + " time mills : " + timeInMills + " time now : " + new Date().getTime());
+                    Log.v("myapp AlarmReceiver", "alarm already exists, id : " + idReminder  + " time mills : " + timeInMills + " time now : " + new Date().getTime());
                 }
             } else {
-                Log.i("myapp AlarmReceiver", "date passed, id : " + idReminder  + " time mills : " + timeInMills + " time now : " + new Date().getTime());
+                Log.v("myapp AlarmReceiver", "date passed, id : " + idReminder  + " time mills : " + timeInMills + " time now : " + new Date().getTime());
 
             }
         }
