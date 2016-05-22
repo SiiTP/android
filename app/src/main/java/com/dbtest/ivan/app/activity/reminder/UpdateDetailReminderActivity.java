@@ -13,7 +13,7 @@ import static com.dbtest.ivan.app.services.intent.ReminderIntentService.*;
 /**
  * Created by ivan on 22.05.16.
  */
-public class UpdateDetailReminder extends DetailReminderActivity {
+public class UpdateDetailReminderActivity extends DetailReminderActivity {
 
     @Override
     public void onCreate(Bundle restoreBundle){

@@ -104,14 +104,13 @@ public class DetailReminderActivity extends ReminderActivity implements Category
             Button wtf = (Button) findViewById(R.id.details_wtf);
             if (wtf != null) {
                 wtf.setOnClickListener(v -> {
-//                    Intent syncAll = new Intent(DetailReminderActivity.this, UpdateDetailReminder.class);
+//                    Intent syncAll = new Intent(DetailReminderActivity.this, UpdateDetailReminderActivity.class);
 //                    syncAll.putExtra(FriendReminderActivity.MAIL,"m@m.m");
 //                    startActivity(syncAll);
 //                    Intent syncAll = new Intent(DetailReminderActivity.this, FullSyncService.class);
 //                    startService(syncAll);
-                    Intent syncAll = new Intent(DetailReminderActivity.this, UpdateDetailReminder.class);
+                    Intent syncAll = new Intent(DetailReminderActivity.this, UpdateDetailReminderActivity.class);
                     Bundle bundle = new Bundle();
-
                     bundle.putLong(ReminderIntentService.TIME, new Date().getTime());
                     bundle.putString(ReminderIntentService.TEXT, "fasfasfasfqweqrwq");
                     bundle.putString(ReminderIntentService.CATEGORY, "aaa");
