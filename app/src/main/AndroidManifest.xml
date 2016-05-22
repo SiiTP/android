@@ -11,6 +11,8 @@
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="com.dbtest.ivan.app.permission.C2D_MESSAGE" />
 
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -19,16 +21,16 @@
         <activity android:name=".activity.StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.list_activity.ListActivity" />
+        <activity android:name=".activity.listActivity.ListActivity" />
         <activity android:name=".activity.SignInActivity" />
         <activity android:name=".activity.SignUpActivity" />
         <activity android:name=".activity.FriendsActivity" />
         <activity android:name=".activity.SettingsActivity" />
-        <activity android:name=".activity.DetailReminderActivity" />
+        <activity android:name=".activity.reminder.DetailReminderActivity" />
+        <activity android:name=".activity.reminder.UpdateDetailReminderActivity" />
 
         <service android:name=".services.intent.SignInIntentService" />
         <service android:name=".services.intent.SignUpIntentService" />
@@ -43,8 +45,6 @@
         <service android:name=".services.intent.AcceptFriendRequestIntentService" />
         <service android:name=".services.intent.RejectFriendRequestIntentService" />
 
-        <receiver android:name=".receiver.AlarmReceiver" />
-
         <activity android:name=".activity.GCM" />
 
         <!-- GCM -->
@@ -54,8 +54,16 @@
             android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-
                 <category android:name="com.dbtest.ivan.app" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name=".receiver.AlarmReceiver"
+            android:enabled="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                />
             </intent-filter>
         </receiver>
 
@@ -74,6 +82,11 @@
             </intent-filter>
         </service>
 
+        <activity android:name=".activity.reminder.FriendReminderActivity" />
+
+        <service
+            android:name=".services.intent.FriendReminderIntentService"
+            android:exported="false"></service>
     </application>
 
 </manifest>

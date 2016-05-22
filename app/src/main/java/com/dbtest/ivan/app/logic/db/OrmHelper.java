@@ -19,7 +19,7 @@ import java.sql.SQLException;
  */
 public class OrmHelper extends OrmLiteSqliteOpenHelper {
     public static final String DB_NAME = "friend_reminder";
-    public static final int DB_VERSION = 43;
+    public static final int DB_VERSION = 46;
     public OrmHelper(Context context){
         super(context,DB_NAME,null,DB_VERSION, R.raw.ormlite_config);
     }

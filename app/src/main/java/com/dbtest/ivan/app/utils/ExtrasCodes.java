@@ -6,5 +6,5 @@ public class ExtrasCodes {
 
     public static final int LOADER_REMINDER_ID = 1;
     public static final int LOADER_CATEGORY_ID = 2;
-
+    public static final int LOADER_CATEGORY_NOTIFICATION_ID = 3;
 }

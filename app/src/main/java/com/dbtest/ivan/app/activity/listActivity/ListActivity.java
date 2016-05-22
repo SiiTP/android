@@ -4,7 +4,7 @@
 //TODO ResultReceiver???
 
 
-package com.dbtest.ivan.app.activity.list_activity;
+package com.dbtest.ivan.app.activity.listActivity;
 
 import android.app.LoaderManager;
 import android.content.Intent;
@@ -18,27 +18,29 @@ import android.util.Log;
 import android.widget.TextView;
 
 import com.dbtest.ivan.app.R;
-import com.dbtest.ivan.app.activity.DetailReminderActivity;
-import com.dbtest.ivan.app.activity.abstract_toolbar_activity.AbstractToolbarActivity;
+import com.dbtest.ivan.app.activity.reminder.DetailReminderActivity;
+import com.dbtest.ivan.app.activity.abstractToolbarActivity.AbstractToolbarActivity;
 import com.dbtest.ivan.app.logic.adapter.ReminderListAdapter;
+import com.dbtest.ivan.app.logic.db.entities.Category;
 import com.dbtest.ivan.app.logic.db.entities.Reminder;
 import com.dbtest.ivan.app.logic.divider.DividerItemDecoration;
+import com.dbtest.ivan.app.model.loader.CategoryLoader;
 import com.dbtest.ivan.app.model.loader.ReminderLoader;
-import com.dbtest.ivan.app.utils.AlarmManager;
 import com.dbtest.ivan.app.utils.ExtrasCodes;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class ListActivity extends AbstractToolbarActivity {
     private static final String CURRENT_POSITION_KEY = "currentPosition";
     private static final String CURRENT_CATEGORIES = "currentCategories";
+    public static final String CURRENT_CATEGORY = "currentCategory";
     private int mMenuLastPosition = 4;
     private ReminderLoader mReminderLoader;
     private RecyclerView mRemindersRecyclerView;
     private ReminderListAdapter mRemindersAdapter;
     private FloatingActionButton mButtonAdd;
+    private CategoryLoader mCategoryNotificationLoader;
 
     @NonNull
     @Override
@@ -56,8 +58,6 @@ public class ListActivity extends AbstractToolbarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        testAlarms();
-
         mButtonAdd = (FloatingActionButton) findViewById(R.id.list_add_reminder);
         if (mButtonAdd != null) {
             mButtonAdd.setOnClickListener(v -> {
@@ -68,16 +68,39 @@ public class ListActivity extends AbstractToolbarActivity {
 
         addRemindersRecyclerView();
 
-        Intent intent = getIntent();
-        if (intent != null) {
-            mMenuLastPosition = intent.getIntExtra(ExtrasCodes.ACTIVE_MENU_POSITION_CODE, mMenuLastPosition);
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            mMenuLastPosition = bundle.getInt(ExtrasCodes.ACTIVE_MENU_POSITION_CODE, mMenuLastPosition);
         }
 
         if (savedInstanceState != null) {
             mCategories = savedInstanceState.getStringArray(CURRENT_CATEGORIES);
             mMenuLastPosition = savedInstanceState.getInt(CURRENT_POSITION_KEY);
+            mDrawer.setSelectionAtPosition(mMenuLastPosition);
         }
-        mCategoryLoader.forceLoad();
+        mReminderLoader.forceLoad();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            mMenuLastPosition = bundle.getInt(ExtrasCodes.ACTIVE_MENU_POSITION_CODE, mMenuLastPosition);
+            String currentCategory = bundle.getString(CURRENT_CATEGORY);
+            if (currentCategory != null) {
+                CategoryNotificationCallbacks notificationCallbacks = new CategoryNotificationCallbacks(this);
+                notificationCallbacks.setCurrentCategory(currentCategory);
+                mCategoryNotificationLoader = (CategoryLoader) getLoaderManager().initLoader(ExtrasCodes.LOADER_CATEGORY_NOTIFICATION_ID, null, notificationCallbacks);
+                Log.d("myapp", "forceload when resume soon");
+                mCategoryNotificationLoader.forceLoad();
+            }
+        }
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
         mReminderLoader.forceLoad();
     }
 
@@ -98,6 +121,12 @@ public class ListActivity extends AbstractToolbarActivity {
         super.onSaveInstanceState(outState);
         outState.putInt(CURRENT_POSITION_KEY, getMenuPosition());
         outState.putStringArray(CURRENT_CATEGORIES, mCategories);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
     }
 
     public void setMenuLastPosition(int mMenuLastPosition) {
@@ -145,7 +174,7 @@ public class ListActivity extends AbstractToolbarActivity {
             if (id == ExtrasCodes.LOADER_REMINDER_ID) {
                 reminderLoader = new ReminderLoader(activity);
             } else {
-                Log.e("myapp", "unexcept loader id not equal reminder loader");
+                Log.e("myapp", "unexcept, loader id not equal reminder loader");
             }
             return reminderLoader;
         }
@@ -158,19 +187,45 @@ public class ListActivity extends AbstractToolbarActivity {
 
         @Override
         public void onLoaderReset(Loader<ArrayList<Reminder>> loader) {
-            Log.d("myapp " + this.getClass().toString(), "reminder loader reset");
             mRemindersAdapter.reset();
         }
     }
 
-    public void testAlarms() {
-        long time = new Date().getTime();
-        AlarmManager.setAlarm(this, 1000, time + 3000);
-//        try {
-//            Thread.sleep(4000);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
+    //когда запускаем приложение по клику из нотификации
+    private class CategoryNotificationCallbacks extends CategoryCallbacks {
 
+        private String currentCategory;
+        private AbstractToolbarActivity activity;
+
+        public CategoryNotificationCallbacks(AbstractToolbarActivity activity) {
+            super(activity);
+            this.activity = activity;
+        }
+
+        @Override
+        public Loader<ArrayList<Category>> onCreateLoader(int id, Bundle args) {
+            if (id == ExtrasCodes.LOADER_CATEGORY_NOTIFICATION_ID) {
+                mCategoryNotificationLoader = new CategoryLoader(activity);
+            } else {
+                Log.e("myapp", "unexcept loader id not equal category notification loader");
+            }
+            return mCategoryNotificationLoader;
+        }
+
+        @Override
+        public void onLoadFinished(Loader<ArrayList<Category>> loader, ArrayList<Category> data) {
+            Log.d("myapp", "soon loader finished callback");
+            int index = getCategoryIndexByName(currentCategory);
+            mMenuLastPosition = index + MENU_FIRST_CATEGORY_POSITION;
+
+//            Log.d("myapp", "index : " + index);
+//            Log.d("myapp", "current category menu last position : " + mMenuLastPosition);
+            super.onLoadFinished(loader, data);
+            renderList();
+        }
+
+        public void setCurrentCategory(String category) {
+            this.currentCategory = category;
+        }
     }
 }

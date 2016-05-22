@@ -15,7 +15,8 @@ import android.widget.ImageButton;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.dbtest.ivan.app.R;
-import com.dbtest.ivan.app.activity.abstract_toolbar_activity.AbstractToolbarActivity;
+import com.dbtest.ivan.app.activity.abstractToolbarActivity.AbstractToolbarActivity;
+import com.dbtest.ivan.app.activity.reminder.DetailReminderActivity;
 import com.dbtest.ivan.app.logic.adapter.FriendListAdapter;
 import com.dbtest.ivan.app.logic.divider.DividerItemDecoration;
 import com.dbtest.ivan.app.model.Friend;

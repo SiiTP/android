@@ -5,7 +5,6 @@
     <string name="proj_numb">114694038794</string>
     <string name="title_activity_list">ListActivity</string>
 
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="drawer_item_home">Home</string>
     <string name="drawer_item_settings">Settings</string>
@@ -13,7 +12,6 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="h_unlogged_btn_signin">Sign In</string>
     <string name="h_unlogged_btn_signup">Sign Up</string>
-    <string name="title_activity_azaza">AzazaActivity</string>
     <string name="list_default_category">all</string>
     <string name="signin_lo">all</string>
 
@@ -32,6 +30,8 @@
     <string name="details_create_category">New</string>
     <string name="category_dialog_submit">Create</string>
     <string name="details_text">reminder text...</string>
-
-
+    <string name="alarm_notification_title">FriendReminder alarm</string>
+    <string name="friend_reminder_send">Send</string>
+    <string name="choose_date_and_time">Choose date and time</string>
+    <string name="update_reminder_button">Update</string>
 </resources>
