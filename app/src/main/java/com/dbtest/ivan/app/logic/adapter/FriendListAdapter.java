@@ -74,11 +74,11 @@ public class FriendListAdapter extends RecyclerSwipeAdapter<FriendListAdapter.Vi
             switch (which) {
                 case POSITIVE:
                     Toast.makeText(activity, "Positive" + position, Toast.LENGTH_SHORT).show();
-                    activity.removeFriend(friendList.get(position).getEmail());
                     mItemManger.removeShownLayouts(holder.swipeLayout);
                     friendList.remove(position);
                     notifyItemRemoved(position);
                     notifyItemRangeChanged(position, friendList.size());
+                    activity.removeFriend(friendList.get(position).getEmail());
                 case NEGATIVE:
                     Toast.makeText(activity, "Negative" + position, Toast.LENGTH_SHORT).show();
             }
