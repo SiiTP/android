@@ -24,12 +24,10 @@ import com.dbtest.ivan.app.logic.adapter.ReminderListAdapter;
 import com.dbtest.ivan.app.logic.db.entities.Reminder;
 import com.dbtest.ivan.app.logic.divider.DividerItemDecoration;
 import com.dbtest.ivan.app.model.loader.ReminderLoader;
-import com.dbtest.ivan.app.utils.ReminderAlarmManager;
 import com.dbtest.ivan.app.utils.ExtrasCodes;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class ListActivity extends AbstractToolbarActivity {
     private static final String CURRENT_POSITION_KEY = "currentPosition";
@@ -56,8 +54,6 @@ public class ListActivity extends AbstractToolbarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        testAlarms();
-
         mButtonAdd = (FloatingActionButton) findViewById(R.id.list_add_reminder);
         if (mButtonAdd != null) {
             mButtonAdd.setOnClickListener(v -> {
@@ -78,6 +74,12 @@ public class ListActivity extends AbstractToolbarActivity {
             mMenuLastPosition = savedInstanceState.getInt(CURRENT_POSITION_KEY);
         }
 //        mCategoryLoader.forceLoad();
+        mReminderLoader.forceLoad();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
         mReminderLoader.forceLoad();
     }
 
@@ -160,16 +162,5 @@ public class ListActivity extends AbstractToolbarActivity {
         public void onLoaderReset(Loader<ArrayList<Reminder>> loader) {
             mRemindersAdapter.reset();
         }
-    }
-
-    public void testAlarms() {
-        long time = new Date().getTime();
-        ReminderAlarmManager.setAlarm(this, 1000, time + 3000);
-//        try {
-//            Thread.sleep(4000);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-
     }
 }

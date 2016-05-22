@@ -75,6 +75,7 @@ public abstract class AbstractToolbarActivity extends AppCompatActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
+        mCategoryLoader.forceLoad();
         mDrawer.setSelectionAtPosition(getMenuPosition());
     }
 
