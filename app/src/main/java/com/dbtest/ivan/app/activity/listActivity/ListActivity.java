@@ -12,20 +12,23 @@ import android.content.Loader;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.dbtest.ivan.app.R;
-import com.dbtest.ivan.app.activity.reminder.DetailReminderActivity;
 import com.dbtest.ivan.app.activity.abstractToolbarActivity.AbstractToolbarActivity;
+import com.dbtest.ivan.app.activity.reminder.DetailReminderActivity;
 import com.dbtest.ivan.app.logic.adapter.ReminderListAdapter;
 import com.dbtest.ivan.app.logic.db.entities.Category;
 import com.dbtest.ivan.app.logic.db.entities.Reminder;
 import com.dbtest.ivan.app.logic.divider.DividerItemDecoration;
 import com.dbtest.ivan.app.model.loader.CategoryLoader;
 import com.dbtest.ivan.app.model.loader.ReminderLoader;
+import com.dbtest.ivan.app.services.intent.CategoryDeleteService;
 import com.dbtest.ivan.app.utils.ExtrasCodes;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 
@@ -41,6 +44,7 @@ public class ListActivity extends AbstractToolbarActivity {
     private ReminderListAdapter mRemindersAdapter;
     private FloatingActionButton mButtonAdd;
     private CategoryLoader mCategoryNotificationLoader;
+    private ImageButton mButtonDelete;
 
     @NonNull
     @Override
@@ -63,6 +67,24 @@ public class ListActivity extends AbstractToolbarActivity {
             mButtonAdd.setOnClickListener(v -> {
                 Intent intent1 = new Intent(ListActivity.this, DetailReminderActivity.class);
                 startActivity(intent1);
+            });
+        }
+
+        mButtonDelete = (ImageButton) findViewById(R.id.list_btn_category_delete);
+        if (mButtonDelete != null) {
+            mButtonDelete.setOnClickListener(v -> {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle(getString(R.string.dialog_delete_category_title))
+                        .setMessage(getString(R.string.dialog_delete_category_message))
+                        .setPositiveButton(getString(R.string.dialog_delete_category_btn_positive), (dialog, which) -> {
+                            Intent intent = new Intent(ListActivity.this, CategoryDeleteService.class);
+                            intent.putExtra(ExtrasCodes.CATEGORY_NAME_KEY, getCheckedCategory());
+                            startService(intent);
+                        })
+                        .setNegativeButton(getString(R.string.dialog_delete_category_btn_negative), (dialog1, which1) -> {
+                        });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
             });
         }
 
@@ -92,6 +114,7 @@ public class ListActivity extends AbstractToolbarActivity {
                 CategoryNotificationCallbacks notificationCallbacks = new CategoryNotificationCallbacks(this);
                 notificationCallbacks.setCurrentCategory(currentCategory);
                 mCategoryNotificationLoader = (CategoryLoader) getLoaderManager().initLoader(ExtrasCodes.LOADER_CATEGORY_NOTIFICATION_ID, null, notificationCallbacks);
+                mCategoryLoader.stopLoading();
                 Log.d("myapp", "forceload when resume soon");
                 mCategoryNotificationLoader.forceLoad();
             }

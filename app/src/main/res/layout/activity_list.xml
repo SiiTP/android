@@ -7,12 +7,25 @@
 
     <RelativeLayout
         style="@style/HeaderLargeContainer"
-        android:id="@+id/list_category_header">
+        android:id="@+id/list_category_header"
+        android:layout_height="64dp">
             <TextView
                 style="@style/HeaderLargeText"
                 android:id="@+id/list_category_name"
                 android:text="@string/list_default_category"
                 android:layout_alignParentTop="true"/>
+            <ImageButton
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:id="@+id/list_btn_category_delete"
+
+                android:src="@drawable/ic_action_discard"
+                android:background="?attr/selectableItemBackgroundBorderless"
+
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:contentDescription="@string/list_category_delete_button"/>
     </RelativeLayout>
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"

@@ -33,6 +33,7 @@
         <activity android:name=".activity.reminder.UpdateDetailReminderActivity" />
 
         <service android:name=".services.intent.SignInIntentService" />
+        <service android:name=".services.intent.CategoryDeleteService" />
         <service android:name=".services.intent.SignUpIntentService" />
         <service android:name=".services.intent.ReminderIntentService" />
         <service android:name=".services.intent.LoadFriendsIntentService" />
