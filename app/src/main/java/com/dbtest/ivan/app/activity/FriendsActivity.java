@@ -1,6 +1,5 @@
 package com.dbtest.ivan.app.activity;
 
-import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
@@ -8,7 +7,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -36,6 +34,8 @@ public class FriendsActivity extends AbstractToolbarActivity {
     private FriendsWebRequestReceiver receiver;
     private ImageButton button;
     private EditText emailView;
+    public static final String inviteMessage = "invite";
+    public static final String reminderMessage = "reminder";
 
     @NonNull
     @Override

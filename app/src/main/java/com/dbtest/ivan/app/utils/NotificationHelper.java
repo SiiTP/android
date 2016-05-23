@@ -23,7 +23,6 @@ public class NotificationHelper {
     private static NotificationCompat.Builder initNotification(Context context, String msg) {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
 
-        builder.setAutoCancel(true);
         builder.setContentTitle("Invite notification");
         builder.setContentText(msg);
         builder.setSmallIcon(R.drawable.ic_launcher);
@@ -34,8 +33,6 @@ public class NotificationHelper {
     private static void addButtonToNotification(NotificationCompat.Builder builder, Context context, int id, String email) {
         Intent acceptIntent = new Intent(context, AcceptFriendRequestIntentService.class);
         Intent rejectIntent = new Intent(context, RejectFriendRequestIntentService.class);
-        PendingIntent acceptPenIntent = PendingIntent.getService(context, 0, acceptIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        PendingIntent rejectPenIntent = PendingIntent.getService(context, 0, rejectIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         Bundle bundle = new Bundle();
 
         bundle.putString("email", email);
@@ -43,6 +40,9 @@ public class NotificationHelper {
 
         acceptIntent.putExtras(bundle);
         rejectIntent.putExtras(bundle);
+
+        PendingIntent acceptPenIntent = PendingIntent.getService(context, 0, acceptIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent rejectPenIntent = PendingIntent.getService(context, 0, rejectIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         builder.addAction(R.drawable.ic_check_circle, "Accept", acceptPenIntent);
         builder.addAction(R.drawable.ic_remove_circle, "Dismiss", rejectPenIntent);
@@ -52,10 +52,11 @@ public class NotificationHelper {
         int id = new Random().nextInt(32);
         NotificationCompat.Builder builder = initNotification(context, msg);
 
+        builder.setOngoing(true);
         addButtonToNotification(builder, context, id, email);
 
         Notification notification = builder.build();
-        NotificationManager manager = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
+        NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         manager.notify(id, notification);
     }
@@ -64,8 +65,14 @@ public class NotificationHelper {
         int id = new Random().nextInt(32);
         NotificationCompat.Builder builder = initNotification(context, msg);
         Notification notification = builder.build();
-        NotificationManager manager = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
+        builder.setAutoCancel(true);
+        NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         manager.notify(id, notification);
+    }
+
+    public static void cancelNotification(Context context, int id) {
+        NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        manager.cancel(id);
     }
 }
