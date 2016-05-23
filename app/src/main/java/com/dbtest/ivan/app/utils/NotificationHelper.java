@@ -19,11 +19,13 @@ import java.util.Random;
  * Created by said on 22.05.16.
  */
 public class NotificationHelper {
+    private static final String inviteTitle = "invites you";
+    private static final String reminderTitle = "New reminder from";
 
-    private static NotificationCompat.Builder initNotification(Context context, String msg) {
+    private static NotificationCompat.Builder initNotification(Context context, String msg, String title) {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
 
-        builder.setContentTitle("Invite notification");
+        builder.setContentTitle(title);
         builder.setContentText(msg);
         builder.setSmallIcon(R.drawable.ic_launcher);
 
@@ -50,7 +52,7 @@ public class NotificationHelper {
 
     public static void sendInviteNotification(Context context, String msg, String email) {
         int id = new Random().nextInt(32);
-        NotificationCompat.Builder builder = initNotification(context, msg);
+        NotificationCompat.Builder builder = initNotification(context, msg, email + inviteTitle);
 
         builder.setOngoing(true);
         addButtonToNotification(builder, context, id, email);
@@ -63,7 +65,7 @@ public class NotificationHelper {
 
     public static void sendReminderNotification(Context context, String msg) {
         int id = new Random().nextInt(32);
-        NotificationCompat.Builder builder = initNotification(context, msg);
+        NotificationCompat.Builder builder = initNotification(context, msg, reminderTitle);
         Notification notification = builder.build();
         builder.setAutoCancel(true);
         NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
