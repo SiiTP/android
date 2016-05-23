@@ -26,7 +26,9 @@ public class FriendsWebRequestReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         List<Friend> friendList = intent.getParcelableArrayListExtra("FriendsList");
 
-        Collections.sort(friendList);
-        activity.setFriendListAdapter(friendList);
+        if (friendList != null) {
+            Collections.sort(friendList);
+            activity.setFriendListAdapter(friendList);
+        }
     }
 }
