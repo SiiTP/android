@@ -56,7 +56,7 @@ public class FriendListAdapter extends RecyclerSwipeAdapter<FriendListAdapter.Vi
 
     @Override
     public int getSwipeLayoutResourceId(int position) {
-        return R.id.swipe_layout;
+        return R.id.friends_activity_swipe_layout;
     }
 
     private class ChooseCallback implements MaterialDialog.SingleButtonCallback {
@@ -96,10 +96,10 @@ public class FriendListAdapter extends RecyclerSwipeAdapter<FriendListAdapter.Vi
         public ViewHolder(View itemView) {
             super(itemView);
 
-            swipeLayout = (SwipeLayout) itemView.findViewById(R.id.swipe_layout);
-            name = (TextView) itemView.findViewById(R.id.friend_name);
-            addReminder = (ImageView) itemView.findViewById(R.id.add_reminder);
-            deleteBtn = (TextView) itemView.findViewById(R.id.delete_text);
+            swipeLayout = (SwipeLayout) itemView.findViewById(R.id.friends_activity_swipe_layout);
+            name = (TextView) itemView.findViewById(R.id.friend_list_item_friend_name);
+            addReminder = (ImageView) itemView.findViewById(R.id.friend_list_item_add_reminder_to_friend);
+            deleteBtn = (TextView) itemView.findViewById(R.id.friend_list_item_delete_text);
         }
     }
 }

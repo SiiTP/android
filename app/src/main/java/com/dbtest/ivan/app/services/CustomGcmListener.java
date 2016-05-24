@@ -1,6 +1,5 @@
 package com.dbtest.ivan.app.services;
 
-import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,10 +23,10 @@ public class CustomGcmListener extends GcmListenerService {
     }
 
     private void sendNotification(Context context, String message) {
-        JsonObject msgObject = JsonParser.stringToJsonObject(message);
-        String msg = msgObject.get("message").getAsString();
-        String email = msgObject.get("email").getAsString();
-        String type = msgObject.get("type").getAsString();
+        JsonObject msgJsonObject = JsonParser.stringToJsonObject(message);
+        String msg = msgJsonObject.get("message").getAsString();
+        String email = msgJsonObject.get("email").getAsString();
+        String type = msgJsonObject.get("type").getAsString();
 
         switch (type) {
             case FriendsActivity.inviteMessage:

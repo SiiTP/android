@@ -7,7 +7,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
@@ -18,21 +17,20 @@ import com.dbtest.ivan.app.activity.reminder.DetailReminderActivity;
 import com.dbtest.ivan.app.logic.adapter.FriendListAdapter;
 import com.dbtest.ivan.app.logic.divider.DividerItemDecoration;
 import com.dbtest.ivan.app.model.Friend;
-import com.dbtest.ivan.app.receiver.FriendsWebRequestReceiver;
+import com.dbtest.ivan.app.receiver.FriendRequestReceiver;
 import com.dbtest.ivan.app.services.intent.InviteFriendService;
 import com.dbtest.ivan.app.services.intent.LoadFriendsIntentService;
 import com.dbtest.ivan.app.services.intent.RemoveFriendIntentService;
-import com.dbtest.ivan.app.utils.NotificationHelper;
 
 import java.util.List;
 
 public class FriendsActivity extends AbstractToolbarActivity {
 
     private static final int MENU_POSITION = 1;
-    private RecyclerView recyclerView;
+    private RecyclerView friendsListRecyclerView;
     private FriendListAdapter friendListAdapter;
-    private FriendsWebRequestReceiver receiver;
-    private ImageButton button;
+    private FriendRequestReceiver friendRequestReceiver;
+    private ImageButton addFriendButton;
     private EditText emailView;
     public static final String inviteMessage = "invite";
     public static final String reminderMessage = "reminder";
@@ -53,13 +51,13 @@ public class FriendsActivity extends AbstractToolbarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        emailView = (EditText) findViewById(R.id.find_friend).findViewById(R.id.friend_email);
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-        button = (ImageButton) findViewById(R.id.add_friend);
-        if (button != null) {
-            button.setOnClickListener((v)-> {
+        emailView = (EditText) findViewById(R.id.friends_activity_find_friend_view).findViewById(R.id.friend_email);
+        friendsListRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        friendsListRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        friendsListRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+        addFriendButton = (ImageButton) findViewById(R.id.add_friend);
+        if (addFriendButton != null) {
+            addFriendButton.setOnClickListener((v)-> {
                 String email = emailView.getText().toString();
 
                 if (!email.isEmpty()) {
@@ -72,19 +70,19 @@ public class FriendsActivity extends AbstractToolbarActivity {
                 }
             });
         }
-        IntentFilter filter = new IntentFilter(FriendsWebRequestReceiver.PROCESS_RESPONSE);
+        IntentFilter filter = new IntentFilter(FriendRequestReceiver.PROCESS_RESPONSE);
         Intent intent = new Intent(FriendsActivity.this, LoadFriendsIntentService.class);
 
         filter.addCategory(Intent.CATEGORY_DEFAULT);
-        receiver = new FriendsWebRequestReceiver(this);
-        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, filter);
+        friendRequestReceiver = new FriendRequestReceiver(this);
+        LocalBroadcastManager.getInstance(this).registerReceiver(friendRequestReceiver, filter);
         startService(intent);
     }
 
     @Override
     public void onDestroy() {
-        if (receiver != null) {
-            LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
+        if (friendRequestReceiver != null) {
+            LocalBroadcastManager.getInstance(this).unregisterReceiver(friendRequestReceiver);
         }
         super.onDestroy();
     }
@@ -107,7 +105,7 @@ public class FriendsActivity extends AbstractToolbarActivity {
     public void setFriendListAdapter(List<Friend> friendsList) {
         if (friendListAdapter == null) {
             friendListAdapter = new FriendListAdapter(this, friendsList);
-            recyclerView.setAdapter(friendListAdapter);
+            friendsListRecyclerView.setAdapter(friendListAdapter);
         }
     }
 
