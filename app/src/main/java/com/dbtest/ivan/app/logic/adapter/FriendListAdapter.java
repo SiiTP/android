@@ -34,14 +34,14 @@ public class FriendListAdapter extends RecyclerSwipeAdapter<FriendListAdapter.Vi
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.friends_list_row, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.friends_list_item, parent, false);
 
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.swipeLayout.setShowMode(SwipeLayout.ShowMode.LayDown);
+        holder.swipeLayout.setShowMode(SwipeLayout.ShowMode.PullOut);
         holder.name.setText(friendList.get(position).getName());
         holder.deleteBtn.setOnClickListener((v) -> {
             Toast.makeText(activity, "Click delete friend", Toast.LENGTH_SHORT).show();
@@ -54,7 +54,7 @@ public class FriendListAdapter extends RecyclerSwipeAdapter<FriendListAdapter.Vi
 
     @Override
     public int getSwipeLayoutResourceId(int position) {
-        return R.id.swipe_layout;
+        return R.id.friends_activity_swipe_layout;
     }
 
     private class ChooseCallback implements MaterialDialog.SingleButtonCallback {
@@ -69,16 +69,13 @@ public class FriendListAdapter extends RecyclerSwipeAdapter<FriendListAdapter.Vi
 
         @Override
         public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-            switch (which) {
-                case POSITIVE:
-                    Toast.makeText(activity, "Positive" + position, Toast.LENGTH_SHORT).show();
-                    activity.removeFriend(friendList.get(position).getEmail());
-                    mItemManger.removeShownLayouts(holder.swipeLayout);
-                    friendList.remove(position);
-                    notifyItemRemoved(position);
-                    notifyItemRangeChanged(position, friendList.size());
-                case NEGATIVE:
-                    Toast.makeText(activity, "Negative" + position, Toast.LENGTH_SHORT).show();
+            if (which == DialogAction.POSITIVE) {
+                Toast.makeText(activity, "Positive" + position, Toast.LENGTH_SHORT).show();
+                mItemManger.removeShownLayouts(holder.swipeLayout);
+                friendList.remove(position);
+                notifyItemRemoved(position);
+                notifyItemRangeChanged(position, friendList.size());
+                activity.removeFriend(friendList.get(position).getEmail());
             }
         }
     }
@@ -97,11 +94,10 @@ public class FriendListAdapter extends RecyclerSwipeAdapter<FriendListAdapter.Vi
         public ViewHolder(View itemView) {
             super(itemView);
 
-            //TODO назови по-нормальному id
-            swipeLayout = (SwipeLayout) itemView.findViewById(R.id.swipe_layout);
-            name = (TextView) itemView.findViewById(R.id.friend_name);
-            addReminder = (ImageView) itemView.findViewById(R.id.add_reminder);
-            deleteBtn = (TextView) itemView.findViewById(R.id.delete_text);
+            swipeLayout = (SwipeLayout) itemView.findViewById(R.id.friends_activity_swipe_layout);
+            name = (TextView) itemView.findViewById(R.id.friend_list_item_friend_name);
+            addReminder = (ImageView) itemView.findViewById(R.id.friend_list_item_add_reminder_to_friend);
+            deleteBtn = (TextView) itemView.findViewById(R.id.friend_list_item_delete_text);
         }
     }
 }

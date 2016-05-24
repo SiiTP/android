@@ -13,12 +13,12 @@ import java.util.List;
 /**
  * Created by said on 08.05.16.
  */
-public class FriendsWebRequestReceiver extends BroadcastReceiver {
+public class FriendRequestReceiver extends BroadcastReceiver {
 
     public static final String PROCESS_RESPONSE = "com.dbtest.ivan.intent.action.PROCESS_RESPONSE";
     private FriendsActivity activity;
 
-    public FriendsWebRequestReceiver(FriendsActivity activity) {
+    public FriendRequestReceiver(FriendsActivity activity) {
         this.activity = activity;
     }
 
@@ -26,7 +26,9 @@ public class FriendsWebRequestReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         List<Friend> friendList = intent.getParcelableArrayListExtra("FriendsList");
 
-        Collections.sort(friendList);
-        activity.setFriendListAdapter(friendList);
+        if (friendList != null) {
+            Collections.sort(friendList);
+            activity.setFriendListAdapter(friendList);
+        }
     }
 }

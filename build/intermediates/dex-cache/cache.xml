@@ -1,3 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<items version="2" />
+<items version="2" >
 
+    <item
+        jar="/Users/said/Desktop/Study/Techno/Android/android/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="f24e69e673c63be0595cecf67b02653c2905bf36">
+        <dex dex="/Users/said/Desktop/Study/Techno/Android/android/app/build/intermediates/pre-dexed/debug/instant-run-bootstrap_883b73679fa47b8758004971aa721d85838b4251.jar" />
+    </item>
+
+</items>

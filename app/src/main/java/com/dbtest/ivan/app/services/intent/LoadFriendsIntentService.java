@@ -2,22 +2,18 @@ package com.dbtest.ivan.app.services.intent;
 
 import android.app.IntentService;
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 
-import com.dbtest.ivan.app.activity.FriendsActivity;
 import com.dbtest.ivan.app.logic.RetrofitFactory;
 import com.dbtest.ivan.app.logic.api.FriendApi;
 import com.dbtest.ivan.app.model.Friend;
-import com.dbtest.ivan.app.receiver.FriendsWebRequestReceiver;
+import com.dbtest.ivan.app.receiver.FriendRequestReceiver;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
-import retrofit2.Response;
 
 /**
  * Created by said on 10.04.16.
@@ -60,7 +56,7 @@ public class LoadFriendsIntentService extends IntentService {
             List<Friend> friendList = callFriends.execute().body();
             Intent broadcastIntent = new Intent();
 
-            broadcastIntent.setAction(FriendsWebRequestReceiver.PROCESS_RESPONSE);
+            broadcastIntent.setAction(FriendRequestReceiver.PROCESS_RESPONSE);
             broadcastIntent.addCategory(Intent.CATEGORY_DEFAULT);
             broadcastIntent.putParcelableArrayListExtra("FriendsList", (ArrayList<Friend>) friendList);
             LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);

@@ -2,7 +2,7 @@
 
 <com.daimajia.swipe.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/swipe_layout"
+    android:id="@+id/friends_activity_swipe_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:clickToClose="true">
@@ -11,19 +11,18 @@
         android:id="@+id/bottom_wrapper"
         android:layout_width="160dp"
         android:layout_height="match_parent"
-        android:background="@color/app_add_reminder"
-        android:tag="Bottom1"
+        android:background="@color/app_primary_red"
         android:weightSum="1">
 
         <TextView
-            android:id="@+id/delete_text"
+            android:id="@+id/friend_list_item_delete_text"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="0.5"
             android:clickable="true"
             android:gravity="center"
             android:text="Delete"
-            android:textColor="#000000" />
+            android:textColor="@color/app_primary_text" />
 
     </LinearLayout>
 
@@ -36,7 +35,7 @@
         android:paddingTop="5dp">
 
         <TextView
-            android:id="@+id/friend_name"
+            android:id="@+id/friend_list_item_friend_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -46,7 +45,7 @@
             android:textStyle="bold" />
 
         <ImageButton
-            android:id="@+id/add_reminder"
+            android:id="@+id/friend_list_item_add_reminder_to_friend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"

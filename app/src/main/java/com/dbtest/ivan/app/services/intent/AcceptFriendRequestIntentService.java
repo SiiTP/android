@@ -9,6 +9,7 @@ import android.util.Log;
 import com.dbtest.ivan.app.logic.RetrofitFactory;
 import com.dbtest.ivan.app.logic.api.FriendApi;
 import com.dbtest.ivan.app.model.Friend;
+import com.dbtest.ivan.app.utils.NotificationHelper;
 
 import java.io.IOException;
 
@@ -26,9 +27,8 @@ public class AcceptFriendRequestIntentService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         Bundle bundle = intent.getExtras();
-        int id = bundle.getInt("notificationID");
-        NotificationManager manager = (NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
-        manager.cancel(id);
+        NotificationHelper.cancelNotification(this, bundle.getInt("notificationID"));
+
         String email = intent.getStringExtra("email");
         FriendApi friendApi = RetrofitFactory.getInstance().create(FriendApi.class);
         Friend friend = new Friend();
