@@ -1,12 +1,10 @@
 package com.dbtest.ivan.app.logic.db.entities;
 
-import android.util.Log;
-
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -39,35 +37,10 @@ public class Reminder {
 
     }
 
-    public Reminder(Long id, String author, Date reminderTime, String text) {
-        this.id = id;
-        this.author = author;
-        this.reminderTime = reminderTime;
-        this.text = text;
-    }
-
     public Reminder(Date reminderTime, String text) {
         this.author = author;
         this.reminderTime = reminderTime;
         this.text = text;
-    }
-
-    public Reminder(String author, Date reminderTime, String text, Category category) {
-        this.author = author;
-        this.reminderTime = reminderTime;
-        this.text = text;
-        this.category = category;
-    }
-
-    public Reminder(String date, String text) {
-        this.text = text;
-        try {
-            this.reminderTime = new SimpleDateFormat(REMINDER_FULL_TIME_FORMAT, Locale.US).parse(date);
-        } catch (ParseException e) {
-            Log.e("myapp " + this.getClass(), "date was not parsed");
-            this.reminderTime = new Date();
-        }
-
     }
 
     public String getAuthor() {
@@ -142,4 +115,16 @@ public class Reminder {
         this.serverId = serverId;
     }
 
+    public boolean isReminderToday() {
+        Calendar cal1 = Calendar.getInstance();
+        Calendar cal2 = Calendar.getInstance();
+        cal1.setTime(new Date());
+        cal2.setTime(reminderTime);
+        return cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
+                cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR);
+    }
+
+    public boolean isReminderPassed() {
+        return new Date().getTime() > reminderTime.getTime();
+    }
 }

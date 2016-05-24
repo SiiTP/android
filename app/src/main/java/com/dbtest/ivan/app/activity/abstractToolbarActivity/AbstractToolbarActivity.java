@@ -1,4 +1,4 @@
-package com.dbtest.ivan.app.activity.abstract_toolbar_activity;
+package com.dbtest.ivan.app.activity.abstractToolbarActivity;
 
 import android.app.LoaderManager;
 import android.content.Loader;
@@ -27,6 +27,9 @@ public abstract class AbstractToolbarActivity extends AppCompatActivity {
 
     protected Toolbar mToolbar;
     protected Drawer mDrawer;
+
+    protected Category allCategory;
+
     @NonNull
     protected abstract Integer getBodyResId();
 
@@ -64,13 +67,23 @@ public abstract class AbstractToolbarActivity extends AppCompatActivity {
         setContentView(mLayout);
 
         setToolbarAndMenu();
+
+        allCategory = new Category(Category.CATEGORY_ALL_NAME);
+        Log.d("myapp", "forceload when create");
         mCategoryLoader.forceLoad(); // загружем категории из базы
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        mDrawer.setSelectionAtPosition(getMenuPosition());
+        Log.d("myapp", "forceload when restart");
+        mCategoryLoader.forceLoad();
+//        mDrawer.setSelectionAtPosition(getMenuPosition());
     }
 
     protected void afterCategoriesLoaded() {
@@ -78,9 +91,19 @@ public abstract class AbstractToolbarActivity extends AppCompatActivity {
         mDrawer.setSelectionAtPosition(getMenuPosition());
     }
 
+    protected int getCategoryIndexByName(String category) {
+        for (int categoryIndex = 0; categoryIndex < mCategories.length; categoryIndex++) {
+            if (mCategories[categoryIndex].equals(category)) {
+                return categoryIndex;
+            }
+        }
+        Log.e("myapp AbstractActivity", "no category with name : " + category);
+        return -1;
+    }
 
 
-    private class CategoryCallbacks implements LoaderManager.LoaderCallbacks<ArrayList<Category>> {
+
+    protected class CategoryCallbacks implements LoaderManager.LoaderCallbacks<ArrayList<Category>> {
         private AbstractToolbarActivity activity;
 
         public CategoryCallbacks(AbstractToolbarActivity activity) {
@@ -99,10 +122,10 @@ public abstract class AbstractToolbarActivity extends AppCompatActivity {
 
         @Override
         public void onLoadFinished(Loader<ArrayList<Category>> loader, ArrayList<Category> data) {
-//        Category category = new Category("all");
-//        Category category2 = new Category("friends");
-//        data.add(category);
-//        data.add(category2);
+            Log.d("myapp", "parent loader finished callback");
+            if (!data.get(0).getName().equals(allCategory.getName())) {
+                data.add(0, allCategory);
+            }
             mCategories = Category.toStringArray(data);
             afterCategoriesLoaded();
         }

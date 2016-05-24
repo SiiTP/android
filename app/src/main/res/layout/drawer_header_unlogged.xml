@@ -5,13 +5,12 @@ android:layout_height="wrap_content">
     <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="188dp"
-        android:src="@drawable/menu_header"
+        android:src="@drawable/header_image"
         android:scaleType="fitXY"
         android:id="@+id/h_unlogged_bgr" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/SignSubmit"
         android:text="@string/h_unlogged_btn_signin"
         android:id="@+id/h_unlogged_btn_signin"
 
@@ -23,8 +22,7 @@ android:layout_height="wrap_content">
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/SignSubmit"
         android:id="@+id/h_unlogged_btn_signup"
         android:text="@string/h_unlogged_btn_signup"
 

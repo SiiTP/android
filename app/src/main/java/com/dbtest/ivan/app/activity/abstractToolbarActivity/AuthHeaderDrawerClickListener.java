@@ -1,4 +1,4 @@
-package com.dbtest.ivan.app.activity.abstract_toolbar_activity;
+package com.dbtest.ivan.app.activity.abstractToolbarActivity;
 
 import android.content.Intent;
 import android.os.Handler;

@@ -10,7 +10,7 @@ import com.dbtest.ivan.app.logic.db.OrmHelper;
 import com.dbtest.ivan.app.logic.db.entities.Category;
 import com.dbtest.ivan.app.logic.db.entities.Reminder;
 import com.dbtest.ivan.app.receiver.CustomReceiver;
-import com.dbtest.ivan.app.utils.AlarmManager;
+import com.dbtest.ivan.app.utils.ReminderAlarmManager;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
 
@@ -19,9 +19,7 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by ivan on 02.04.16.
- */
+
 public class ReminderIntentService extends IntentService {
     public static final String TIME = "TIME";
     public static final String TEXT = "TEXT";
@@ -49,7 +47,6 @@ public class ReminderIntentService extends IntentService {
             if(time != 0) {
                 date = new Date(time);
             }
-
             if(id != CREATE_ID){
                 reminder = reminderDao.queryForId(id);
                 if(text != null && !text.isEmpty()){
@@ -74,13 +71,13 @@ public class ReminderIntentService extends IntentService {
                 reminderDao.create(reminder);
             }
             int idReminder = (int) (long) reminder.getId();
-            AlarmManager.setAlarm(this.getApplicationContext(), idReminder, reminder.getReminderTime().getTime());
+            ReminderAlarmManager.setAlarm(this.getApplicationContext(), idReminder, reminder.getReminderTime().getTime());
             Intent sync = new Intent(this,SynchronizeIntentService.class);
             startService(sync);
 
             Bundle answer = new Bundle();
             answer.putString(CustomReceiver.RESULT,"Reminder created");
-            try {
+            try { //TODO зачем это? Ответ: чтобы показать прогрес бар, на локалхосте взаимодействие с сервером очень быстрое
                 Thread.sleep(1500L);
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -103,7 +100,7 @@ public class ReminderIntentService extends IntentService {
         }
         return category;
     }
-    private Category createCategory(Dao<Category,Long> dao,String categoryName) throws SQLException, IOException {
+    protected Category createCategory(Dao<Category,Long> dao,String categoryName) throws SQLException, IOException {
         Category category;
         category = new Category(categoryName);
         dao.create(category);

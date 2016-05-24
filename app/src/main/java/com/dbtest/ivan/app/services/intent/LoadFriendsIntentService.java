@@ -3,12 +3,14 @@ package com.dbtest.ivan.app.services.intent;
 import android.app.IntentService;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.dbtest.ivan.app.activity.FriendsActivity;
 import com.dbtest.ivan.app.logic.RetrofitFactory;
 import com.dbtest.ivan.app.logic.api.FriendApi;
 import com.dbtest.ivan.app.model.Friend;
+import com.dbtest.ivan.app.receiver.FriendsWebRequestReceiver;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,10 +22,10 @@ import retrofit2.Response;
 /**
  * Created by said on 10.04.16.
  */
-public class FriendIntentService extends IntentService {
+public class LoadFriendsIntentService extends IntentService {
 
-    public FriendIntentService() {
-        super("FriendService");
+    public LoadFriendsIntentService() {
+        super("LoadFriendsService");
     }
 
     @Override
@@ -58,10 +60,10 @@ public class FriendIntentService extends IntentService {
             List<Friend> friendList = callFriends.execute().body();
             Intent broadcastIntent = new Intent();
 
-            broadcastIntent.setAction(FriendsActivity.FriendsWebRequestReceiver.PROCESS_RESPONSE);
+            broadcastIntent.setAction(FriendsWebRequestReceiver.PROCESS_RESPONSE);
             broadcastIntent.addCategory(Intent.CATEGORY_DEFAULT);
             broadcastIntent.putParcelableArrayListExtra("FriendsList", (ArrayList<Friend>) friendList);
-            sendBroadcast(broadcastIntent);
+            LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
         } catch (IOException e) {
             e.printStackTrace();
         }

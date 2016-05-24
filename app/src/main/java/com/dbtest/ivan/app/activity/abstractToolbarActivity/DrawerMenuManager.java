@@ -1,4 +1,4 @@
-package com.dbtest.ivan.app.activity.abstract_toolbar_activity;
+package com.dbtest.ivan.app.activity.abstractToolbarActivity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -7,7 +7,7 @@ import android.support.v7.widget.Toolbar;
 
 import com.dbtest.ivan.app.R;
 import com.dbtest.ivan.app.activity.FriendsActivity;
-import com.dbtest.ivan.app.activity.list_activity.ListActivity;
+import com.dbtest.ivan.app.activity.listActivity.ListActivity;
 import com.dbtest.ivan.app.activity.SettingsActivity;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;

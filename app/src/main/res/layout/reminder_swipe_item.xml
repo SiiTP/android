@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.daimajia.swipe.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/reminder_swipe_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp"
+    app:clickToClose="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageButton
+            style="@style/MyImageButton"
+
+            android:id="@+id/_reminder_s_item_delete_btn"
+            android:src="@drawable/ic_action_discard"
+            android:contentDescription="@string/reminder_swipe_item_delete_button"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+        <ImageButton
+            style="@style/MyImageButton"
+            android:id="@+id/_reminder_s_item_edit_btn"
+            android:src="@drawable/ic_action_edit"
+
+            android:contentDescription="@string/reminder_swipe_item_edit_button"
+            android:layout_alignTop="@+id/_reminder_s_item_delete_btn"
+            android:layout_toLeftOf="@+id/_reminder_s_item_delete_btn"
+            android:layout_toStartOf="@+id/_reminder_s_item_delete_btn" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/reminder_item_text"
+            android:layout_toLeftOf="@id/reminder_item_date_container"
+            android:textSize="@dimen/font_size_medium"/>
+        <RelativeLayout
+            android:id="@+id/reminder_item_date_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/reminder_item_date"
+                android:textSize="@dimen/font_size_large"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/reminder_item_time"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/reminder_item_date"
+                android:textSize="@dimen/font_size_xlarge"/>
+        </RelativeLayout>
+    </RelativeLayout>
+</com.daimajia.swipe.SwipeLayout>
