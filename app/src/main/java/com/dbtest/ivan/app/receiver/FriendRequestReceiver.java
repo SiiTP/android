@@ -26,10 +26,10 @@ public class FriendRequestReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         List<Friend> friendList = intent.getParcelableArrayListExtra("FriendsList");
 
+        activity.hideProgressBar();
         if (friendList != null) {
             Collections.sort(friendList);
             activity.setFriendListAdapter(friendList);
         }
-        activity.hideProgressBar();
     }
 }
