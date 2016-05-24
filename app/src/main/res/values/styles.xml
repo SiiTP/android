@@ -74,4 +74,22 @@
         <item name="android:textSize">@dimen/font_size_xlarge</item>
         <item name="android:textColor">@color/app_accent</item>
     </style>
+
+    <!--android:layout_width="48dp"-->
+    <!--android:layout_height="48dp"-->
+    <!--android:id="@+id/list_btn_category_delete"-->
+
+    <!--android:src="@drawable/ic_action_discard"-->
+    <!--android:background="?attr/selectableItemBackgroundBorderless"-->
+
+    <!--android:layout_centerVertical="true"-->
+    <!--android:layout_alignParentEnd="true"-->
+    <!--android:layout_alignParentRight="true"-->
+    <!--android:contentDescription="@string/list_category_delete_button"-->
+
+    <style name="MyImageButton">
+        <item name="android:layout_width">48dp</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+    </style>
 </resources>

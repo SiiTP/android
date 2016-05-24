@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.daimajia.swipe.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/swipe_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp"
+    app:clickToClose="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/md_green_400">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="FIRST RELATIVE LAYOUT"/>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/md_grey_200">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/reminder_item_text"
+            android:layout_toLeftOf="@id/reminder_item_date_container"
+            android:textSize="@dimen/font_size_medium"/>
+        <RelativeLayout
+            android:id="@+id/reminder_item_date_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/reminder_item_date"
+                android:textSize="@dimen/font_size_large"
+                android:text="11.11.2012"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/reminder_item_time"
+                android:layout_centerHorizontal="true"
+                android:text="16:45"
+                android:layout_below="@id/reminder_item_date"
+                android:textSize="@dimen/font_size_xlarge"/>
+        </RelativeLayout>
+    </RelativeLayout>
+</com.daimajia.swipe.SwipeLayout>

@@ -15,13 +15,9 @@
                 android:text="@string/list_default_category"
                 android:layout_alignParentTop="true"/>
             <ImageButton
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                style="@style/MyImageButton"
                 android:id="@+id/list_btn_category_delete"
-
                 android:src="@drawable/ic_action_discard"
-                android:background="?attr/selectableItemBackgroundBorderless"
-
                 android:layout_centerVertical="true"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"

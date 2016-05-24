@@ -99,6 +99,7 @@ public class FriendListAdapter extends RecyclerSwipeAdapter<FriendListAdapter.Vi
         public ViewHolder(View itemView) {
             super(itemView);
 
+            //TODO назови по-нормальному id
             swipeLayout = (SwipeLayout) itemView.findViewById(R.id.swipe_layout);
             name = (TextView) itemView.findViewById(R.id.friend_name);
             addReminder = (ImageView) itemView.findViewById(R.id.add_reminder);

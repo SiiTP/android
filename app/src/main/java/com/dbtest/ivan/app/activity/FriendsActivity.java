@@ -52,7 +52,7 @@ public class FriendsActivity extends AbstractToolbarActivity {
         super.onCreate(savedInstanceState);
 
         emailView = (EditText) findViewById(R.id.find_friend).findViewById(R.id.friend_email);
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view); //TODO надо сменить id
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));

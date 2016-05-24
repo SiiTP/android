@@ -32,11 +32,11 @@ public class CategoryDeleteService extends IntentService {
             return;
         }
 
-        Log.d("myapp " + this.getClass().getSimpleName(), "category from intent : " + categoryName);
+        Log.d("myapp " + this.getClass().getSimpleName(), "!!!category from intent : " + categoryName);
         try {
             Call<Category> callCategory = categoryApi.delete(categoryName);
             Response<Category> categoryResponse = callCategory.execute();
-            Log.d("myapp", "in delete service");
+            Log.d("myapp", "in delete service code : " + categoryResponse.code());
         } catch (IOException e) {
             e.printStackTrace();
         }
