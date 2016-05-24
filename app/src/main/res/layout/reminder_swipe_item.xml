@@ -51,18 +51,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/reminder_item_date"
-                android:textSize="@dimen/font_size_large"
-                android:text="11.11.2012"/>
+                android:textSize="@dimen/font_size_large"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/reminder_item_time"
                 android:layout_centerHorizontal="true"
-                android:text="16:45"
                 android:layout_below="@id/reminder_item_date"
                 android:textSize="@dimen/font_size_xlarge"/>
         </RelativeLayout>
     </RelativeLayout>
-
-
 </com.daimajia.swipe.SwipeLayout>

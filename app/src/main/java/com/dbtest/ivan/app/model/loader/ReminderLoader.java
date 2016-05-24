@@ -2,12 +2,13 @@ package com.dbtest.ivan.app.model.loader;
 
 import android.content.AsyncTaskLoader;
 import android.content.Context;
-import android.util.Log;
 
 import com.dbtest.ivan.app.logic.db.OrmHelper;
 import com.dbtest.ivan.app.logic.db.entities.Category;
 import com.dbtest.ivan.app.logic.db.entities.Reminder;
 import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.stmt.QueryBuilder;
+import com.j256.ormlite.stmt.Where;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -33,10 +34,19 @@ public class ReminderLoader extends AsyncTaskLoader<ArrayList<Reminder>> {
         List<Reminder> reminders = new ArrayList<>();
         try {
             if (categoryLoaded.equals(Category.CATEGORY_ALL_NAME)) {
-                reminders = reminderDao.queryForAll();
+                QueryBuilder<Reminder, Long> queryBuilder = reminderDao.queryBuilder();
+                queryBuilder.orderBy("reminder_time", false);
+                reminders = queryBuilder.query();
             } else {
                 Category category = categoryDao.queryForEq("name", categoryLoaded).get(0); //TODO get unique
-                reminders = reminderDao.queryForEq("category_id", category.getId());
+                QueryBuilder<Reminder, Long> queryBuilder = reminderDao.queryBuilder();
+                Where<Reminder, Long> where = queryBuilder.where();
+                where.eq("category_id", category.getId());
+//                where.and();
+//                where.between("reminder_time", new Date(), DateUtils.getEndOfDay(new Date()));
+                queryBuilder.setWhere(where);
+                queryBuilder.orderBy("reminder_time", false);
+                reminders = queryBuilder.query();
             }
         } catch (SQLException e) {
             e.printStackTrace();

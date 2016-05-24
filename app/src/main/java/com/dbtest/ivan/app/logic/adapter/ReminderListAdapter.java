@@ -1,6 +1,7 @@
 package com.dbtest.ivan.app.logic.adapter;
 
 import android.content.Intent;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -39,13 +40,21 @@ public class ReminderListAdapter extends RecyclerSwipeAdapter<ReminderListAdapte
     @Override
     public void onBindViewHolder(ReminderViewHolder holder, int position) {
         Reminder reminderItem = reminders.get(position);
+
+        holder.date.setTextColor(ContextCompat.getColor(activity, R.color.md_black_1000));
+        if (reminderItem.isReminderToday()) {
+            holder.date.setTextColor(ContextCompat.getColor(activity, R.color.app_accent));
+        }
+        if (reminderItem.isReminderPassed()) {
+            holder.date.setTextColor(ContextCompat.getColor(activity, R.color.app_disabled));
+        }
+
         holder.date.setText(reminderItem.getStringReminderDate());
         holder.time.setText(reminderItem.getStringReminderTime());
         holder.text.setText(reminderItem.getText());
 
         holder.mBtnEdit.setOnClickListener((v -> {
             Reminder reminder = reminders.get(position);
-            Log.d("myapp", "edit clicked : " + reminder.getId());
             Intent intent = new Intent(activity, UpdateDetailReminderActivity.class);
             intent.putExtra(ReminderIntentService.ID, reminder.getId());
             intent.putExtra(ReminderIntentService.CATEGORY, reminder.getCategory().getName());

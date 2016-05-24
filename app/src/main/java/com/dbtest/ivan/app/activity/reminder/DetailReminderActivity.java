@@ -55,7 +55,7 @@ public class DetailReminderActivity extends ReminderActivity implements Category
             categoryList = helper.getCategoryDao().queryForAll();
             List<String> categoriesNames = new ArrayList<>(categoryList.size());
             for(Category c : categoryList){
-                if(!c.getName().equals("from friends")) {
+                if(!c.getName().equals(Category.CATEGORY_FRIENDS_NAME)) {
                     categoriesNames.add(c.getName());
                 }
             }
