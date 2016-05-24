@@ -33,21 +33,17 @@ public class ReminderLoader extends AsyncTaskLoader<ArrayList<Reminder>> {
 
         List<Reminder> reminders = new ArrayList<>();
         try {
-            if (categoryLoaded.equals(Category.CATEGORY_ALL_NAME)) {
-                QueryBuilder<Reminder, Long> queryBuilder = reminderDao.queryBuilder();
-                queryBuilder.orderBy("reminder_time", false);
-                reminders = queryBuilder.query();
-            } else {
+            QueryBuilder<Reminder, Long> queryBuilder = reminderDao.queryBuilder();
+            if (!categoryLoaded.equals(Category.CATEGORY_ALL_NAME)) {
                 Category category = categoryDao.queryForEq("name", categoryLoaded).get(0); //TODO get unique
-                QueryBuilder<Reminder, Long> queryBuilder = reminderDao.queryBuilder();
                 Where<Reminder, Long> where = queryBuilder.where();
                 where.eq("category_id", category.getId());
 //                where.and();
 //                where.between("reminder_time", new Date(), DateUtils.getEndOfDay(new Date()));
                 queryBuilder.setWhere(where);
-                queryBuilder.orderBy("reminder_time", false);
-                reminders = queryBuilder.query();
             }
+            queryBuilder.orderBy("reminder_time", false);
+            reminders = queryBuilder.query();
         } catch (SQLException e) {
             e.printStackTrace();
         }
