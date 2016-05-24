@@ -7,10 +7,11 @@ import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.widget.Button;
+import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.dbtest.ivan.app.R;
@@ -19,21 +20,25 @@ import com.dbtest.ivan.app.activity.reminder.DetailReminderActivity;
 import com.dbtest.ivan.app.logic.adapter.FriendListAdapter;
 import com.dbtest.ivan.app.logic.divider.DividerItemDecoration;
 import com.dbtest.ivan.app.model.Friend;
-import com.dbtest.ivan.app.receiver.FriendsWebRequestReceiver;
+import com.dbtest.ivan.app.receiver.FriendRequestReceiver;
 import com.dbtest.ivan.app.services.intent.InviteFriendService;
 import com.dbtest.ivan.app.services.intent.LoadFriendsIntentService;
 import com.dbtest.ivan.app.services.intent.RemoveFriendIntentService;
+import com.dbtest.ivan.app.utils.WaitingManager;
 
 import java.util.List;
 
 public class FriendsActivity extends AbstractToolbarActivity {
 
     private static final int MENU_POSITION = 1;
-    private RecyclerView recyclerView;
+    private RecyclerView friendsListRecyclerView;
     private FriendListAdapter friendListAdapter;
-    private FriendsWebRequestReceiver receiver;
-    private ImageButton button;
+    private FriendRequestReceiver friendRequestReceiver;
+    private ImageButton addFriendButton;
     private EditText emailView;
+    private ProgressBar bar;
+    public static final String inviteMessage = "invite";
+    public static final String reminderMessage = "reminder";
 
     @NonNull
     @Override
@@ -51,49 +56,41 @@ public class FriendsActivity extends AbstractToolbarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        emailView = (EditText) findViewById(R.id.find_friend).findViewById(R.id.friend_email);
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view); //TODO надо сменить id
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                Log.d("myapp", "scroll state changed, new state : " + newState);
-            }
+        bar = (ProgressBar) findViewById(R.id.friends_bar);
+        emailView = (EditText) findViewById(R.id.friends_activity_find_friend_view).findViewById(R.id.friend_email);
+        friendsListRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        friendsListRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        friendsListRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+        addFriendButton = (ImageButton) findViewById(R.id.add_friend);
+        if (addFriendButton != null) {
+            addFriendButton.setOnClickListener((v)-> {
+                String email = emailView.getText().toString();
 
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                Log.d("myapp", "onScrolled, dx, dy : " + dx + " " + dy);
-            }
-        });
-        button = (ImageButton) findViewById(R.id.add_friend);
-        assert button != null;
-        button.setOnClickListener((v)-> {
-            String email = emailView.getText().toString();
-            if (!email.isEmpty()) {
-                Bundle bundle = new Bundle();
-                bundle.putString("email", email);
-                Intent intent = new Intent(FriendsActivity.this, InviteFriendService.class);
-                intent.putExtras(bundle);
-                startService(intent);
-            }
-        });
-        IntentFilter filter = new IntentFilter(FriendsWebRequestReceiver.PROCESS_RESPONSE);
-        receiver = new FriendsWebRequestReceiver(this);
-        filter.addCategory(Intent.CATEGORY_DEFAULT);
-        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, filter);
+                if (!email.isEmpty()) {
+                    Bundle bundle = new Bundle();
+                    Intent intent = new Intent(FriendsActivity.this, InviteFriendService.class);
+
+                    bundle.putString("email", email);
+                    intent.putExtras(bundle);
+                    startService(intent);
+                }
+            });
+        }
         Intent intent = new Intent(FriendsActivity.this, LoadFriendsIntentService.class);
+
         startService(intent);
-        Button button = (Button) findViewById(R.id.test);
+        showProgressBar();
+        IntentFilter filter = new IntentFilter(FriendRequestReceiver.PROCESS_RESPONSE);
+
+        filter.addCategory(Intent.CATEGORY_DEFAULT);
+        friendRequestReceiver = new FriendRequestReceiver(this);
+        LocalBroadcastManager.getInstance(this).registerReceiver(friendRequestReceiver, filter);
     }
 
     @Override
     public void onDestroy() {
-        if (receiver != null) {
-            this.unregisterReceiver(receiver);
+        if (friendRequestReceiver != null) {
+            LocalBroadcastManager.getInstance(this).unregisterReceiver(friendRequestReceiver);
         }
         super.onDestroy();
     }
@@ -116,8 +113,16 @@ public class FriendsActivity extends AbstractToolbarActivity {
     public void setFriendListAdapter(List<Friend> friendsList) {
         if (friendListAdapter == null) {
             friendListAdapter = new FriendListAdapter(this, friendsList);
-            recyclerView.setAdapter(friendListAdapter);
+            friendsListRecyclerView.setAdapter(friendListAdapter);
         }
+    }
+
+    public void showProgressBar() {
+        WaitingManager.makeWaitingProgressBar(this, bar, true);
+    }
+
+    public void hideProgressBar() {
+        WaitingManager.makeWaitingProgressBar(this, bar, false);
     }
 
     public void showDeleteFriendDialog(MaterialDialog.SingleButtonCallback callback) {

@@ -28,7 +28,7 @@
     <color name="app_divider">
         #B6B6B6
     </color>
-    <color name="app_add_reminder">
+    <color name="app_primary_red">
         #D50000
     </color>
 </resources>
