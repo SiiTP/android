@@ -60,7 +60,6 @@ public class DetailReminderActivity extends ReminderActivity implements Category
                 }
             }
             categoriesAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, categoriesNames);
-
             spinner = (Spinner) findViewById(R.id.details_category_spinner);
             categoriesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner.setAdapter(categoriesAdapter);
