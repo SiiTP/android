@@ -7,8 +7,11 @@ import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.dbtest.ivan.app.R;
@@ -21,6 +24,7 @@ import com.dbtest.ivan.app.receiver.FriendRequestReceiver;
 import com.dbtest.ivan.app.services.intent.InviteFriendService;
 import com.dbtest.ivan.app.services.intent.LoadFriendsIntentService;
 import com.dbtest.ivan.app.services.intent.RemoveFriendIntentService;
+import com.dbtest.ivan.app.utils.WaitingManager;
 
 import java.util.List;
 
@@ -32,6 +36,7 @@ public class FriendsActivity extends AbstractToolbarActivity {
     private FriendRequestReceiver friendRequestReceiver;
     private ImageButton addFriendButton;
     private EditText emailView;
+    private ProgressBar bar;
     public static final String inviteMessage = "invite";
     public static final String reminderMessage = "reminder";
 
@@ -51,6 +56,7 @@ public class FriendsActivity extends AbstractToolbarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        bar = (ProgressBar) findViewById(R.id.friends_bar);
         emailView = (EditText) findViewById(R.id.friends_activity_find_friend_view).findViewById(R.id.friend_email);
         friendsListRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         friendsListRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
@@ -70,13 +76,15 @@ public class FriendsActivity extends AbstractToolbarActivity {
                 }
             });
         }
-        IntentFilter filter = new IntentFilter(FriendRequestReceiver.PROCESS_RESPONSE);
         Intent intent = new Intent(FriendsActivity.this, LoadFriendsIntentService.class);
+
+        startService(intent);
+        showProgressBar();
+        IntentFilter filter = new IntentFilter(FriendRequestReceiver.PROCESS_RESPONSE);
 
         filter.addCategory(Intent.CATEGORY_DEFAULT);
         friendRequestReceiver = new FriendRequestReceiver(this);
         LocalBroadcastManager.getInstance(this).registerReceiver(friendRequestReceiver, filter);
-        startService(intent);
     }
 
     @Override
@@ -107,6 +115,14 @@ public class FriendsActivity extends AbstractToolbarActivity {
             friendListAdapter = new FriendListAdapter(this, friendsList);
             friendsListRecyclerView.setAdapter(friendListAdapter);
         }
+    }
+
+    public void showProgressBar() {
+        WaitingManager.makeWaitingProgressBar(this, bar, true);
+    }
+
+    public void hideProgressBar() {
+        WaitingManager.makeWaitingProgressBar(this, bar, false);
     }
 
     public void showDeleteFriendDialog(MaterialDialog.SingleButtonCallback callback) {

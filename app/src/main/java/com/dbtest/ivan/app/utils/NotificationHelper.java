@@ -19,8 +19,8 @@ import java.util.Random;
  * Created by said on 22.05.16.
  */
 public class NotificationHelper {
-    private static final String inviteTitle = "invites you";
-    private static final String reminderTitle = "New reminder from";
+    private static final String inviteTitle = "Invited notification";
+    private static final String reminderTitle = "Remider notification";
 
     private static NotificationCompat.Builder initNotification(Context context, String msg, String title) {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
@@ -52,7 +52,7 @@ public class NotificationHelper {
 
     public static void sendInviteNotification(Context context, String msg, String email) {
         int id = new Random().nextInt(32);
-        NotificationCompat.Builder builder = initNotification(context, msg, email + inviteTitle);
+        NotificationCompat.Builder builder = initNotification(context, msg, inviteTitle);
 
         builder.setOngoing(true);
         addButtonToNotification(builder, context, id, email);

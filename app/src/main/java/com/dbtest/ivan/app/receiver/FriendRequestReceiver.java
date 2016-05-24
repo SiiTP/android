@@ -30,5 +30,6 @@ public class FriendRequestReceiver extends BroadcastReceiver {
             Collections.sort(friendList);
             activity.setFriendListAdapter(friendList);
         }
+        activity.hideProgressBar();
     }
 }

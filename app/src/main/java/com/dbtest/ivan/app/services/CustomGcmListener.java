@@ -6,10 +6,8 @@ import android.os.Bundle;
 
 import com.dbtest.ivan.app.activity.FriendsActivity;
 import com.dbtest.ivan.app.services.intent.FullSyncService;
-import com.dbtest.ivan.app.utils.JsonParser;
 import com.dbtest.ivan.app.utils.NotificationHelper;
 import com.google.android.gms.gcm.GcmListenerService;
-import com.google.gson.JsonObject;
 
 /**
  * Created by ivan on 26.04.16.
@@ -19,14 +17,13 @@ public class CustomGcmListener extends GcmListenerService {
     @Override
     public void onMessageReceived(String from, Bundle data) {
         super.onMessageReceived(from, data);
-        sendNotification(getApplicationContext(), data.getString("message"));
+        sendNotification(getApplicationContext(), data);
     }
 
-    private void sendNotification(Context context, String message) {
-        JsonObject msgJsonObject = JsonParser.stringToJsonObject(message);
-        String msg = msgJsonObject.get("message").getAsString();
-        String email = msgJsonObject.get("email").getAsString();
-        String type = msgJsonObject.get("type").getAsString();
+    private void sendNotification(Context context, Bundle data) {
+        String msg = data.getString("message");
+        String email = data.getString("email");
+        String type = data.getString("type");
 
         switch (type) {
             case FriendsActivity.inviteMessage:
