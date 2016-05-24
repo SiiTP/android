@@ -2,7 +2,6 @@ package com.dbtest.ivan.app.model.loader;
 
 import android.content.AsyncTaskLoader;
 import android.content.Context;
-import android.util.Log;
 
 import com.dbtest.ivan.app.logic.db.OrmHelper;
 import com.dbtest.ivan.app.logic.db.entities.Category;
@@ -19,7 +18,7 @@ public class CategoryLoader extends AsyncTaskLoader<ArrayList<Category>> {
     OrmHelper mOrmHelper;
     public CategoryLoader(Context context) {
         super(context);
-        mOrmHelper = new OrmHelper(context);
+        mOrmHelper = new OrmHelper(context); //TODO no release helper
     }
 
     @Override
@@ -33,4 +32,6 @@ public class CategoryLoader extends AsyncTaskLoader<ArrayList<Category>> {
         }
         return (ArrayList<Category>)categories;
     }
+
+
 }

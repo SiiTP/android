@@ -13,6 +13,7 @@ import java.util.ArrayList;
 @DatabaseTable(tableName = "category")
 public class Category {
     public static final String CATEGORY_ALL_NAME = "all";
+    public static final String CATEGORY_FRIENDS_NAME = "from friends";
     @DatabaseField(generatedId = true)
     private Long id;
     @DatabaseField(unique = true)

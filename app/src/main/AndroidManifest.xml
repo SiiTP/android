@@ -11,6 +11,8 @@
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="com.dbtest.ivan.app.permission.C2D_MESSAGE" />
 
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -19,7 +21,6 @@
         <activity android:name=".activity.StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -32,6 +33,7 @@
         <activity android:name=".activity.reminder.UpdateDetailReminderActivity" />
 
         <service android:name=".services.intent.SignInIntentService" />
+        <service android:name=".services.intent.CategoryDeleteService" />
         <service android:name=".services.intent.SignUpIntentService" />
         <service android:name=".services.intent.ReminderIntentService" />
         <service android:name=".services.intent.LoadFriendsIntentService" />
@@ -44,8 +46,6 @@
         <service android:name=".services.intent.AcceptFriendRequestIntentService" />
         <service android:name=".services.intent.RejectFriendRequestIntentService" />
 
-        <receiver android:name=".receiver.AlarmReceiver" />
-
         <activity android:name=".activity.GCM" />
 
         <!-- GCM -->
@@ -55,8 +55,16 @@
             android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-
                 <category android:name="com.dbtest.ivan.app" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name=".receiver.AlarmReceiver"
+            android:enabled="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                />
             </intent-filter>
         </receiver>
 
