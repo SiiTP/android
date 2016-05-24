@@ -34,4 +34,11 @@
     <string name="friend_reminder_send">Send</string>
     <string name="choose_date_and_time">Choose date and time</string>
     <string name="update_reminder_button">Update</string>
+    <string name="list_category_delete_button">category delete button</string>
+    <string name="dialog_delete_category_message">All reminders also will be deleted</string>
+    <string name="dialog_delete_category_title">Delete category</string>
+    <string name="dialog_delete_category_btn_positive">Delete</string>
+    <string name="dialog_delete_category_btn_negative">Cancel</string>
+    <string name="reminder_swipe_item_delete_button">reminder swipe item delete button</string>
+    <string name="reminder_swipe_item_edit_button">reminder swipe item edit button</string>
 </resources>

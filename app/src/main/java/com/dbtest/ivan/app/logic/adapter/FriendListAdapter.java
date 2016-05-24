@@ -48,9 +48,7 @@ public class FriendListAdapter extends RecyclerSwipeAdapter<FriendListAdapter.Vi
             mItemManger.closeAllItems();
             activity.showDeleteFriendDialog(new ChooseCallback(position, holder));
         });
-        holder.addReminder.setOnClickListener((v) -> {
-            activity.openDetailReminderActivity();
-        });
+        holder.addReminder.setOnClickListener((v) -> activity.openDetailReminderActivity());
         mItemManger.bindView(holder.itemView, position);
     }
 
