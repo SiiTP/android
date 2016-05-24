@@ -2,7 +2,7 @@
 
 <com.daimajia.swipe.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/swipe_layout"
+    android:id="@+id/reminder_swipe_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingTop="8dp"
@@ -11,19 +11,30 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/md_green_400">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="FIRST RELATIVE LAYOUT"/>
-    </RelativeLayout>
+        android:layout_height="match_parent">
+        <ImageButton
+            style="@style/MyImageButton"
 
+            android:id="@+id/_reminder_s_item_delete_btn"
+            android:src="@drawable/ic_action_discard"
+            android:contentDescription="@string/reminder_swipe_item_delete_button"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+        <ImageButton
+            style="@style/MyImageButton"
+            android:id="@+id/_reminder_s_item_edit_btn"
+            android:src="@drawable/ic_action_edit"
+
+            android:contentDescription="@string/reminder_swipe_item_edit_button"
+            android:layout_alignTop="@+id/_reminder_s_item_delete_btn"
+            android:layout_toLeftOf="@+id/_reminder_s_item_delete_btn"
+            android:layout_toStartOf="@+id/_reminder_s_item_delete_btn" />
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/md_grey_200">
+        android:layout_height="wrap_content">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -52,4 +63,6 @@
                 android:textSize="@dimen/font_size_xlarge"/>
         </RelativeLayout>
     </RelativeLayout>
+
+
 </com.daimajia.swipe.SwipeLayout>
