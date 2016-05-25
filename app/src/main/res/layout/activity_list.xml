@@ -16,9 +16,10 @@
         android:layout_centerHorizontal="true" />
     <RelativeLayout
         style="@style/HeaderLargeContainer"
+        android:animateLayoutChanges="true"
         android:id="@+id/list_category_header"
         android:layout_height="64dp">
-            <TextView
+            <TextSwitcher
                 style="@style/HeaderLargeText"
                 android:id="@+id/list_category_name"
                 android:text="@string/list_default_category"
