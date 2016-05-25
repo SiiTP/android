@@ -1,2 +1,208 @@
 <?xml version="1.0" encoding="utf-8"?>
-<items version="2" />
+<items version="2" >
+
+    <item
+        jar="/Users/said/Desktop/Study/Techno/Android/android/app/build/intermediates/exploded-aar/com.mikepenz/fastadapter/1.2.4/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="e7767f205f96d44b07b7c04ee3da1d3098161675">
+        <dex dex="/Users/said/Desktop/Study/Techno/Android/android/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.mikepenz-fastadapter-1.2.4_02d0e59a442406e96a22b630797d05a554b9dd6c/classes.dex" />
+    </item>
+    <item
+        jar="/Users/said/Desktop/Study/Techno/Android/android/app/build/intermediates/exploded-aar/com.github.afollestad.material-dialogs/commons/0.8.5.8/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="1edf6f0fa4df936d55652b13b154e42947d23916">
+        <dex dex="/Users/said/Desktop/Study/Techno/Android/android/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.github.afollestad.material-dialogs-commons-0.8.5.8_f9da6f58601f022d5a295cee04d3bd8dcf926440/classes.dex" />
+    </item>
+    <item
+        jar="/Users/said/.gradle/caches/modules-2/files-2.1/com.squareup.okio/okio/1.6.0/98476622f10715998eacf9240d6b479f12c66143/okio-1.6.0.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="98476622f10715998eacf9240d6b479f12c66143">
+        <dex dex="/Users/said/Desktop/Study/Techno/Android/android/app/build/intermediates/transforms/dex/debug/folders/1000/10/okio-1.6.0_dac6edd76c668f103d4effef1885846de9042cc6/classes.dex" />
+    </item>
+    <item
+        jar="/Users/said/Desktop/Study/Techno/Android/android/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.3.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="a0b5d60246cd9d4f3f2443611b3b4c25265840b5">
+        <dex dex="/Users/said/Desktop/Study/Techno/Android/android/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-vector-drawable-23.3.0_524bf9d9c2597ba7cc52f71a9ad7813486e12b70/classes.dex" />
+    </item>
+    <item
+        jar="/Users/said/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/okhttp/3.2.0/f7873a2ebde246a45c2a8d6f3247108b4c88a879/okhttp-3.2.0.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="f7873a2ebde246a45c2a8d6f3247108b4c88a879">
+        <dex dex="/Users/said/Desktop/Study/Techno/Android/android/app/build/intermediates/transforms/dex/debug/folders/1000/10/okhttp-3.2.0_605ee229965962684baab1af20c8e8d7452ead99/classes.dex" />
+    </item>
+    <item
+        jar="/Users/said/.gradle/caches/modules-2/files-2.1/com.squareup.retrofit2/retrofit/2.0.0/5c06d197fb7fa875ad452f562e3310dd9949d066/retrofit-2.0.0.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="5c06d197fb7fa875ad452f562e3310dd9949d066">
+        <dex dex="/Users/said/Desktop/Study/Techno/Android/android/app/build/intermediates/transforms/dex/debug/folders/1000/10/retrofit-2.0.0_d636953b1273f5bb07c2119490e7ffe7e3c24234/classes.dex" />
+    </item>
+    <item
+        jar="/Users/said/Desktop/Study/Techno/Android/android/app/build/intermediates/exploded-aar/com.mikepenz/materialize/0.8.6/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="0c0e104cedca43c5c5c39851605485e4e7e6c3a6">
+        <dex dex="/Users/said/Desktop/Study/Techno/Android/android/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.mikepenz-materialize-0.8.6_94f10bcb7d9d098ced26ba387c232b67f36836a7/classes.dex" />
+    </item>
+    <item
+        jar="/Users/said/Desktop/Study/Techno/Android/android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="1b8e03daaa43fb0a4cd57e378167c2fd70454c1e">
+        <dex dex="/Users/said/Desktop/Study/Techno/Android/android/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-appcompat-v7-23.3.0_e27c16c797b4aef2240a9a40e122ed0f07f8354a/classes.dex" />
+    </item>
+    <item
+        jar="/Users/said/Desktop/Study/Techno/Android/android/app/build/intermediates/exploded-aar/com.mikepenz/iconics-core/2.5.9/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="3149c4ac4c88c40904ca8042bf7eb62cbb9e9114">
+        <dex dex="/Users/said/Desktop/Study/Techno/Android/android/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.mikepenz-iconics-core-2.5.9_3b02b475eb992d1bdf9c1b362096afa8dce71073/classes.dex" />
+    </item>
+    <item
+        jar="/Users/said/Desktop/Study/Techno/Android/android/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.3.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="23be6993826b8fd88bbc8d14928bb3b8960d3d4e">
+        <dex dex="/Users/said/Desktop/Study/Techno/Android/android/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-animated-vector-drawable-23.3.0_419e530be94b56bffa82229d559dbba08b10d648/classes.dex" />
+    </item>
+    <item
+        jar="/Users/said/Desktop/Study/Techno/Android/android/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-measurement/8.3.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="b000ecceb9877fefcdc7ab1959ff03df91551656">
+        <dex dex="/Users/said/Desktop/Study/Techno/Android/android/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-measurement-8.3.0_6493f42d6d1f75e8814b38bb1b9a2040b6c96ac1/classes.dex" />
+    </item>
+    <item
+        jar="/Users/said/.gradle/caches/modules-2/files-2.1/com.j256.ormlite/ormlite-core/4.48/e579bd2905d0399af5029aaaf9817d5fa0ca88a5/ormlite-core-4.48.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="e579bd2905d0399af5029aaaf9817d5fa0ca88a5">
+        <dex dex="/Users/said/Desktop/Study/Techno/Android/android/app/build/intermediates/transforms/dex/debug/folders/1000/10/ormlite-core-4.48_c61618a4521670d5c57d6e98d1ac2bc997e5cab9/classes.dex" />
+    </item>
+    <item
+        jar="/Users/said/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/23.3.0/support-annotations-23.3.0.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="db7791d75a07fef9844d06236c1c59ba7bf6997c">
+        <dex dex="/Users/said/Desktop/Study/Techno/Android/android/app/build/intermediates/transforms/dex/debug/folders/1000/10/support-annotations-23.3.0_c8b33a96026ac7d8e0667dc112f4669c43a02340/classes.dex" />
+    </item>
+    <item
+        jar="/Users/said/.gradle/caches/modules-2/files-2.1/com.squareup.retrofit2/converter-gson/2.0.0-beta4/de5935a367ba5e343e9df786ac8fc0c7d52b5f0c/converter-gson-2.0.0-beta4.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="de5935a367ba5e343e9df786ac8fc0c7d52b5f0c">
+        <dex dex="/Users/said/Desktop/Study/Techno/Android/android/app/build/intermediates/transforms/dex/debug/folders/1000/10/converter-gson-2.0.0-beta4_3b01304bc493a7678c1bb5496c595663a18f2262/classes.dex" />
+    </item>
+    <item
+        jar="/Users/said/.gradle/caches/modules-2/files-2.1/com.j256.ormlite/ormlite-android/4.48/afa06f539a4026c10b247386312aa67404b80a16/ormlite-android-4.48.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="afa06f539a4026c10b247386312aa67404b80a16">
+        <dex dex="/Users/said/Desktop/Study/Techno/Android/android/app/build/intermediates/transforms/dex/debug/folders/1000/10/ormlite-android-4.48_03b3112da393dfade13d41b66c040507dc389738/classes.dex" />
+    </item>
+    <item
+        jar="/Users/said/Desktop/Study/Techno/Android/android/app/build/intermediates/exploded-aar/me.zhanghai.android.materialprogressbar/library/1.1.5/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="4a9f97c742d058ca55948643c06f447895a9af76">
+        <dex dex="/Users/said/Desktop/Study/Techno/Android/android/app/build/intermediates/transforms/dex/debug/folders/1000/10/me.zhanghai.android.materialprogressbar-library-1.1.5_6b0bffe66f79af178383a1aebc8397058f99a096/classes.dex" />
+    </item>
+    <item
+        jar="/Users/said/Desktop/Study/Techno/Android/android/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-gcm/8.3.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="71eda10e33212e44245524b5087366ff8d805825">
+        <dex dex="/Users/said/Desktop/Study/Techno/Android/android/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-gcm-8.3.0_eff21f986215a45c2372521c40879a53d393bf31/classes.dex" />
+    </item>
+    <item
+        jar="/Users/said/Desktop/Study/Techno/Android/android/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.3.0/jars/libs/internal_impl-23.3.0.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="4da5a4d697d32497c6f85567a5112e62fdfd0676">
+        <dex dex="/Users/said/Desktop/Study/Techno/Android/android/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-23.3.0_8aa99fdf4995cc233b4082005c4f01bfc6423c7f/classes.dex" />
+    </item>
+    <item
+        jar="/Users/said/Desktop/Study/Techno/Android/android/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.3.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="8a034dd16c0dfd75fe86c52c2cd581592acc684a">
+        <dex dex="/Users/said/Desktop/Study/Techno/Android/android/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-v4-23.3.0_b9e4b3b876d194b0a168fa0dd6833d9ee6f4165d/classes.dex" />
+    </item>
+    <item
+        jar="/Users/said/Desktop/Study/Techno/Android/android/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.3.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="345a1b5cf5b144ce18ba6962bc66a7e2f26c1c1b">
+        <dex dex="/Users/said/Desktop/Study/Techno/Android/android/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-basement-8.3.0_4c771fb377e1ea250f0d4f37e92cb6bb7bfb37bd/classes.dex" />
+    </item>
+    <item
+        jar="/Users/said/Desktop/Study/Techno/Android/android/app/build/intermediates/exploded-aar/com.android.support/design/23.2.1/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="72961d8b453b46e277702f18de9d210bc019e36e">
+        <dex dex="/Users/said/Desktop/Study/Techno/Android/android/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-design-23.2.1_e7002ece8338782da8b730e48be376a5db1adf79/classes.dex" />
+    </item>
+    <item
+        jar="/Users/said/Desktop/Study/Techno/Android/android/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="2016a3ea1d78c7f89fdc9f462b722310bdfa7e7d">
+        <dex dex="/Users/said/Desktop/Study/Techno/Android/android/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_7ac032cb11b29fad73527c6e1ec3876924db13e1/classes.dex" />
+    </item>
+    <item
+        jar="/Users/said/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.4/695b63d702f505b9b916e02272e3b6381bade7f/gson-2.4.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="0695b63d702f505b9b916e02272e3b6381bade7f">
+        <dex dex="/Users/said/Desktop/Study/Techno/Android/android/app/build/intermediates/transforms/dex/debug/folders/1000/10/gson-2.4_bdeb56b0d2d4f14f26aaf3f23228090f33e73595/classes.dex" />
+    </item>
+    <item
+        jar="/Users/said/Desktop/Study/Techno/Android/android/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="b6f21917f653b99b3c18eca3d8284b46b8728935">
+        <dex dex="/Users/said/Desktop/Study/Techno/Android/android/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_883b73679fa47b8758004971aa721d85838b4251/classes.dex" />
+    </item>
+    <item
+        jar="/Users/said/Desktop/Study/Techno/Android/android/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.3.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="01a90bbb9495a8bbf6f3cfdf12f1b35caaa9524b">
+        <dex dex="/Users/said/Desktop/Study/Techno/Android/android/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-base-8.3.0_ea8ae22fb2b4ff70306f8a03da2c6a653883c4aa/classes.dex" />
+    </item>
+    <item
+        jar="/Users/said/Desktop/Study/Techno/Android/android/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.3.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="debf30ce0a7560396b6235edef77e447006454c2">
+        <dex dex="/Users/said/Desktop/Study/Techno/Android/android/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-recyclerview-v7-23.3.0_2fd3314601439c990e6e6b2139175be6dac83986/classes.dex" />
+    </item>
+    <item
+        jar="/Users/said/Desktop/Study/Techno/Android/android/app/build/intermediates/exploded-aar/com.mikepenz/materialdrawer/5.1.3/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="296a120b4cf08754712d2100113a9450298fc9ba">
+        <dex dex="/Users/said/Desktop/Study/Techno/Android/android/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.mikepenz-materialdrawer-5.1.3_618fed8c4b13c7d37ab3eaebb7deb7a9e83eead0/classes.dex" />
+    </item>
+    <item
+        jar="/Users/said/Desktop/Study/Techno/Android/android/app/build/intermediates/exploded-aar/com.github.afollestad.material-dialogs/core/0.8.5.8/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="4f7e1ce5942093c77105c86ef11b782f75aff0c3">
+        <dex dex="/Users/said/Desktop/Study/Techno/Android/android/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.github.afollestad.material-dialogs-core-0.8.5.8_1985f691767d753086e3f9735389ca2de7ad440e/classes.dex" />
+    </item>
+    <item
+        jar="/Users/said/Desktop/Study/Techno/Android/android/app/build/intermediates/exploded-aar/com.daimajia.swipelayout/library/1.2.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="e84b30031d4bab89a2b5c45af4eb9213828524dd">
+        <dex dex="/Users/said/Desktop/Study/Techno/Android/android/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.daimajia.swipelayout-library-1.2.0_4ef6d1cae4c0e35e26ae3262f8e1f14971fb41ad/classes.dex" />
+    </item>
+
+</items>

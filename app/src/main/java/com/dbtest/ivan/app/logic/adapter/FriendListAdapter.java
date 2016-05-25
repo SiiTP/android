@@ -85,6 +85,16 @@ public class FriendListAdapter extends RecyclerSwipeAdapter<FriendListAdapter.Vi
         return friendList.size();
     }
 
+    public void setAdapterItems(List<Friend> friendList) {
+        this.friendList.addAll(friendList);
+        notifyDataSetChanged();
+    }
+
+    public void clear() {
+        friendList.clear();
+        notifyDataSetChanged();
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         SwipeLayout swipeLayout;
         TextView name;

@@ -5,8 +5,10 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
@@ -33,6 +35,7 @@ public class FriendsActivity extends AbstractToolbarActivity {
 
     private static final int MENU_POSITION = 1;
     private RecyclerView friendsListRecyclerView;
+    private SwipeRefreshLayout friendsListRefreshLayout;
     private FriendListAdapter friendListAdapter;
     private FriendRequestReceiver friendRequestReceiver;
     private ImageButton addFriendButton;
@@ -57,11 +60,22 @@ public class FriendsActivity extends AbstractToolbarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        bar = (ProgressBar) findViewById(R.id.friends_bar);
-        emailView = (EditText) findViewById(R.id.friends_activity_find_friend_view).findViewById(R.id.friend_email);
         friendsListRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         friendsListRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         friendsListRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+
+        bar = (ProgressBar) findViewById(R.id.friends_bar);
+        emailView = (EditText) findViewById(R.id.friends_activity_find_friend_view).findViewById(R.id.friend_email);
+
+        friendsListRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.friends_swipe_refresh_layout);
+        friendsListRefreshLayout.setOnRefreshListener(()->{
+            refreshFriendsList();
+        });
+        friendsListRefreshLayout.setColorSchemeResources(R.color.app_primaryDark,
+                R.color.app_primaryDark,
+                R.color.app_primaryDark,
+                R.color.app_primaryDark);
+
         addFriendButton = (ImageButton) findViewById(R.id.add_friend);
         if (addFriendButton != null) {
             addFriendButton.setOnClickListener((v)-> {
@@ -86,6 +100,12 @@ public class FriendsActivity extends AbstractToolbarActivity {
         filter.addCategory(Intent.CATEGORY_DEFAULT);
         friendRequestReceiver = new FriendRequestReceiver(this);
         LocalBroadcastManager.getInstance(this).registerReceiver(friendRequestReceiver, filter);
+    }
+
+    public void refreshFriendsList() {
+        Intent intent = new Intent(FriendsActivity.this, LoadFriendsIntentService.class);
+
+        startService(intent);
     }
 
     @Override
@@ -116,8 +136,12 @@ public class FriendsActivity extends AbstractToolbarActivity {
     public void setFriendListAdapter(List<Friend> friendsList) {
         if (friendListAdapter == null) {
             friendListAdapter = new FriendListAdapter(this, friendsList);
-            friendsListRecyclerView.setAdapter(friendListAdapter);
+        } else {
+            friendListAdapter.clear();
+            friendListAdapter.setAdapterItems(friendsList);
         }
+
+        friendsListRecyclerView.setAdapter(friendListAdapter);
     }
 
     public void showProgressBar() {
@@ -125,7 +149,13 @@ public class FriendsActivity extends AbstractToolbarActivity {
     }
 
     public void hideProgressBar() {
-        WaitingManager.makeWaitingProgressBar(this, bar, false);
+        if (bar.isShown()) {
+            WaitingManager.makeWaitingProgressBar(this, bar, false);
+        }
+    }
+
+    public void stopRefreshing() {
+        friendsListRefreshLayout.setRefreshing(false);
     }
 
     public void showDeleteFriendDialog(MaterialDialog.SingleButtonCallback callback) {

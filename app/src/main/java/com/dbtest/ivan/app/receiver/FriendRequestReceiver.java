@@ -27,6 +27,7 @@ public class FriendRequestReceiver extends BroadcastReceiver {
         List<Friend> friendList = intent.getParcelableArrayListExtra("FriendsList");
 
         activity.hideProgressBar();
+        activity.stopRefreshing();
         if (friendList != null) {
             Collections.sort(friendList);
             activity.setFriendListAdapter(friendList);
