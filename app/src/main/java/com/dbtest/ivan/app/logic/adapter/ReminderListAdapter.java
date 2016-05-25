@@ -1,7 +1,9 @@
 package com.dbtest.ivan.app.logic.adapter;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,21 +14,21 @@ import android.widget.TextView;
 
 import com.daimajia.swipe.adapters.RecyclerSwipeAdapter;
 import com.dbtest.ivan.app.R;
-import com.dbtest.ivan.app.activity.abstractToolbarActivity.AbstractToolbarActivity;
+import com.dbtest.ivan.app.activity.listActivity.ListActivity;
 import com.dbtest.ivan.app.activity.reminder.UpdateDetailReminderActivity;
 import com.dbtest.ivan.app.logic.db.entities.Reminder;
+import com.dbtest.ivan.app.receiver.CustomReceiver;
+import com.dbtest.ivan.app.services.intent.ReminderDeleteService;
 import com.dbtest.ivan.app.services.intent.ReminderIntentService;
+import com.dbtest.ivan.app.utils.ExtrasCodes;
 
 import java.util.ArrayList;
 
-/**
- * Created by Ivan on 17.04.2016.
- */
 public class ReminderListAdapter extends RecyclerSwipeAdapter<ReminderListAdapter.ReminderViewHolder> {
-    AbstractToolbarActivity activity;
+    ListActivity activity;
     ArrayList<Reminder> reminders;
 
-    public ReminderListAdapter(AbstractToolbarActivity activity, ArrayList<Reminder> reminders) {
+    public ReminderListAdapter(ListActivity activity, ArrayList<Reminder> reminders) {
         this.reminders = reminders;
         this.activity = activity;
     }
@@ -64,6 +66,15 @@ public class ReminderListAdapter extends RecyclerSwipeAdapter<ReminderListAdapte
         }));
         holder.mBtnDelete.setOnClickListener((v -> {
             Log.d("myapp", "delete clicked : " + reminders.get(position).getId());
+            Intent intent = new Intent(activity, ReminderDeleteService.class);
+            intent.putExtra(ExtrasCodes.REMINDER_ID_KEY, reminders.get(position).getId());
+            activity.startService(intent);
+
+            activity.setWaiting(true);
+            IntentFilter filter = new IntentFilter(CustomReceiver.WAITING_ACTION);
+            filter.addCategory(Intent.CATEGORY_DEFAULT);
+            CustomReceiver receiver = activity.getReceiver();
+            LocalBroadcastManager.getInstance(activity).registerReceiver(receiver, filter);
         }));
     }
 

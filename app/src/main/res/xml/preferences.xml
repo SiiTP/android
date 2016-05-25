@@ -8,6 +8,10 @@
         android:entryValues="@array/lang_array"
         android:defaultValue="WTF?"
         />
+
+    <CheckBoxPreference
+        />
+
     <PreferenceCategory
         android:title="Network"
         android:key="pref_network">

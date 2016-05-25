@@ -37,6 +37,7 @@ import com.dbtest.ivan.app.model.loader.CategoryLoader;
 import com.dbtest.ivan.app.model.loader.ReminderLoader;
 import com.dbtest.ivan.app.receiver.CustomReceiver;
 import com.dbtest.ivan.app.services.intent.CategoryDeleteService;
+import com.dbtest.ivan.app.services.intent.ReminderDeleteService;
 import com.dbtest.ivan.app.utils.ExtrasCodes;
 import com.dbtest.ivan.app.utils.WaitingManager;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
@@ -58,6 +59,10 @@ public class ListActivity extends AbstractToolbarActivity implements WaitingActi
     private TextSwitcher mCategoryName;
     private CustomReceiver mReceiver;
 
+    public CustomReceiver getReceiver() {
+        return mReceiver;
+    }
+
     @NonNull
     @Override
     protected Integer getBodyResId() {
@@ -73,6 +78,7 @@ public class ListActivity extends AbstractToolbarActivity implements WaitingActi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mReceiver = new CustomReceiver(this);
 
         mCategoryName = (TextSwitcher) findViewById(R.id.list_category_name);
         if (mCategoryName != null) {
@@ -110,13 +116,7 @@ public class ListActivity extends AbstractToolbarActivity implements WaitingActi
                             setWaiting(true);
                             IntentFilter filter = new IntentFilter(CustomReceiver.WAITING_ACTION);
                             filter.addCategory(Intent.CATEGORY_DEFAULT);
-                            mReceiver = new CustomReceiver(this);
                             LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver, filter);
-
-
-//                            Intent intent = new Intent(ListActivity.this, CategoryDeleteService.class);
-//                            intent.putExtra(ExtrasCodes.CATEGORY_NAME_KEY, getCheckedCategory());
-//                            startService(intent);
                         })
                         .setNegativeButton(getString(R.string.dialog_delete_category_btn_negative), (dialog1, which1) -> {
                         });
@@ -234,10 +234,18 @@ public class ListActivity extends AbstractToolbarActivity implements WaitingActi
 
     @Override
     public void notifyResult(String result) {
+        Log.d("myapp", "result : " + result);
+
         if (result.equals(CategoryDeleteService.SUCCESS_MSG)) {
             goToAllCategory();
             mCategoryLoader.forceLoad();
             Toast.makeText(this, "category was deleted", Toast.LENGTH_LONG).show();
+            LocalBroadcastManager.getInstance(this).unregisterReceiver(mReceiver);
+        }
+
+        if (result.equals(ReminderDeleteService.SUCCESS_MSG)) {
+            renderList();
+            Toast.makeText(this, "reminder was deleted", Toast.LENGTH_LONG).show();
             LocalBroadcastManager.getInstance(this).unregisterReceiver(mReceiver);
         }
     }
@@ -248,9 +256,9 @@ public class ListActivity extends AbstractToolbarActivity implements WaitingActi
     }
 
     private class RemindersCallbacks implements LoaderManager.LoaderCallbacks<ArrayList<Reminder>> {
-        private AbstractToolbarActivity activity;
+        private ListActivity activity;
 
-        public RemindersCallbacks(AbstractToolbarActivity activity) {
+        public RemindersCallbacks(ListActivity activity) {
             this.activity = activity;
         }
 
