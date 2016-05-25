@@ -127,6 +127,7 @@ public abstract class AbstractToolbarActivity extends AppCompatActivity {
                 data.add(0, allCategory);
             }
             mCategories = Category.toStringArray(data);
+            Log.i("myapp", "loaded categories : " + mCategories.length);
             afterCategoriesLoaded();
         }
 

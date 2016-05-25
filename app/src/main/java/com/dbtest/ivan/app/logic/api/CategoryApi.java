@@ -1,6 +1,7 @@
 package com.dbtest.ivan.app.logic.api;
 
 import com.dbtest.ivan.app.logic.db.entities.Category;
+import com.dbtest.ivan.app.model.RemoveCategoryResponse;
 
 import java.util.ArrayList;
 
@@ -26,5 +27,5 @@ public interface CategoryApi {
     Call<ArrayList<Category>> get();
 
     @DELETE("/category")
-    Call<Category> delete(@Query("categoryName") String categoryName);
+    Call<RemoveCategoryResponse> delete(@Query("categoryName") String categoryName);
 }

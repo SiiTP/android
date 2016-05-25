@@ -5,6 +5,15 @@
     android:layout_height="match_parent"
     tools:context=".activity.listActivity.ListActivity">
 
+    <ProgressBar
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/circ"
+        android:id="@+id/list_bar"
+        android:layout_marginTop="90dp"
+        android:elevation="5dp"
+        android:layout_centerHorizontal="true" />
     <RelativeLayout
         style="@style/HeaderLargeContainer"
         android:id="@+id/list_category_header"
