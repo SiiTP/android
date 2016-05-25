@@ -7,8 +7,8 @@ import com.dbtest.ivan.app.logic.RetrofitFactory;
 import com.dbtest.ivan.app.logic.api.CategoryApi;
 import com.dbtest.ivan.app.logic.api.ReminderApi;
 import com.dbtest.ivan.app.logic.db.OrmHelper;
-import com.dbtest.ivan.app.services.custom.full.CategoryFullSyncHelper;
-import com.dbtest.ivan.app.services.custom.full.ReminderFullSyncHelper;
+import com.dbtest.ivan.app.services.sync.full.CategoryFullSyncHelper;
+import com.dbtest.ivan.app.services.sync.full.ReminderFullSyncHelper;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 
 import retrofit2.Retrofit;
@@ -30,7 +30,7 @@ public class FullSyncService extends IntentService{
 
         OrmHelper ormHelper = OpenHelperManager.getHelper(this, OrmHelper.class);
 
-        ReminderFullSyncHelper reminderFullSyncHelper = new ReminderFullSyncHelper(ormHelper.getReminderDao(),reminderApi,ormHelper.getCategoryDao());
+        ReminderFullSyncHelper reminderFullSyncHelper = new ReminderFullSyncHelper(ormHelper.getReminderDao(),reminderApi,ormHelper.getCategoryDao(), this);
         CategoryFullSyncHelper categoryFullSyncHelper = new CategoryFullSyncHelper(ormHelper.getCategoryDao(),categoryApi);
 
         categoryFullSyncHelper.sync();

@@ -64,13 +64,5 @@
 
         <include layout="@layout/wait_progress_bar"/>
     </RelativeLayout>
-    <Button
-        style="@style/SignSubmit"
-        android:layout_marginTop="10dp"
-        android:text="SYNC ALL"
-        android:id="@+id/details_wtf"
-        android:layout_alignParentBottom="true"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true" />
 </RelativeLayout>
 

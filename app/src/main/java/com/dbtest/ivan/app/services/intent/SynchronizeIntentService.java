@@ -7,8 +7,8 @@ import com.dbtest.ivan.app.logic.RetrofitFactory;
 import com.dbtest.ivan.app.logic.api.CategoryApi;
 import com.dbtest.ivan.app.logic.api.ReminderApi;
 import com.dbtest.ivan.app.logic.db.OrmHelper;
-import com.dbtest.ivan.app.services.custom.CategorySyncService;
-import com.dbtest.ivan.app.services.custom.ReminderSyncService;
+import com.dbtest.ivan.app.services.sync.CategorySyncToServer;
+import com.dbtest.ivan.app.services.sync.ReminderSyncToServer;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 
 import java.io.IOException;
@@ -30,8 +30,8 @@ public class SynchronizeIntentService extends IntentService {
         if (intent != null) {
             helper = OpenHelperManager.getHelper(this, OrmHelper.class);
             Retrofit retrofit = RetrofitFactory.getInstance();
-            CategorySyncService categorySyncService = new CategorySyncService(helper.getCategoryDao(),retrofit.create(CategoryApi.class));
-            ReminderSyncService reminderSyncService = new ReminderSyncService(helper.getReminderDao(),retrofit.create(ReminderApi.class));
+            CategorySyncToServer categorySyncService = new CategorySyncToServer(helper.getCategoryDao(),retrofit.create(CategoryApi.class));
+            ReminderSyncToServer reminderSyncService = new ReminderSyncToServer(helper.getReminderDao(),retrofit.create(ReminderApi.class));
 
             try {
                 categorySyncService.syncAll();

@@ -14,7 +14,6 @@ import com.dbtest.ivan.app.fragment.CategoryDialog;
 import com.dbtest.ivan.app.logic.db.OrmHelper;
 import com.dbtest.ivan.app.logic.db.entities.Category;
 import com.dbtest.ivan.app.services.intent.CategoryIntentService;
-import com.dbtest.ivan.app.services.intent.FullSyncService;
 import com.dbtest.ivan.app.services.intent.ReminderIntentService;
 import com.dbtest.ivan.app.utils.WaitingManager;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
@@ -88,7 +87,7 @@ public class DetailReminderActivity extends ReminderActivity implements Category
             submit.setOnClickListener(v -> {
                 String text = this.reminderText.getText().toString();
                 String categoryName = (String) spinner.getSelectedItem();
-                if((reminderDate != null && categoryName != null) && !text.isEmpty()) {
+                if ((reminderDate != null && categoryName != null) && !text.isEmpty()) {
                     Long time = reminderDate.getTimeInMillis();
                     Bundle bundle = new Bundle();
                     bundle.putLong(ReminderIntentService.TIME, time);
@@ -101,26 +100,6 @@ public class DetailReminderActivity extends ReminderActivity implements Category
                     startWaitingReceiver();
                 }
             });
-
-            Button wtf = (Button) findViewById(R.id.details_wtf);
-            if (wtf != null) {
-                wtf.setOnClickListener(v -> {
-//                    Intent syncAll = new Intent(DetailReminderActivity.this, UpdateDetailReminderActivity.class);
-//                    syncAll.putExtra(FriendReminderActivity.MAIL,"m@m.m");
-//                    startActivity(syncAll);
-                    Intent syncAll = new Intent(DetailReminderActivity.this, FullSyncService.class);
-                    startService(syncAll);
-//                    Intent syncAll = new Intent(DetailReminderActivity.this, UpdateDetailReminderActivity.class);
-//                    Bundle bundle = new Bundle();
-//                    bundle.putLong(ReminderIntentService.TIME, new Date().getTime());
-//                    bundle.putString(ReminderIntentService.TEXT, "fasfasfasfqweqrwq");
-//                    bundle.putString(ReminderIntentService.CATEGORY, "aaa");
-//                    bundle.putLong(ReminderIntentService.ID, 2L);
-//                    syncAll.putExtras(bundle);
-//                    startActivity(syncAll);
-                });
-            }
-
         }
     }
 
