@@ -4,23 +4,34 @@
     android:layout_height="match_parent">
 
     <include
-        android:id="@+id/find_friend"
-        layout="@layout/find_friend"
+        android:id="@+id/friends_activity_find_friend_view"
+        layout="@layout/friends_activity_find_friend_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"/>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/find_friend"/>
-
-    <Button
-        android:id="@+id/test"
-        android:layout_below="@+id/recycler_view"
+    <ProgressBar
+        style="?android:attr/progressBarStyleLarge"
+        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="test"/>
+        android:background="@drawable/circ"
+        android:id="@+id/friends_bar"
+        android:layout_marginTop="90dp"
+        android:elevation="5dp"
+        android:layout_centerHorizontal="true" />
+    
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/friends_swipe_refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/friends_activity_find_friend_view">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
     
 </RelativeLayout>
