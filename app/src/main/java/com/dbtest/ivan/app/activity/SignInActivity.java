@@ -46,7 +46,6 @@ public class SignInActivity extends AbstractToolbarActivity implements WaitingAc
         return MENU_POSITION;
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,8 +92,6 @@ public class SignInActivity extends AbstractToolbarActivity implements WaitingAc
 
             });
         }
-
-
     }
 
     @Override

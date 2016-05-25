@@ -2,6 +2,8 @@ package com.dbtest.ivan.app.activity.abstractToolbarActivity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 
@@ -87,13 +89,15 @@ public class DrawerMenuManager {
     }
 
     private static AccountHeader getAccountHeaderLogged(Activity activity) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+
         AccountHeaderBuilder accountHeaderBuilder = new AccountHeaderBuilder()
                 .withActivity(activity)
                 .withHeaderBackground(R.drawable.menu_header)
                 .withSelectionListEnabled(false)
                 .withTextColor(ContextCompat.getColor(activity, R.color.material_drawer_primary_text))
                 .addProfiles(
-                        new ProfileDrawerItem().withName("IvanS").withEmail("dev.ivansem@gmail.com")
+                        new ProfileDrawerItem().withName(preferences.getString("name", "IvanS")).withEmail("dev: " + preferences.getString("email", "ivan.bmstu.ru"))
                 );
         return accountHeaderBuilder.build();
     }
