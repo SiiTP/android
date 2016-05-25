@@ -244,12 +244,12 @@ public class ListActivity extends AbstractToolbarActivity {
         @Override
         public void onLoadFinished(Loader<ArrayList<Category>> loader, ArrayList<Category> data) {
             Log.d("myapp", "soon loader finished callback");
+            super.onLoadFinished(loader, data);
             int index = getCategoryIndexByName(currentCategory);
             mMenuLastPosition = index + MENU_FIRST_CATEGORY_POSITION;
 
 //            Log.d("myapp", "index : " + index);
 //            Log.d("myapp", "current category menu last position : " + mMenuLastPosition);
-            super.onLoadFinished(loader, data);
             renderList();
         }
 
