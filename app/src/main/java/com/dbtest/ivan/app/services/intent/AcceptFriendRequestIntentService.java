@@ -1,7 +1,6 @@
 package com.dbtest.ivan.app.services.intent;
 
 import android.app.IntentService;
-import android.app.NotificationManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;

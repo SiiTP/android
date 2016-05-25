@@ -1,4 +1,4 @@
-package com.dbtest.ivan.app.services.custom;
+package com.dbtest.ivan.app.services.sync;
 
 import com.j256.ormlite.dao.Dao;
 
@@ -9,10 +9,10 @@ import java.util.List;
 /**
  * Created by ivan on 06.04.16.
  */
-public abstract class AbstractSyncService<T> implements  SyncDataService<T> {
+public abstract class AbstractSyncToServer<T> implements  SyncDataService<T> {
     protected Dao<T,Long> dao;
     private boolean isSynced = true;
-    public AbstractSyncService(Dao<T, Long> dao) {
+    public AbstractSyncToServer(Dao<T, Long> dao) {
         this.dao = dao;
     }
 

@@ -1,4 +1,4 @@
-package com.dbtest.ivan.app.services.custom.full;
+package com.dbtest.ivan.app.services.sync.full;
 
 import com.dbtest.ivan.app.logic.api.CategoryApi;
 import com.dbtest.ivan.app.logic.db.entities.Category;
@@ -13,7 +13,7 @@ import retrofit2.Call;
 /**
  * Created by ivan on 20.04.16.
  */
-public class CategoryFullSyncHelper extends FullSyncHelper<Category> {
+public class CategoryFullSyncHelper extends AbstractSyncFromServer<Category> {
     private CategoryApi api;
 
     public CategoryFullSyncHelper(Dao<Category, Long> dao,CategoryApi api) {

@@ -46,7 +46,6 @@ public class SignInActivity extends AbstractToolbarActivity implements WaitingAc
         return MENU_POSITION;
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,11 +92,6 @@ public class SignInActivity extends AbstractToolbarActivity implements WaitingAc
 
             });
         }
-        Button gcm = (Button) findViewById(R.id.gcm_test);
-        gcm.setOnClickListener(v -> {
-            Intent i = new Intent(SignInActivity.this,GCM.class);
-            startActivity(i);
-        });
     }
 
     @Override

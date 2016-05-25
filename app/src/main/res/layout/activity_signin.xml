@@ -22,12 +22,5 @@
             android:elevation="5dp"
             android:layout_centerHorizontal="true" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="GCM"
-            android:id="@+id/gcm_test"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true" />
     </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>
