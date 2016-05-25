@@ -70,7 +70,7 @@ public abstract class AbstractToolbarActivity extends AppCompatActivity {
 
         allCategory = new Category(Category.CATEGORY_ALL_NAME);
         Log.d("myapp", "forceload when create");
-        mCategoryLoader.forceLoad(); // загружем категории из базы
+        mCategoryLoader.forceLoad();
     }
 
     @Override

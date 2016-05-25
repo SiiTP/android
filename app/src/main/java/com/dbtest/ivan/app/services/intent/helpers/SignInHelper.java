@@ -38,11 +38,14 @@ public class SignInHelper {
             Log.d("myapp " + SignInHelper.class.toString(), userResponse.body().getId() != null ? userResponse.body().getId().toString() : "WTF?");
             String session;
             if (userResponse.body().getId() != ERROR_WRONG_USER_OR_PASS) {
+                User responseUserBody = userResponse.body();
                 List<String> cookies = userResponse.headers().toMultimap().get("Set-Cookie");
                 session = CookieExtractor.getCookie(cookies.get(0), RetrofitFactory.SESSION_COOKIE_NAME);
                 RetrofitFactory.setSession(session);
                 SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
                 preferences.edit().putString(RetrofitFactory.SESSION_COOKIE_NAME, session).commit();
+                preferences.edit().putString("email", responseUserBody.getEmail()).commit();
+                preferences.edit().putString("name", responseUserBody.getUsername()).commit();
                 Log.d("myapp " + SignInHelper.class.toString(), session);
                 DrawerMenuManager.setIsLogged(true);
                 isSuccess = true;
