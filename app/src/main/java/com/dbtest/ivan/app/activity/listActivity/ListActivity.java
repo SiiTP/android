@@ -21,6 +21,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.TextSwitcher;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,6 +55,8 @@ public class ListActivity extends AbstractToolbarActivity implements WaitingActi
     private CategoryLoader mCategoryNotificationLoader;
     private ImageButton mButtonDelete;
     private ProgressBar mBar;
+    private TextSwitcher mCategoryName;
+    private CustomReceiver mReceiver;
 
     @NonNull
     @Override
@@ -71,8 +74,20 @@ public class ListActivity extends AbstractToolbarActivity implements WaitingActi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        mCategoryName = (TextSwitcher) findViewById(R.id.list_category_name);
+        if (mCategoryName != null) {
+            mCategoryName.setInAnimation(this, R.anim.popup_enter);
+            mCategoryName.setOutAnimation(this, R.anim.popup_exit);
+            TextView categoryNameTextView = (TextView) getLayoutInflater().inflate(R.layout.list_category_name, null);
+            TextView categoryNameTextView2 = (TextView) getLayoutInflater().inflate(R.layout.list_category_name, null);
+            mCategoryName.addView(categoryNameTextView);
+            mCategoryName.addView(categoryNameTextView2);
+        }
+
         mBar = (ProgressBar) findViewById(R.id.list_bar);
-        mBar.setVisibility(View.INVISIBLE);
+        if (mBar != null) {
+            mBar.setVisibility(View.INVISIBLE);
+        }
 
         mButtonAdd = (FloatingActionButton) findViewById(R.id.list_add_reminder);
         if (mButtonAdd != null) {
@@ -95,8 +110,8 @@ public class ListActivity extends AbstractToolbarActivity implements WaitingActi
                             setWaiting(true);
                             IntentFilter filter = new IntentFilter(CustomReceiver.WAITING_ACTION);
                             filter.addCategory(Intent.CATEGORY_DEFAULT);
-                            CustomReceiver receiver = new CustomReceiver(this);
-                            LocalBroadcastManager.getInstance(this).registerReceiver(receiver, filter);
+                            mReceiver = new CustomReceiver(this);
+                            LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver, filter);
 
 
 //                            Intent intent = new Intent(ListActivity.this, CategoryDeleteService.class);
@@ -189,8 +204,9 @@ public class ListActivity extends AbstractToolbarActivity implements WaitingActi
         } else {
             mButtonDelete.setVisibility(View.VISIBLE);
         }
-        TextView mCategoryName = (TextView) findViewById(R.id.list_category_name);
+
         if (mCategoryName != null) {
+            System.out.println("!");
             mCategoryName.setText(checkedCategory);
         }
         mReminderLoader.setCategoryLoaded(checkedCategory);
@@ -213,7 +229,6 @@ public class ListActivity extends AbstractToolbarActivity implements WaitingActi
 
     @Override
     public void setWaiting(boolean isWaiting) {
-        Log.i("myapp", "in set waiting : " + isWaiting);
         WaitingManager.makeWaitingProgressBar(this, mBar, isWaiting);
     }
 
@@ -223,6 +238,7 @@ public class ListActivity extends AbstractToolbarActivity implements WaitingActi
             goToAllCategory();
             mCategoryLoader.forceLoad();
             Toast.makeText(this, "category was deleted", Toast.LENGTH_LONG).show();
+            LocalBroadcastManager.getInstance(this).unregisterReceiver(mReceiver);
         }
     }
 

@@ -23,9 +23,6 @@ import java.sql.SQLException;
 
 import retrofit2.Call;
 
-/**
- * Created by Ivan on 22.05.2016.
- */
 public class CategoryDeleteService extends IntentService {
 
     public static final String SUCCESS_MSG = "successful deleting category";
