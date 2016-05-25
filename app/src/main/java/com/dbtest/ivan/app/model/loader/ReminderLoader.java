@@ -6,6 +6,7 @@ import android.content.Context;
 import com.dbtest.ivan.app.logic.db.OrmHelper;
 import com.dbtest.ivan.app.logic.db.entities.Category;
 import com.dbtest.ivan.app.logic.db.entities.Reminder;
+import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.Where;
@@ -16,18 +17,19 @@ import java.util.List;
 
 public class ReminderLoader extends AsyncTaskLoader<ArrayList<Reminder>> {
 
-    private OrmHelper ormHelper;
+    private Context context;
 
     private String categoryLoaded;
 
     public ReminderLoader(Context context) {
         super(context);
-        ormHelper = new OrmHelper(context);
+        this.context = context;
         categoryLoaded = Category.CATEGORY_ALL_NAME;
     }
 
     @Override
     public ArrayList<Reminder> loadInBackground() {
+        OrmHelper ormHelper = new OrmHelper(context);
         Dao<Reminder, Long> reminderDao = ormHelper.getReminderDao();
         Dao<Category, Long> categoryDao = ormHelper.getCategoryDao();
 
@@ -46,6 +48,8 @@ public class ReminderLoader extends AsyncTaskLoader<ArrayList<Reminder>> {
             reminders = queryBuilder.query();
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            OpenHelperManager.releaseHelper();
         }
         return (ArrayList<Reminder>)reminders;
     }

@@ -8,19 +8,24 @@ package com.dbtest.ivan.app.activity.listActivity;
 
 import android.app.LoaderManager;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.Loader;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dbtest.ivan.app.R;
+import com.dbtest.ivan.app.activity.WaitingActivity;
 import com.dbtest.ivan.app.activity.abstractToolbarActivity.AbstractToolbarActivity;
 import com.dbtest.ivan.app.activity.reminder.DetailReminderActivity;
 import com.dbtest.ivan.app.logic.adapter.ReminderListAdapter;
@@ -29,13 +34,15 @@ import com.dbtest.ivan.app.logic.db.entities.Reminder;
 import com.dbtest.ivan.app.logic.divider.DividerItemDecoration;
 import com.dbtest.ivan.app.model.loader.CategoryLoader;
 import com.dbtest.ivan.app.model.loader.ReminderLoader;
+import com.dbtest.ivan.app.receiver.CustomReceiver;
 import com.dbtest.ivan.app.services.intent.CategoryDeleteService;
 import com.dbtest.ivan.app.utils.ExtrasCodes;
+import com.dbtest.ivan.app.utils.WaitingManager;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 
 import java.util.ArrayList;
 
-public class ListActivity extends AbstractToolbarActivity {
+public class ListActivity extends AbstractToolbarActivity implements WaitingActivity {
     private static final String CURRENT_POSITION_KEY = "currentPosition";
     private static final String CURRENT_CATEGORIES = "currentCategories";
     public static final String CURRENT_CATEGORY = "currentCategory";
@@ -46,6 +53,7 @@ public class ListActivity extends AbstractToolbarActivity {
     private FloatingActionButton mButtonAdd;
     private CategoryLoader mCategoryNotificationLoader;
     private ImageButton mButtonDelete;
+    private ProgressBar mBar;
 
     @NonNull
     @Override
@@ -63,6 +71,9 @@ public class ListActivity extends AbstractToolbarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        mBar = (ProgressBar) findViewById(R.id.list_bar);
+        mBar.setVisibility(View.INVISIBLE);
+
         mButtonAdd = (FloatingActionButton) findViewById(R.id.list_add_reminder);
         if (mButtonAdd != null) {
             mButtonAdd.setOnClickListener(v -> {
@@ -78,9 +89,19 @@ public class ListActivity extends AbstractToolbarActivity {
                 builder.setTitle(getString(R.string.dialog_delete_category_title))
                         .setMessage(getString(R.string.dialog_delete_category_message))
                         .setPositiveButton(getString(R.string.dialog_delete_category_btn_positive), (dialog, which) -> {
-                            Intent intent = new Intent(ListActivity.this, CategoryDeleteService.class);
+                            Intent intent = new Intent(this, CategoryDeleteService.class);
                             intent.putExtra(ExtrasCodes.CATEGORY_NAME_KEY, getCheckedCategory());
                             startService(intent);
+                            setWaiting(true);
+                            IntentFilter filter = new IntentFilter(CustomReceiver.WAITING_ACTION);
+                            filter.addCategory(Intent.CATEGORY_DEFAULT);
+                            CustomReceiver receiver = new CustomReceiver(this);
+                            LocalBroadcastManager.getInstance(this).registerReceiver(receiver, filter);
+
+
+//                            Intent intent = new Intent(ListActivity.this, CategoryDeleteService.class);
+//                            intent.putExtra(ExtrasCodes.CATEGORY_NAME_KEY, getCheckedCategory());
+//                            startService(intent);
                         })
                         .setNegativeButton(getString(R.string.dialog_delete_category_btn_negative), (dialog1, which1) -> {
                         });
@@ -168,9 +189,9 @@ public class ListActivity extends AbstractToolbarActivity {
         } else {
             mButtonDelete.setVisibility(View.VISIBLE);
         }
-        TextView textView = (TextView) findViewById(R.id.list_category_name);
-        if (textView != null) {
-            textView.setText(checkedCategory);
+        TextView mCategoryName = (TextView) findViewById(R.id.list_category_name);
+        if (mCategoryName != null) {
+            mCategoryName.setText(checkedCategory);
         }
         mReminderLoader.setCategoryLoaded(checkedCategory);
         mReminderLoader.forceLoad();
@@ -188,6 +209,26 @@ public class ListActivity extends AbstractToolbarActivity {
         mRemindersRecyclerView.setLayoutManager(layoutManager);
         mRemindersRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         mRemindersRecyclerView.addOnScrollListener(new OnScrolledListenerReminders(mButtonAdd));
+    }
+
+    @Override
+    public void setWaiting(boolean isWaiting) {
+        Log.i("myapp", "in set waiting : " + isWaiting);
+        WaitingManager.makeWaitingProgressBar(this, mBar, isWaiting);
+    }
+
+    @Override
+    public void notifyResult(String result) {
+        if (result.equals(CategoryDeleteService.SUCCESS_MSG)) {
+            goToAllCategory();
+            mCategoryLoader.forceLoad();
+            Toast.makeText(this, "category was deleted", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void goToAllCategory() {
+        mMenuLastPosition = MENU_FIRST_CATEGORY_POSITION;
+        renderList();
     }
 
     private class RemindersCallbacks implements LoaderManager.LoaderCallbacks<ArrayList<Reminder>> {
@@ -244,12 +285,12 @@ public class ListActivity extends AbstractToolbarActivity {
         @Override
         public void onLoadFinished(Loader<ArrayList<Category>> loader, ArrayList<Category> data) {
             Log.d("myapp", "soon loader finished callback");
+            super.onLoadFinished(loader, data);
             int index = getCategoryIndexByName(currentCategory);
             mMenuLastPosition = index + MENU_FIRST_CATEGORY_POSITION;
 
 //            Log.d("myapp", "index : " + index);
 //            Log.d("myapp", "current category menu last position : " + mMenuLastPosition);
-            super.onLoadFinished(loader, data);
             renderList();
         }
 

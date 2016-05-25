@@ -1,7 +1,7 @@
-package com.dbtest.ivan.app.services.custom;
+package com.dbtest.ivan.app.services.sync;
 
-import com.dbtest.ivan.app.logic.api.ReminderApi;
-import com.dbtest.ivan.app.logic.db.entities.Reminder;
+import com.dbtest.ivan.app.logic.api.CategoryApi;
+import com.dbtest.ivan.app.logic.db.entities.Category;
 import com.j256.ormlite.dao.Dao;
 
 import java.io.IOException;
@@ -13,22 +13,20 @@ import retrofit2.Response;
 /**
  * Created by ivan on 06.04.16.
  */
-public class ReminderSyncService extends AbstractSyncService<Reminder> {
-    private ReminderApi api;
-    public ReminderSyncService(Dao<Reminder,Long> categoryDao,ReminderApi api) {
+public class CategorySyncToServer extends AbstractSyncToServer<Category> {
+    private CategoryApi api;
+    public CategorySyncToServer(Dao<Category,Long> categoryDao, CategoryApi api) {
         super(categoryDao);
         this.api = api;
     }
 
     @Override
-    public boolean sync(Reminder item) throws IOException, SQLException {
-        if(item.getCategory() != null & !item.getCategory().getIsSynced()){
-            return false;
-        }
-        Call<Reminder> request;
+    public boolean sync(Category item) throws IOException, SQLException {
+        Call<Category> request;
 
         request = api.create(item);
-        Response<Reminder> response = request.execute();
+
+        Response<Category> response = request.execute();
         boolean result = false;
         long serverId = 0;
         if (response.body() != null && response.body().getServerId() != null) {
@@ -42,13 +40,13 @@ public class ReminderSyncService extends AbstractSyncService<Reminder> {
             }else {
                 result = true;
             }
+
         }
-        if(result) {
-            item.setServerId(serverId);
+        if(result){
             item.setIsSynced(true);
+            item.setServerId(serverId);
             dao.update(item);
         }
-
         return result;
     }
 }

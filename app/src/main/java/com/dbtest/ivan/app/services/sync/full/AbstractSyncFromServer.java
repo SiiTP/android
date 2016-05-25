@@ -1,4 +1,4 @@
-package com.dbtest.ivan.app.services.custom.full;
+package com.dbtest.ivan.app.services.sync.full;
 
 import com.j256.ormlite.dao.Dao;
 
@@ -12,10 +12,10 @@ import retrofit2.Response;
 /**
  * Created by ivan on 20.04.16.
  */
-public abstract class FullSyncHelper<T> {
+public abstract class AbstractSyncFromServer<T> {
     protected Dao<T,Long> dao;
 
-    public FullSyncHelper(Dao<T, Long> dao) {
+    public AbstractSyncFromServer(Dao<T, Long> dao) {
         this.dao = dao;
     }
 

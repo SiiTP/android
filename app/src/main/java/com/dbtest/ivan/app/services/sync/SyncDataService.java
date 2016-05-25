@@ -1,4 +1,4 @@
-package com.dbtest.ivan.app.services.custom;
+package com.dbtest.ivan.app.services.sync;
 
 import java.io.IOException;
 import java.sql.SQLException;
