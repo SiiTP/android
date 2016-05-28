@@ -9,6 +9,7 @@ import com.dbtest.ivan.app.logic.db.OrmHelper;
 import com.dbtest.ivan.app.logic.db.entities.Reminder;
 import com.dbtest.ivan.app.receiver.CustomReceiver;
 import com.dbtest.ivan.app.utils.ExtrasCodes;
+import com.dbtest.ivan.app.utils.ReminderAlarmManager;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
 
@@ -28,6 +29,7 @@ public class ReminderDeleteService extends IntentService {
             OrmHelper ormHelper = new OrmHelper(this);
             Dao<Reminder, Long> reminderDao = ormHelper.getReminderDao();
             Reminder reminder = reminderDao.queryForId(reminderId);
+            ReminderAlarmManager.clearAlarm(this,reminderId.intValue());
             int rowsDeleted = reminderDao.delete(reminder);
             Log.i("myapp" + this.getClass().getSimpleName(), "rows reminder deleted : " + rowsDeleted);
             OpenHelperManager.releaseHelper();

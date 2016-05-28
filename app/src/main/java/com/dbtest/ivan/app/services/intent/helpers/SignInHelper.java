@@ -24,14 +24,17 @@ public class SignInHelper {
     public static final long ERROR_WRONG_USER_OR_PASS = -1L;
     private boolean isSuccess = false;
     private Context context;
+    private AuthApi authApi;
+    private SharedPreferences preferences;
 
     public SignInHelper(Context context) {
         this.context = context;
+        authApi = RetrofitFactory.getInstance().create(AuthApi.class);
     }
 
     public void login(User user){
-        AuthApi authApi = RetrofitFactory.getInstance().create(AuthApi.class);
         Call<User> callUser = authApi.login(user);
+        isSuccess = false;
         try {
             Response<User> userResponse = callUser.execute();
             Log.d("myapp " + SignInHelper.class.toString(), userResponse.headers().toMultimap().toString());
@@ -42,19 +45,33 @@ public class SignInHelper {
                 List<String> cookies = userResponse.headers().toMultimap().get("Set-Cookie");
                 session = CookieExtractor.getCookie(cookies.get(0), RetrofitFactory.SESSION_COOKIE_NAME);
                 RetrofitFactory.setSession(session);
-                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+                preferences = PreferenceManager.getDefaultSharedPreferences(context);
                 preferences.edit().putString(RetrofitFactory.SESSION_COOKIE_NAME, session).commit();
-                preferences.edit().putString("email", responseUserBody.getEmail()).commit();
-                preferences.edit().putString("name", responseUserBody.getUsername()).commit();
-                Log.d("myapp " + SignInHelper.class.toString(), session);
-                DrawerMenuManager.setIsLogged(true);
+                setLoginEmailName(responseUserBody.getEmail(), responseUserBody.getUsername());
+                Log.d("myapp " + SignInHelper.class.getSimpleName(), session);
                 isSuccess = true;
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+        DrawerMenuManager.setIsLogged(isSuccess);
+    }
+    public void setLoginEmailName(String email, String name){
+        preferences.edit().putString("email", email).commit();
+        preferences.edit().putString("name", name).commit();
     }
     public boolean isLogged() {
         return  isSuccess;
+    }
+    public boolean isSessionExpired(){
+        Call<User> info = authApi.getUserInfo();
+        boolean isExpired = true;
+        try {
+            Response<User> responseInfo = info.execute();
+            isExpired = responseInfo.body().getId() == null;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return isExpired;
     }
 }

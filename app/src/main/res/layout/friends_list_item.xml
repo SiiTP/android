@@ -46,12 +46,11 @@
 
         <ImageButton
             android:id="@+id/friend_list_item_add_reminder_to_friend"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/MyImageButton"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:background="@android:color/transparent"
-            android:src="@drawable/ic_alarm_add"
+            android:src="@drawable/ic_alarm_add_black_48dp"
             android:text="Delete" />
 
     </RelativeLayout>

@@ -3,22 +3,21 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="5dp"
-    android:paddingRight="5dp">
+    android:padding="@dimen/mrg_medium">
 
+    <ImageButton
+        android:id="@+id/add_friend"
+        style="@style/MyImageButton"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/ic_person_add_black_48dp"
+        android:layout_centerVertical="true"/>
     <EditText
         android:id="@+id/friend_email"
         android:hint="Add friend with email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/add_friend"
         android:inputType="textEmailAddress"/>
 
-    <ImageButton
-        android:id="@+id/add_friend"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:src="@drawable/ic_person_add"
-        android:layout_centerVertical="true"/>
 
 </RelativeLayout>

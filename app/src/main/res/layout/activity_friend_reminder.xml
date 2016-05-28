@@ -8,44 +8,51 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".activity.reminder.ReminderActivity">
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/friend_reminder_email"
-        android:text="friend email here..."
-        android:paddingBottom="20dp"/>
-    <include layout="@layout/reminder_pick_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/friend_reminder_pick_date"
-        android:layout_below="@id/friend_reminder_email"/>
-    <android.support.design.widget.TextInputLayout
-        style="@style/SupportInput"
-        android:id="@+id/details_text_supp"
-        android:layout_below="@id/friend_reminder_pick_date"
-        android:layout_width="@dimen/details_text_width"
-        android:paddingTop="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="15dp"
-        android:paddingBottom="10dp">
-        <EditText
-            style="@style/TextInput"
+        android:id="@+id/friend_form"
+        android:gravity="center_horizontal">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/friend_reminder_email"
+            android:text="friend email here..."
+            android:paddingBottom="20dp"
+            android:layout_alignRight="@+id/friend_reminder_pick_date"
+            android:layout_alignEnd="@+id/friend_reminder_pick_date" />
+        <include layout="@layout/reminder_pick_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/friend_reminder_pick_date"
+            android:layout_below="@id/friend_reminder_email"/>
+        <android.support.design.widget.TextInputLayout
+            style="@style/SupportInput"
+            android:id="@+id/details_text_supp"
+            android:layout_below="@id/friend_reminder_pick_date"
+            android:layout_width="@dimen/details_text_width"
+            android:paddingTop="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="15dp"
+            android:paddingBottom="10dp">
+            <EditText
+                style="@style/TextInput"
 
-            android:id="@+id/details_text"
-            android:hint="@string/details_text"
-            android:lines="7"
-            android:minLines="1"
-            android:inputType="textMultiLine"
-            android:maxLength="1024"/>
-    </android.support.design.widget.TextInputLayout>
+                android:id="@+id/details_text"
+                android:hint="@string/details_text"
+                android:lines="7"
+                android:minLines="1"
+                android:inputType="textMultiLine"
+                android:maxLength="1024"/>
+        </android.support.design.widget.TextInputLayout>
+    </RelativeLayout>
     <Button
         style="@style/SignSubmit"
         android:layout_marginTop="10dp"
         android:text="@string/friend_reminder_send"
         android:id="@+id/friend_reminder_send_button"
-        android:layout_below="@+id/details_text_supp"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true" />
+        android:layout_below="@+id/friend_form"
+        android:layout_height="wrap_content"/>
 
     <include layout="@layout/wait_progress_bar"/>
 </RelativeLayout>

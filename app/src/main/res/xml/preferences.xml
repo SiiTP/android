@@ -1,16 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <ListPreference
-        android:title="Language"
-        android:dialogTitle="Select your language"
-        android:key="pref_lang"
-        android:entries="@array/lang_array"
-        android:entryValues="@array/lang_array"
-        android:defaultValue="WTF?"
-        />
-
-    <CheckBoxPreference
-        />
 
     <PreferenceCategory
         android:title="Network"
@@ -22,17 +11,14 @@
             android:inputType="text"
             android:defaultValue="wtf!"
             />
-        <!--<EditTextPreference-->
-            <!--android:title="Server ip"-->
-            <!--android:key="pref_server_ip"-->
-            <!-- -->
-            <!--android:inputType="textUri"-->
-            <!--android:defaultValue="http://10.0.3.2/"/>-->
         <com.dbtest.ivan.app.fragment.ServerAddressDialog
             android:key="pref_server_ip"
             android:title="Server address"
             
             />
-    </PreferenceCategory>
 
+    </PreferenceCategory>
+    <Preference android:title="Logout"
+        android:key="@string/log_out_pref"
+        android:summary="press to logout"/>
 </PreferenceScreen>

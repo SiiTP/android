@@ -44,7 +44,6 @@ public class FriendListAdapter extends RecyclerSwipeAdapter<FriendListAdapter.Vi
         holder.swipeLayout.setShowMode(SwipeLayout.ShowMode.PullOut);
         holder.name.setText(friendList.get(position).getName());
         holder.deleteBtn.setOnClickListener((v) -> {
-            Toast.makeText(activity, "Click delete friend", Toast.LENGTH_SHORT).show();
             mItemManger.closeAllItems();
             activity.showDeleteFriendDialog(new ChooseCallback(position, holder));
         });
