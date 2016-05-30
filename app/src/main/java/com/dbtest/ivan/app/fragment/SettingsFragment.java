@@ -6,6 +6,7 @@ import android.preference.Preference;
 import android.preference.PreferenceFragment;
 
 import com.dbtest.ivan.app.R;
+import com.dbtest.ivan.app.services.intent.FullSyncService;
 import com.dbtest.ivan.app.services.intent.LogOutIntentService;
 
 /**
@@ -21,6 +22,15 @@ public class SettingsFragment extends PreferenceFragment {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 Intent i = new Intent(getActivity(), LogOutIntentService.class);
+                getActivity().startService(i);
+                return false;
+            }
+        });
+        Preference sync = findPreference(getString(R.string.pref_sync));
+        sync.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                Intent i = new Intent(getActivity(), FullSyncService.class);
                 getActivity().startService(i);
                 return false;
             }

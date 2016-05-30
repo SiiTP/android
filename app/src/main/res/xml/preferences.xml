@@ -21,4 +21,7 @@
     <Preference android:title="Logout"
         android:key="@string/log_out_pref"
         android:summary="press to logout"/>
+    <Preference android:title="Sync from server"
+        android:key="@string/pref_sync"
+        android:summary="Sync data from server"/>
 </PreferenceScreen>
