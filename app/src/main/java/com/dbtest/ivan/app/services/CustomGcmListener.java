@@ -33,6 +33,7 @@ public class CustomGcmListener extends GcmListenerService {
                 NotificationHelper.sendReminderNotification(context, msg);
                 Intent syncAll = new Intent(context, FullSyncService.class);
                 startService(syncAll);
+                break;
         }
     }
 }

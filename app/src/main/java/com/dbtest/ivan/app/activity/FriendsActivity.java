@@ -2,7 +2,9 @@ package com.dbtest.ivan.app.activity;
 
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -11,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.dbtest.ivan.app.R;
@@ -78,12 +81,17 @@ public class FriendsActivity extends AbstractToolbarActivity {
                 String email = emailView.getText().toString();
 
                 if (!email.isEmpty()) {
-                    Bundle bundle = new Bundle();
-                    Intent intent = new Intent(FriendsActivity.this, InviteFriendService.class);
+                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+                    if (email.equals(preferences.getString("email", "ivan.bmstu.ru"))) {
+                        Toast.makeText(FriendsActivity.this, "Your can't add self", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Bundle bundle = new Bundle();
+                        Intent intent = new Intent(FriendsActivity.this, InviteFriendService.class);
 
-                    bundle.putString("email", email);
-                    intent.putExtras(bundle);
-                    startService(intent);
+                        bundle.putString("email", email);
+                        intent.putExtras(bundle);
+                        startService(intent);
+                    }
                 }
             });
         }
