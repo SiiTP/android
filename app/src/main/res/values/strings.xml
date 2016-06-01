@@ -41,4 +41,6 @@
     <string name="dialog_delete_category_btn_negative">Cancel</string>
     <string name="reminder_swipe_item_delete_button">reminder swipe item delete button</string>
     <string name="reminder_swipe_item_edit_button">reminder swipe item edit button</string>
+    <string name="log_out_pref">log_out_pref</string>
+    <string name="pref_sync">sync</string>
 </resources>

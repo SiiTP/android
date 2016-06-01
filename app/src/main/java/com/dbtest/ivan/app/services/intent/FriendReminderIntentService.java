@@ -46,7 +46,7 @@ public class FriendReminderIntentService extends IntentService {
                 e.printStackTrace();
             }
             Bundle answer = new Bundle();
-            answer.putString(CustomReceiver.RESULT,"Result!");
+            answer.putString(CustomReceiver.RESULT,"Reminder sent");
             Intent activityNotify = new Intent(CustomReceiver.WAITING_ACTION);
             activityNotify.addCategory(Intent.CATEGORY_DEFAULT);
             activityNotify.putExtras(answer);

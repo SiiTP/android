@@ -17,6 +17,7 @@ import com.dbtest.ivan.app.logic.db.entities.Category;
 import com.dbtest.ivan.app.logic.db.entities.Reminder;
 import com.dbtest.ivan.app.receiver.AlarmReceiver;
 import com.dbtest.ivan.app.receiver.CustomReceiver;
+import com.dbtest.ivan.app.services.intent.SessionCheckIntentService;
 import com.dbtest.ivan.app.utils.ReminderAlarmManager;
 import com.j256.ormlite.dao.Dao;
 
@@ -37,6 +38,8 @@ public class StartActivity extends Activity {
         if(uri != null) {
             RetrofitFactory.setServerURI(uri);
         }
+        Intent sessionCheck = new Intent(this, SessionCheckIntentService.class);
+        startService(sessionCheck);
 
         mOrmHelper = new OrmHelper(this);
         Dao<Category, Long> categoryDao = mOrmHelper.getCategoryDao();

@@ -3,6 +3,7 @@ package com.dbtest.ivan.app.services.sync.full;
 import com.dbtest.ivan.app.logic.api.CategoryApi;
 import com.dbtest.ivan.app.logic.db.entities.Category;
 import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.stmt.PreparedQuery;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -28,10 +29,23 @@ public class CategoryFullSyncHelper extends AbstractSyncFromServer<Category> {
 
     @Override
     protected void syncOne(Category item) throws SQLException {
-        List<Category> temp = dao.queryForEq("serverId", item.getServerId());
-        if(temp.size() == 0){
-            item.setIsSynced(true);
-            dao.create(item);
+        List<Category> temp = null;
+//            temp = dao.queryForEq("serverId", item.getServerId());
+            PreparedQuery<Category> preparedQuery = dao.queryBuilder().where().eq("name",item.getName()).or().eq("serverId", item.getServerId()).prepare();
+            temp = dao.query(preparedQuery);
+        if(temp != null){
+            if(temp.size() != 0){
+                Category stored = temp.get(0);
+                if(stored.getServerId() == null){
+                    stored.setServerId(item.getServerId());
+                    stored.setIsSynced(true);
+                    dao.update(stored);
+                }
+            }else{
+                item.setIsSynced(true);
+                dao.create(item);
+            }
+
         }
     }
 }

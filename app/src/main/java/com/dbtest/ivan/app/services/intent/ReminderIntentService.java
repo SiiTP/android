@@ -76,7 +76,11 @@ public class ReminderIntentService extends IntentService {
             startService(sync);
 
             Bundle answer = new Bundle();
-            answer.putString(CustomReceiver.RESULT,"Reminder created");
+            if(id == CREATE_ID) {
+                answer.putString(CustomReceiver.RESULT, "Reminder created");
+            }else{
+                answer.putString(CustomReceiver.RESULT, "Reminder updated");
+            }
             try { //TODO зачем это? Ответ: чтобы показать прогрес бар, на локалхосте взаимодействие с сервером очень быстрое
                 Thread.sleep(1500L);
             } catch (InterruptedException e) {
